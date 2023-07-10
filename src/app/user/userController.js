@@ -6,20 +6,18 @@ const fs = require("fs");
 
 /**
  * API No. 1
- * API Name : 유저 생성 api
- * [POST] /app/users
+ * API Name : 휴대폰 인증 번호 발송
+ * [POST] /users/send
  */
-exports.sign_up = async function (req, res) {
-    var userid = req.body.userid;
-    var name = req.body.name;
-    var email = req.body.email;
-    var phone = req.body.phone;
-    var birth = req.body.birth;
-    var sex = req.body.sex;
-    var password = req.body.password;
+exports.send = async function (req, res) {
 
-    const Info = [userid, name, email, phone, birth, sex, password];
-
-    const userInfo = await userService.createInfo(Info);
-    return res.send(response(baseResponse.SIGNUP, userInfo));
 };
+
+/**
+ * API No. 2
+ * API Name : 테스트 API
+ * [POST] /users/verify
+ */
+exports.verify = async function (req, res) {
+
+  };
