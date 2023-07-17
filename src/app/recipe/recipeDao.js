@@ -15,11 +15,13 @@ module.exports = {
 }; 
 
 //API.34 레시피 전체 조회
-async function allRecipeInquiry(connection, Info) {
-    const AllRecipeQuery = `select * from recipe`; 
+async function allRecipeInquiry(connection) {
+    const AllRecipeQuery = `select * from Recipe`; 
     const recipeRows = await connection.query(AllRecipeQuery);
     return recipeRows[0];
 }
+
+
 module.exports = {
     allRecipeInquiry,
     

@@ -5,5 +5,5 @@ module.exports = function (app) {
     app.post("/recipe/:recipe_id/review/:userid", recipe.PostRegisterReview);
     
     //34. 레시피전체 조회
-    app.get("/recipe/all", recipe.allRecipeInquiry);
+    app.get("/recipe/all", recipe.GetallRecipe);
 };

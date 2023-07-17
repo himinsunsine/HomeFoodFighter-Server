@@ -38,14 +38,9 @@ exports.PostRegisterReview = async function (req, res) {
 
 };
 
-/**
- * API No. 34
- * API Name : 레시피 전체조회
- * [GET] /recipe/all
- */
-exports.allRecipeInquiry = async function(req, res) {
-    const allRecipe = await recipeService.registerReview(Info);
-    return res.send(ReviewInfoResult);
+exports.GetallRecipe = async function (req, res) {
+    const allRecipeResult = await recipeProvider.allRecipe();
+    return res.send(allRecipeResult);
 }
 
 
