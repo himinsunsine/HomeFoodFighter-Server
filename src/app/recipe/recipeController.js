@@ -38,10 +38,83 @@ exports.PostRegisterReview = async function (req, res) {
 
 };
 
+
+
+/**
+ * API No. 34
+ * API Name : 레시피 전체조회
+ * [GET] /recipe/all
+ */
 exports.GetallRecipe = async function (req, res) {
-    const allRecipeResult = await recipeProvider.allRecipe();
-    return res.send(allRecipeResult);
+
+    var RecipeType = req.param('type');
+
+    
+    if(!RecipeType){
+        const allTypeResult = await recipeProvider.allRecipe(RecipeType);
+        return res.send(allTypeResult);
+    }
+
+    else{
+        const RecipeTypeResult = await recipeProvider.TypeRecipe(RecipeType);
+        return res.send(RecipeTypeResult);
+    }
+
+}
+
+/**
+ * API No. 35
+ * API Name : 한식 레시피조회
+ * [GET] /recipe/korea
+ */
+exports.GetKoreaRecipe = async function (req, res) {
+    const KoreaRecipeResult = await recipeProvider.KoreaRecipe();
+    return res.send(KoreaRecipeResult);
+}
+
+/**
+ * API No. 36
+ * API Name : 일식 레시피조회
+ * [GET] /recipe/japan
+ */
+exports.GetJapanRecipe = async function (req, res) {
+    const JapanRecipeResult = await recipeProvider.JapanRecipe();
+    return res.send(JapanRecipeResult);
+}
+
+/**
+ * API No. 37
+ * API Name : 중식 레시피조회
+ * [GET] /recipe/China
+ */
+exports.GetChinaRecipe = async function (req, res) {
+    const ChinaRecipeResult = await recipeProvider.ChinaRecipe();
+    return res.send(ChinaRecipeResult);
+}
+
+/**
+ * API No. 38
+ * API Name : 양식 레시피조회
+ * [GET] /recipe/western
+ */
+exports.GetWesternRecipe = async function (req, res) {
+    const WesternRecipeResult = await recipeProvider.WesternRecipe();
+    return res.send(WesternRecipeResult);
 }
 
 
+/**
+ * API No. 39
+ * API Name : 음식 이름으로 레시피조회
+ * [GET] /recipe/:recipe_name
+ */
+/*
+exports.GetFoodNameRecipe = async function (req, res) {
+    const recipe_name = req.params.recipe_name;
+    const Info = recipe_name;
 
+    const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(Info);
+    return res.send(FoodNameRecipeResult);
+}
+
+*/

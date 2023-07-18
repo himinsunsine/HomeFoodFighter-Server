@@ -16,16 +16,158 @@ module.exports = {
 
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
-    const AllRecipeQuery = `select * from Recipe`; 
-    const recipeRows = await connection.query(AllRecipeQuery);
+    const RecipeQuery = `
+    select * from Recipe
+    `; 
+    const recipeRows = await connection.query(RecipeQuery);
     return recipeRows[0];
+}
+
+module.exports = {
+    allRecipeInquiry
+}
+
+
+//API.34 레시피 전체 조회  쿼리스트링으로 타입받아 조회하기
+async function TypeRecipeInquiry(connection, RecipeType) {
+    if ( RecipeType == '1'){
+        const KoreaRecipeQuery = `
+        select * from Recipe where type_class = '1'
+        `; 
+        const recipeRows = await connection.query(KoreaRecipeQuery);
+        return recipeRows[0];
+    }
+    
+    else if(RecipeType == '2'){
+        const JapanRecipeQuery = `
+        select * from Recipe where type_class = '2'
+        `; 
+        const recipeRows = await connection.query(JapanRecipeQuery);
+        return recipeRows[0];
+    }
+    
+    else if(RecipeType == '3'){
+        const ChinaRecipeQuery = `
+        select * from Recipe where type_class = '3'
+        `; 
+        const recipeRows = await connection.query(ChinaRecipeQuery);
+        return recipeRows[0];
+    }
+
+    else if(RecipeType == '4'){
+        const WesternRecipeQuery = `
+        select * from Recipe where type_class = '4' OR type_class = '5'
+        `; 
+        const recipeRows = await connection.query(WesternRecipeQuery);
+        return recipeRows[0];
+    }
+    else if(RecipeType == '5'){
+        const AsiaernRecipeQuery = `
+        select * from Recipe where type_class = '6'
+        `; 
+        const recipeRows = await connection.query(AsiaRecipeQuery);
+        return recipeRows[0];
+    }
+    else if(RecipeType == '6'){
+        const FusionRecipeQuery = `
+        select * from Recipe where type_class = '7'
+        `; 
+        const recipeRows = await connection.query(FusionRecipeQuery);
+        return recipeRows[0];
+    }
+    else if(RecipeType == '7'){
+        const DesertRecipeQuery = `
+        select * from Recipe where type_class = '8'
+        `; 
+        const recipeRows = await connection.query(DesertRecipeQuery);
+        return recipeRows[0];
+    }
 }
 
 
 module.exports = {
-    allRecipeInquiry,
-    
+    TypeRecipeInquiry,
 }; 
+
+
+
+/*
+//API.35 한식 레시피 조회
+
+async function KoreaRecipeInquiry(connection) {
+    const AllRecipeQuery = `
+    select * from Recipe where type_class = '1'
+    `; 
+    const recipeRows = await connection.query(AllRecipeQuery);
+    return recipeRows[0];
+}
+
+module.exports = {
+    KoreaRecipeInquiry,
+}; 
+
+//API.36 일식 레시피 조회
+
+async function JapanRecipeInquiry(connection) {
+    const JapanRecipeQuery = `
+    select * from Recipe where type_class = '2'
+    `; 
+    const recipeRows = await connection.query(JapanRecipeQuery);
+    return recipeRows[0];
+}
+
+module.exports = {
+    JapanRecipeInquiry,
+}; 
+
+
+//API.37 중식 레시피 조회
+
+async function ChinaRecipeInquiry(connection) {
+    const ChinaRecipeQuery = `
+    select * from Recipe where type_class = '3'
+    `; 
+    const recipeRows = await connection.query(ChinaRecipeQuery);
+    return recipeRows[0];
+}
+
+module.exports = {
+    ChinaRecipeInquiry,
+}; 
+
+//API.38 양식 레시피 조회
+
+async function WesternRecipeInquiry(connection) {
+    const WesternRecipeQuery = `
+    select * from Recipe where type_class = '4' OR type_class = '5'
+    `; 
+    const recipeRows = await connection.query(WesternRecipeQuery);
+    return recipeRows[0];
+}
+
+module.exports = {
+    WesternRecipeInquiry,
+}; 
+
+
+//API.39 음식이름으로 레시피 조회
+
+
+
+async function FoodNameRecipeInquiry(connection, Info) {
+
+    const FoodNameRecipeQuery = `
+    select * from Recipe where recipe_name LIKE '%${Info}%'
+    `; 
+    const recipeRows = await connection.query(FoodNameRecipeQuery);
+    return recipeRows[0];
+}
+
+module.exports = {
+    FoodNameRecipeInquiry,
+}; 
+
+
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows
 async function InsertRecipe(connection, Info) {
