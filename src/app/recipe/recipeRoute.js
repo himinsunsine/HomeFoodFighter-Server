@@ -7,19 +7,6 @@ module.exports = function (app) {
     //34. 전체 레시피 조회
     app.get("/recipe", recipe.GetallRecipe);
 
-    /*
-    //35. 한식 레시피 조회
-    app.get("recipe?recipe_type=korea", recipe.GetKoreaRecipe);
-
-    //36. 일식 레시피 조회
-    app.get("/recipe?recipe_type=japan", recipe.GetJapanRecipe);
-
-    //37. 중식 레시피 조회
-    app.get("/recipe/china", recipe.GetChinaRecipe);
-
-    //38. 양식 레시피 조회
-    app.get("/recipe/western", recipe.GetWesternRecipe);
-  */  
     //39. 음식이름으로 레시피 조회
     //app.get("/recipe/:recipe_name", recipe.GetFoodNameRecipe);  
 };
