@@ -7,36 +7,35 @@ const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 const {connect} = require("http2");
 
-exports.getUser = async function(Info){
-    try{
+// Provider: Read 비즈니스 로직 처리
+exports.idCheck = async function(id) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const idCheckResult = await userDao.selectUserId(connection, id);
+    connection.release();
+  
+    return idCheckResult;
+  }
 
-        const connection = await pool.getConnection(async (conn)=> conn);
+exports.nicknameCheck = async function(nickname){
+    const connection = await pool.getConnection(async (conn) => conn);
+    const nicknameCheckResult = await userDao.selectUserNickname(connection, nickname);
+    connection.release();
+  
+    return nicknameCheckResult;
+  }
 
-        const InfoResult = await userDao.getUserInfo(connection, Info);
-        console.log(`유저 조회 완료`);
-        connection.release();
+exports.passwordCheck = async function(selectUserPasswordParams) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const passwordCheckResult = await userDao.selectUserPassword(connection, selectUserPasswordParams);
+    connection.release();
+  
+    return passwordCheckResult;
+  }
 
-        return InfoResult;
-    }
-    catch(err){
-        logger.error(`App - editInfo Service error\n: ${err.message}`);
-        return errResponse(baseResponse.DB_ERROR);
-    }
-}
-exports.getuserNickname = async function(nickname){
-    try{
-
-        const connection = await pool.getConnection(async (conn)=> conn);
-
-        const nicknameResult = await userDao.getnickname(connection, nickname);
-        console.log(`유저 조회 완료`);
-        console.log(nicknameResult);
-        connection.release();
-
-        return nicknameResult;
-    }
-    catch(err){
-        logger.error(`App - editInfo Service error\n: ${err.message}`);
-        return errResponse(baseResponse.DB_ERROR);
-    }
-}
+exports.emailCheck = async function(selectUserPasswordParams) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const passwordCheckResult = await userDao.selectUserPassword(connection, selectUserPasswordParams);
+    connection.release();
+  
+    return passwordCheckResult;
+  }

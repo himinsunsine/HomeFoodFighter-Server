@@ -1,16 +1,29 @@
-//유저 생성 api
-async function createUserInfo(connection, Info) {
-    console.log(Info);
-    const createUserInfoQuery = `
-    insert into user(user_id, name, email, phone_number, birth, sex, password, createdAt, status, manner, coupon_coupon_id) 
-    values(${Info[0]}, '${Info[1]}', '${Info[2]}', '${Info[3]}', '${Info[4]}', '${Info[5]}', '${Info[6]}' , now(), '1', '36.5', 1);
-    `;
-    const userRows = await connection.query(createUserInfoQuery);
-    return userRows[0];
+// 유저 삽입
+async function insertUser(connection, insertUserParams) {
+    const insertUserQuery =`
+              INSERT INTO User (id, password, nickname, name, birth, email, state)
+              VALUES (?, ?, ?, ?, ?, ?, 1);
+                `;
+                
+    const insertUserRow = await connection.query(
+        insertUserQuery,
+        insertUserParams
+    );
+
+    return insertUserRow;
 }
 
+async function selectUserId(connection, id) {
+    const selectUserIdQuery = `
+                    SELECT id, nickname
+                    FROM user
+                    WHERE id = ?;
+                    `;
+    const [idRows] = await connection.query(selectUserIdQuery, id);
+    return idRows;
+}
 
 module.exports = {
-    createUserInfo,
-    
+    insertUser,
+    selectUserId
 };  
