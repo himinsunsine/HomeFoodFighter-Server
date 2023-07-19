@@ -106,6 +106,7 @@ async function FoodNameRecipeInquiry(connection, recipe_name){
 
 module.exports ={
     FoodNameRecipeInquiry,
+    allRecipeInquiry,
 }
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows
