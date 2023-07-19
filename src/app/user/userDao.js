@@ -15,7 +15,7 @@ async function insertUser(connection, insertUserParams) {
 
 async function selectUserId(connection, id) {
     const selectUserIdQuery = `
-                    SELECT id, nickname
+                    SELECT id
                     FROM User
                     WHERE id = ?;
                     `;
@@ -52,9 +52,33 @@ async function selectUserAccount(connection, id) {
     return selectUserAccountRow[0];
 }
 
+async function selectUserNickname(connection, nickname){
+    const selectUserNicknameQuery = `
+                    SELECT id, nickname
+                    FROM User
+                    WHERE nickname = ?;
+                    `;
+    const [nicknameRows] = await connection.query(selectUserNicknameQuery, nickname);
+    return nicknameRows;
+  
+  }
+
+async function selectUserEmail(connection, email){
+    const selectUserEmailQuery = `
+                    SELECT email
+                    FROM User
+                    WHERE email = ?;
+                    `;
+    const [emailRows] = await connection.query(selectUserEmailQuery, email);
+    return emailRows;
+  
+  }
+
 module.exports = {
     insertUser,
     selectUserId,
     selectUserPassword,
     selectUserAccount,
+    selectUserNickname,
+    selectUserEmail,
 };  
