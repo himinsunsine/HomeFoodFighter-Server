@@ -103,3 +103,17 @@ exports.login = async function (req, res) {
 
   return res.send(signInResponse);
 }
+
+/**
+ * API No. 3
+ * API Name : 아이디/비밀번호 찾기
+ * [POST] /users/finding
+ * email
+ */
+exports.finding = async function (req, res) {
+  const {email} = req.body;
+
+  const findingResponse = await userService.findInfo(email);
+
+  return res.send(findingResponse);
+}
