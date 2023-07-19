@@ -14,21 +14,21 @@ const {connect} = require("http2");
 
 exports.createUser = async function (id, password, nickname, name, birth, email) {
     try{
-        // // 아이디 중복 확인
-        // const idRows = await userProvider.idCheck(id); // Read인 Provider 통해서 확인
-        // if (idRows.length > 0)
-        //     return errResponse(baseResponse.SIGNUP_REDUNDANT_ID)
+        // 아이디 중복 확인
+        const idRows = await userProvider.idCheck(id); // Read인 Provider 통해서 확인
+        if (idRows.length > 0)
+            return errResponse(baseResponse.SIGNUP_REDUNDANT_ID)
 
-        // // 닉네임 중복 확인
-        // const nicknameRows = await userProvider.nicknameCheck(nickname);
-        // if (nicknameRows.length > 0)
-        //     return errResponse(baseResponse.SIGNUP_REDUNDANT_NICKNAME);
+        // 닉네임 중복 확인
+        const nicknameRows = await userProvider.nicknameCheck(nickname);
+        if (nicknameRows.length > 0)
+            return errResponse(baseResponse.SIGNUP_REDUNDANT_NICKNAME);
         
-        // // 이메일 중복 확인
-        // const findeEmailResponse = await userProvider.emailCheck(email);
-        // console.log(findeEmailResponse.length)
-        // if (findeEmailResponse.length > 0)
-        //     return res.send(errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL));
+        // 이메일 중복 확인
+        const emailRows= await userProvider.emailCheck(email);
+        console.log(emailRows.length)
+        if (emailRows.length > 0)
+            return (errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL));
         
         // INSERT할 Params
         const insertUserParams = [id, password, nickname, name, birth, email];
@@ -70,7 +70,7 @@ exports.postSignIn = async function(id, password) {
 
         // 0: 탈퇴, 1: 활성
         if (userInfoRows[0].status === 0) {
-            return errResponse(baseResponse.SIGNIN_INACTIVE_ACCOUNT);
+            return errResponse(baseResponse.SIGNIN_UNSIGN_USER);
         } 
 
         console.log(userInfoRows[0].userId)
