@@ -6,6 +6,7 @@ const baseResponse = require("../../../config/baseResponse");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 const {connect} = require("http2");
+const nodemailer = require("nodemailer");
 
 // Provider: Read 비즈니스 로직 처리
 exports.idCheck = async function(id) {
@@ -47,3 +48,27 @@ exports.accountCheck = async function(id){
   
     return userAccountResult;
   }
+
+
+exports.sendMail = async (mailOptions) => {
+  // nodemailer 설정과 메일 발송
+  // 메일 서버 설정 (Gmail 예시)
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'himinsunsine@gmail.com', // 발송할 메일 계정
+      pass: 'nbgtywuuwqicmakj', // 발송할 메일 계정의 비밀번호
+    },
+  });
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Password reset email sent: ', mailOptions);
+  } catch (error) {
+    console.error('Error sending password reset email: ', error);
+    throw error;
+  }
+};
+
+
+

@@ -94,3 +94,19 @@ exports.postSignIn = async function(id, password) {
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+exports.findInfo = async (email) => {
+    // 비밀번호 재설정 링크를 포함한 메일 옵션 설정
+    const mailOptions = {
+      from: 'himinsunsine@gmail.com', // 발송할 메일 계정
+      to: email, // 회원의 이메일 주소
+      subject: 'HomeFoodFighter', // 이메일 제목
+      text: 'Please click the following link to reset your password: <reset_link_here>', // 이메일 내용 (비밀번호 재설정 링크를 포함해야 함)
+    };
+  
+    try {
+      await userProvider.sendMail(mailOptions);
+    } catch (error) {
+      throw error;
+    }
+  };
