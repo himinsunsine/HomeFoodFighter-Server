@@ -1,3 +1,4 @@
+const jwtMiddleware = require("../../../config/jwtMiddleware");
 const userProvider = require("../../app/User/userProvider");
 const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponse");
@@ -87,4 +88,18 @@ exports.postSignUpMentor = async function (req, res) {
   );
   
   return res.send(signUpResponse);
+}
+
+/**
+ * API No. 1
+ * API Name : 로그인
+ * [POST] /users/login
+ * id, password
+ */
+exports.login = async function (req, res) {
+  const {id, password} = req.body;
+
+  const signInResponse = await userService.postSignIn(id, password);
+
+  return res.send(signInResponse);
 }
