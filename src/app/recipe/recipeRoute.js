@@ -8,5 +8,5 @@ module.exports = function (app) {
     app.get("/recipe", recipe.GetallRecipe);
 
     //39. 음식이름으로 레시피 조회
-    //app.get("/recipe/:recipe_name", recipe.GetFoodNameRecipe);  
+    app.get("/recipe/name", recipe.GetFoodNameRecipe);  
 };

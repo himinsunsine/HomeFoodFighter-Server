@@ -47,12 +47,15 @@ exports.PostRegisterReview = async function (req, res) {
  */
 exports.GetallRecipe = async function (req, res) {
 
-    var RecipeType = req.param('type');
+    var RecipeType = req.param('type')
 
-    
     if(!RecipeType){
-        const allTypeResult = await recipeProvider.allRecipe(RecipeType);
-        return res.send(allTypeResult);
+        const allRecipeResult = await recipeProvider.allRecipe();
+        return res.send(allRecipeResult);
+    }
+
+    else if(RecipeType < 0 | RecipeType > 7){
+        return res.send(baseResponse.TYPE_CHECK);
     }
 
     else{
@@ -68,13 +71,11 @@ exports.GetallRecipe = async function (req, res) {
  * API Name : 음식 이름으로 레시피조회
  * [GET] /recipe/:recipe_name
  */
-/*
-exports.GetFoodNameRecipe = async function (req, res) {
-    const recipe_name = req.params.recipe_name;
-    const Info = recipe_name;
 
-    const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(Info);
+exports.GetFoodNameRecipe = async function (req, res) {
+    var recipe_name = req.param('recipe_name');
+
+    const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(recipe_name);
     return res.send(FoodNameRecipeResult);
 }
 
-*/

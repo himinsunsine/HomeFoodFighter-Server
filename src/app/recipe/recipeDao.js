@@ -1,3 +1,5 @@
+const baseResponse = require("../../../config/baseResponse");
+
 //API.15 레시피 리뷰 등록하기 
 async function insertReview(connection, Info) {
     
@@ -82,6 +84,10 @@ async function TypeRecipeInquiry(connection, RecipeType) {
         const recipeRows = await connection.query(DesertRecipeQuery);
         return recipeRows[0];
     }
+    else{
+        return null;
+    }
+
 }
 
 
@@ -89,7 +95,18 @@ module.exports = {
     TypeRecipeInquiry,
 }; 
 
+//API.34 음식이름으로 레시피 조회
+async function FoodNameRecipeInquiry(connection, recipe_name){
+    const FoodNameRecipeQuery = `
+    select * from Recipe where recipe_name LIKE concat('%','${recipe_name}','%')
+    `; 
+    const recipeRows = await connection.query(FoodNameRecipeQuery);
+    return recipeRows[0];
+}
 
+module.exports ={
+    FoodNameRecipeInquiry,
+}
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows
 async function InsertRecipe(connection, Info) {
