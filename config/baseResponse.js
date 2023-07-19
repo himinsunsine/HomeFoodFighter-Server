@@ -17,6 +17,7 @@ module.exports = {
     SIGNUP_NAME_EMPTY : { "isSuccess": false, "code": 2007, "message":"이름을 입력해주세요." },
     SIGNUP_NAME_LENGTH : { "isSuccess": false, "code": 2008, "message":"이름은 7자리 이하로 입력해주세요." }, 
     SIGNUP_BIRTH_EMPTY : { "isSuccess": false, "code": 2011, "message":"생년월일을 입력해주세요." },
+    SIGNUP_BIRTH_ERROR : { "isSuccess": false, "code": 2011, "message":"생년월일을 정확하게 입력해주세요." },
     SIGNUP_EMAIL_EMPTY : { "isSuccess": false, "code": 2011, "message":"이메일을 입력해주세요." },
     SIGNUP_EMAIL_ERROR : { "isSuccess": false, "code": 2011, "message":"이메일을 정확하게 입력해주세요." },
 
@@ -24,12 +25,12 @@ module.exports = {
     CONTENT_EMPTY : { "isSuccess": false, "code": 4001, "message": "리뷰를 입력하세요"},
     STAR_CHECK1 : { "isSuccess": false, "code": 4002, "message": "별점이 0.5 미만입니다."},
     STAR_CHECK2 : { "isSuccess": false, "code": 4003, "message": "별점이 0.5 단위가 아닙니다."},
-
     TYPE_CHECK : {"isSucces":false, "code" : 204, "messsage": "값이 존재하지 않습니다."},
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 500, "message": "데이터 베이스 에러"},
     SERVER_ERROR : { "isSuccess": false, "code": 500, "message": "서버 에러"},
+  
   
   }
   
