@@ -37,3 +37,45 @@ exports.PostRegisterReview = async function (req, res) {
     return res.send(ReviewInfoResult);
 
 };
+
+
+
+/**
+ * API No. 34
+ * API Name : 레시피 전체조회
+ * [GET] /recipe/all
+ */
+exports.GetallRecipe = async function (req, res) {
+
+    var RecipeType = req.param('type')
+
+    if(!RecipeType){
+        const allRecipeResult = await recipeProvider.allRecipe();
+        return res.send(allRecipeResult);
+    }
+
+    else if(RecipeType < 0 | RecipeType > 7){
+        return res.send(baseResponse.TYPE_CHECK);
+    }
+
+    else{
+        const RecipeTypeResult = await recipeProvider.TypeRecipe(RecipeType);
+        return res.send(RecipeTypeResult);
+    }
+
+}
+
+
+/**
+ * API No. 39
+ * API Name : 음식 이름으로 레시피조회
+ * [GET] /recipe/:recipe_name
+ */
+
+exports.GetFoodNameRecipe = async function (req, res) {
+    var recipe_name = req.param('recipe_name');
+
+    const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(recipe_name);
+    return res.send(FoodNameRecipeResult);
+}
+

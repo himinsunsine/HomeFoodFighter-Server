@@ -25,10 +25,11 @@ module.exports = {
     STAR_CHECK1 : { "isSuccess": false, "code": 4002, "message": "별점이 0.5 미만입니다."},
     STAR_CHECK2 : { "isSuccess": false, "code": 4003, "message": "별점이 0.5 단위가 아닙니다."},
 
+    TYPE_CHECK : {"isSucces":false, "code" : 204, "messsage": "값이 존재하지 않습니다."},
+
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 500, "message": "데이터 베이스 에러"},
     SERVER_ERROR : { "isSuccess": false, "code": 500, "message": "서버 에러"},
-  
   
   }
   
