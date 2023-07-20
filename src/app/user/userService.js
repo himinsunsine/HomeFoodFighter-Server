@@ -102,18 +102,30 @@ exports.findInfo = async (email) => {
     if (emailRows.length == 0)
         return errResponse(baseResponse.FINDING_INFO_ERROR);    
 
+    // 아이디 값 받아오기
+    const idRows = await userProvider.GetIdInfoByEmail(email);
+
+    // 비밀번호 값 받아오기
+    const passwordRows = await userProvider.GetPasswordInfoByEmail(email);
+
+    // 각각의 객체에서 필요한 정보만 추출하여 이메일 내용에 포함
+    const idInfo = idRows.map((row) => row.id);
+    const passwordInfo = passwordRows.map((row) => row.password);
+
     // 비밀번호 재설정 링크를 포함한 메일 옵션 설정
     const mailOptions = {
       from: 'himinsunsine@gmail.com', // 발송할 메일 계정
       to: email, // 회원의 이메일 주소
       subject: 'HomeFoodFighter', // 이메일 제목
-      text: 'Please click the following link to reset your password: <reset_link_here>', // 이메일 내용 (비밀번호 재설정 링크를 포함해야 함)
+    //   text: 'Please click the following link to reset your password: <reset_link_here>',
+      text: `아이디는: ${idInfo.join(', ')}이고, 비밀번호는: ${passwordInfo.join(', ')}입니다.`, // 이메일 내용 (비밀번호 재설정 링크를 포함해야 함)
     };
-    return response(baseResponse.SUCCESS);
+    
 
     try {
       await userProvider.sendMail(mailOptions);
     } catch (error) {
       throw error;
     }
+    return response(baseResponse.SUCCESS);
   };

@@ -49,6 +49,22 @@ exports.accountCheck = async function(id){
     return userAccountResult;
   }
 
+exports.GetIdInfoByEmail= async function(email){
+    const connection = await pool.getConnection(async (conn) => conn);
+    const idResult = await userDao.idGet(connection, email);
+    connection.release();
+  
+    return idResult;
+}
+
+exports.GetPasswordInfoByEmail = async function(email){
+  const connection = await pool.getConnection(async (conn) => conn);
+  const passwordResult = await userDao.passwordGet(connection, email);
+  connection.release();
+
+  return passwordResult;
+}
+
 
 exports.sendMail = async (mailOptions) => {
   // nodemailer 설정과 메일 발송

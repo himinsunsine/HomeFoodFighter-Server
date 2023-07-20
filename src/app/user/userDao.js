@@ -74,6 +74,26 @@ async function selectUserEmail(connection, email){
   
   }
 
+async function idGet(connection, email) {
+    const selectUserIdQuery = `
+                    SELECT id
+                    FROM User
+                    WHERE email = ?;
+                    `;
+    const [idRows] = await connection.query(selectUserIdQuery,email);
+    return idRows;
+}
+
+async function passwordGet(connection, email) {
+    const selectUserPasswordQuery = `
+                    SELECT password
+                    FROM User
+                    WHERE email = ?;
+                    `;
+    const [passwordRows] = await connection.query(selectUserPasswordQuery,email);
+    return passwordRows;
+}
+
 module.exports = {
     insertUser,
     selectUserId,
@@ -81,4 +101,6 @@ module.exports = {
     selectUserAccount,
     selectUserNickname,
     selectUserEmail,
+    idGet,
+    passwordGet,
 };  
