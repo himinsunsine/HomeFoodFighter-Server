@@ -35,7 +35,7 @@ exports.PostRegisterReview = async function (req, res) {
         }
     }
     const ReviewInfoResult = await recipeService.registerReview(Info);
-    return return res.send(response(baseResponse.SUCCESS, ReviewInfoResult));
+    return res.send(response(baseResponse.SUCCESS, ReviewInfoResult));
 
 };
 
