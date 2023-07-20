@@ -7,8 +7,18 @@ const baseResponse = require("../../../config/baseResponse");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 const jwtMiddleware = require('../../../config/jwtMiddleware');
+//19. 인기 레시피 조회
+exports.getRecipeHot = async function(){
+    try{
+        const connection = await pool.getConnection(async (conn)=>conn);
+        
+    }
+    catch(err){
 
-//20. 상세레시피 조회
+    }
+}
+
+//20. 상세 레시피 조회
 exports.getDetail = async function(recipe_id){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
