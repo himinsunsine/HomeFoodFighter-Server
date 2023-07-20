@@ -13,7 +13,7 @@ module.exports = {
     SIGNUP_PASSWORD_ERROR : { "isSuccess": false, "code": 2005, "message":"8~16자리/영문 대소문자,숫자,특수문자 조합" },
     SIGNUP_CHECK_PASSWORD_ERROR : { "isSuccess": false, "code": 2006, "message": "비밀번호가 일치하지 않습니다." }, 
     SIGNUP_NICKNAME_EMPTY : { "isSuccess": false, "code": 2007, "message":"닉네임을 입력해주세요." },
-    // SIGNUP_NICKNAME_LENGTH : { "isSuccess": false,"code": 2010,"message":"중복된 닉네임입니다." },
+    SIGNUP_NICKNAME_LENGTH : { "isSuccess": false,"code": 2010,"message":"닉네임을 7자리 이하로 입력해주세요." },
     SIGNUP_NAME_EMPTY : { "isSuccess": false, "code": 2008, "message":"이름을 입력해주세요." },
     SIGNUP_NAME_LENGTH : { "isSuccess": false, "code": 2009, "message":"이름은 7자리 이하로 입력해주세요." }, 
     SIGNUP_BIRTH_EMPTY : { "isSuccess": false, "code": 2010, "message":"생년월일을 입력해주세요." },

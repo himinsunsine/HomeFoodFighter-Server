@@ -28,7 +28,7 @@ exports.createUser = async function (id, password, nickname, name, birth, email)
         const emailRows= await userProvider.emailCheck(email);
         console.log(emailRows.length)
         if (emailRows.length > 0)
-            return (errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL));
+            return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
         
         // INSERT할 Params
         const insertUserParams = [id, password, nickname, name, birth, email];
