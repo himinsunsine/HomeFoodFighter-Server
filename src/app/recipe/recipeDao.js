@@ -10,11 +10,30 @@ async function insertReview(connection, Info) {
     return userRows[0];
 }
 
+//상위 x개 레시피의 별점 평균 조회
+async function avgStar(connection, Info){
+    const avgStarQuery = `
+    SELECT recipe_id, avg(star) FROM review GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${Info[0]};
+    `;
+}
 
-module.exports = {
-    insertReview,
-    
-}; 
+//레시피 상세 정보 조회
+async function selectDetailInfo(connection, recipe_id){
+    const selectDetailQuery = `
+    select recipe_id, userid, recipe_name, cook_time, difficulty, img_url from Recipe where recipe_id=?;
+    `;
+    const [recipeInfoRows] = await connection.query(selectDetailQuery);
+    return recipeInfoRows;
+}
+
+//레시피 과정 정보 조회
+async function selectDetailProcess(connection, recipe_id){
+    const selectDetailQuery = `
+    select cook_order, description, order_img_url from process where recipe_id = ?;
+    `;
+    const [recipeProcessRows] = await connection.query(selectDetailQuery);
+    return recipeProcessRows;
+}
 
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
@@ -23,10 +42,6 @@ async function allRecipeInquiry(connection) {
     `; 
     const recipeRows = await connection.query(RecipeQuery);
     return recipeRows[0];
-}
-
-module.exports = {
-    allRecipeInquiry
 }
 
 
@@ -90,11 +105,6 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 
 }
 
-
-module.exports = {
-    TypeRecipeInquiry,
-}; 
-
 //API.34 음식이름으로 레시피 조회
 async function FoodNameRecipeInquiry(connection, recipe_name){
     const FoodNameRecipeQuery = `
@@ -103,11 +113,17 @@ async function FoodNameRecipeInquiry(connection, recipe_name){
     const recipeRows = await connection.query(FoodNameRecipeQuery);
     return recipeRows[0];
 }
-
-module.exports ={
+module.exports = {
+    insertReview,
+    avgStar,
+    selectDetailInfo,
+    selectDetailProcess,
+    insertReview,
+    allRecipeInquiry,
+    TypeRecipeInquiry,
     FoodNameRecipeInquiry,
     allRecipeInquiry,
-}
+}; 
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows
 async function InsertRecipe(connection, Info) {

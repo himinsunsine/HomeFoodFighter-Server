@@ -37,7 +37,17 @@ exports.PostRegisterReview = async function (req, res) {
     return res.send(ReviewInfoResult);
 
 };
-
+/**
+ * API No. 20
+ * API Name : 레시피 상세 페이지 조회
+ * [POST] /recipe/detail?recipe_id=
+ */
+exports.GetDetail= async function (req, res){
+    var type = req.param('recipe_id');
+    
+    const recipeResult = await recipeProvider.getDetail(recipe_id);
+    return res.send(recipeResult);
+};
 
 
 /**

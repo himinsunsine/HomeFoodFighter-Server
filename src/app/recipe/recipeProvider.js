@@ -7,6 +7,23 @@ const baseResponse = require("../../../config/baseResponse");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 
+//20. 상세레시피 조회
+exports.getDetail = async function(recipe_id){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const recipeInfoResult = await recipeDao.selectDetailInfo(connection, recipe_id);
+        const recipeProcessResult = await recipeDao.selectDetailProcess(connection, recipe_id);
+        connection.release();
+
+        recipeInfo=[recipeInfoResult, recipeProcessResult];
+        return recipeInfo;
+    }
+    catch(err){
+        logger.error(`App - editInfo Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
 
 //34. 전체레시피 조회
 exports.allRecipe = async function(){
