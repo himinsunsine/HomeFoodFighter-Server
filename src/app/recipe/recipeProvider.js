@@ -6,6 +6,7 @@ const recipeDao = require("./recipeDao");
 const baseResponse = require("../../../config/baseResponse");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
+const jwtMiddleware = require('../../../config/jwtMiddleware');
 
 //20. 상세레시피 조회
 exports.getDetail = async function(recipe_id){

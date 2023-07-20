@@ -37,8 +37,10 @@ module.exports = {
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
 
     //Connection, Transaction 등의 서버 오류
-    DB_ERROR : { "isSuccess": false, "code": 500, "message": "데이터 베이스 에러"},
-    SERVER_ERROR : { "isSuccess": false, "code": 500, "message": "서버 에러"},
+    DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
+    SERVER_ERROR : { "isSuccess": false, "code": 4001, "message": "서버 에러"},
+    TOKEN_EMPTY : { "isSuccess": false, "code": 4002, "message": "토큰을 입력해주세요"},
+    TOKEN_VERIFICATION_FAILURE :  {"isSuccess": false, "code": 4003, "message": "토큰 검증에 실패했습니다."},
 
   }
   
