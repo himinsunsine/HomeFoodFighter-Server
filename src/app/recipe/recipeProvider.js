@@ -12,16 +12,23 @@ const jwtMiddleware = require('../../../config/jwtMiddleware');
 exports.getDetail = async function(recipe_id){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
+        const recipe_existence = await recipeDao.CheckRecipeExistence(connection,recipe_id);
+        if (recipe_existence==null){
+            return res.send(response(baseResponse.RECIPE_ID_EMPTY));
+        } else{
+            const recipeInfoResult = await recipeDao.selectDetailInfo(connection, recipe_id);
+            const recipeProcessResult = await recipeDao.selectDetailProcess(connection, recipe_id);
+            const recipeIngreResult = await recipeDao.Detailingre(connection,recipe_id);
+            connection.release();
 
-        const recipeInfoResult = await recipeDao.selectDetailInfo(connection, recipe_id);
-        const recipeProcessResult = await recipeDao.selectDetailProcess(connection, recipe_id);
-        connection.release();
+            recipeInfo=[recipeInfoResult, recipeProcessResult, recipeIngreResult];
+            return recipeInfo;
+        }
 
-        recipeInfo=[recipeInfoResult, recipeProcessResult];
-        return recipeInfo;
+        
     }
     catch(err){
-        logger.error(`App - editInfo Service error\n: ${err.message}`);
+        logger.error(`App - getRecipeInfo Service error\n: ${err.message}`);
         return errResponse(baseResponse.DB_ERROR);
     }
 }
