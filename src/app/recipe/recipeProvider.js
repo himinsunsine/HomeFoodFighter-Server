@@ -42,7 +42,7 @@ exports.allRecipe = async function(){
         const inquiryResult = await recipeDao.allRecipeInquiry(connection)
         console.log(`레시피 검색 완료`);
         connection.release();
-        return inquiryResult;
+        return response(baseResponse.SUCCESS,inquiryResult);
     }
     catch(err){
         logger.error(`App - Service error\n: ${err.message}`);
@@ -78,7 +78,7 @@ exports.FoodNameRecipe = async function(recipe_name){
         console.log(inquiryResult);
         connection.release();
 
-        return inquiryResult;
+        return response(baseResponse.SUCCESS, inquiryResult);
     }
     catch(err){
         logger.error(`App - Service error\n: ${err.message}`);

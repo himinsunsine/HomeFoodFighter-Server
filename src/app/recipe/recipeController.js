@@ -45,6 +45,7 @@ exports.PostRegisterReview = async function (req, res) {
  */
 exports.GetDetail= async function (req, res){
     const recipe_id = req.query.recipe_id;
+    console.log(recipe_id);
 
     
     const recipeResult = await recipeProvider.getDetail(recipe_id);
@@ -54,23 +55,18 @@ exports.GetDetail= async function (req, res){
 
 /**
  * API No. 34
- * API Name : 레시피 전체조회
- * [GET] /recipe/all
+ * API Name : 레시피 전체조회 및 타입별 레시피 조회
+ * [GET] /recipe?type=
  */
 exports.GetallRecipe = async function (req, res) {
-
-    var RecipeType = req.param('type')
-
+    const RecipeType = req.query.type;
+    console.log(RecipeType);
     if(!RecipeType){
         const allRecipeResult = await recipeProvider.allRecipe();
         return res.send(allRecipeResult);
-    }
-
-    else if(RecipeType < 0 | RecipeType > 7){
+    }else if(RecipeType < 0 || RecipeType > 7){
         return res.send(baseResponse.TYPE_CHECK);
-    }
-
-    else{
+    }else{
         const RecipeTypeResult = await recipeProvider.TypeRecipe(RecipeType);
         return res.send(RecipeTypeResult);
     }
@@ -79,13 +75,13 @@ exports.GetallRecipe = async function (req, res) {
 
 
 /**
- * API No. 39
+ * API No. 35
  * API Name : 음식 이름으로 레시피조회
- * [GET] /recipe/:recipe_name
+ * [GET] /recipe/name?recipe_name=
  */
 
 exports.GetFoodNameRecipe = async function (req, res) {
-    var recipe_name = req.param('recipe_name');
+    const recipe_name = req.query.recipe_name;
 
     const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(recipe_name);
     return res.send(FoodNameRecipeResult);

@@ -91,6 +91,7 @@ exports.postSignIn = async function(id, password) {
 
     } catch (err) {
         logger.error(`App - postSignIn Service error\n: ${err.message} \n${JSON.stringify(err)}`);
+        console.log(err);
         return errResponse(baseResponse.DB_ERROR);
     }
 }
