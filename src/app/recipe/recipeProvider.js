@@ -7,14 +7,32 @@ const baseResponse = require("../../../config/baseResponse");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 const jwtMiddleware = require('../../../config/jwtMiddleware');
-//19. 인기 레시피 조회
+//19. 인기 레시피 조회 (모두 출력)
 exports.getRecipeHot = async function(){
     try{
         const connection = await pool.getConnection(async (conn)=>conn);
-        
+        const recipeHot = await recipeDao.avgStar(connection);
+        connection.release();
+        return recipeHot;
+
     }
     catch(err){
+        logger.error(`App - getRecipeHot Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+//인기 레시피 조회 (개수 제한)
+exports.getRecipeHotLimit = async function(limit){
+    try{
+        const connection = await pool.getConnection(async (conn)=>conn);
+        const recipeHot = await recipeDao.avgStarLimit(connection,limit);
+        connection.release();
+        return recipeHot;
 
+    }
+    catch(err){
+        logger.error(`App - getRecipeHot Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
     }
 }
 
