@@ -12,7 +12,7 @@ const jwtMiddleware = require('../../../config/jwtMiddleware');
  */
 exports.PostRegisterReview = async function (req, res) {
     const recipe_id = req.params.recipe_id;
-    const userid = req.params.userid;
+    const userid = req.verifiedToken.userId;
     const star = req.body.star;
     const content = req.body.content;
 
