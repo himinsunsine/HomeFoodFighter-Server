@@ -47,7 +47,7 @@ function validateEmail(email) {
  */
 
 exports.postSignUpMentor = async function (req, res) {
-  const {id, password, check_password, nickname, name, birth, email } = req.body; // agreed_to_terms도 추가해줘야함.
+  const {id, password, check_password, nickname, name, birth, email, agreed_to_terms } = req.body; // agreed_to_terms도 추가해줘야함.
 
   // 빈 값이 되면 안되는 속성값 체크
   if (!id)
@@ -64,8 +64,8 @@ exports.postSignUpMentor = async function (req, res) {
       return res.send(response(baseResponse.SIGNUP_BIRTH_EMPTY));
   else if (!email)
       return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
-  // else if (!agreed_to_terms)
-  //     return res.send(response(baseResponse.SIGNUP_AGREED_TO_TERMS_EMPTY));
+  else if (!agreed_to_terms)
+      return res.send(response(baseResponse.SIGNUP_AGREED_TO_TERMS_EMPTY));
   
   // 오류 체크
   if (!validateUsername(id))
