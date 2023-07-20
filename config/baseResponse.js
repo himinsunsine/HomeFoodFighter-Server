@@ -21,10 +21,10 @@ module.exports = {
     SIGNUP_EMAIL_EMPTY : { "isSuccess": false, "code": 2012, "message":"이메일을 입력해주세요." },
     SIGNUP_EMAIL_ERROR : { "isSuccess": false, "code": 2013, "message":"이메일을 정확하게 입력해주세요." },
 
-
-    CONTENT_EMPTY : { "isSuccess": false, "code": 4001, "message": "리뷰를 입력하세요"},
-    STAR_CHECK1 : { "isSuccess": false, "code": 4002, "message": "별점이 0.5 미만입니다."},
-    STAR_CHECK2 : { "isSuccess": false, "code": 4003, "message": "별점이 0.5 단위가 아닙니다."},
+    
+    CONTENT_EMPTY : { "isSuccess": false, "code": 2101, "message": "리뷰를 입력하세요"},
+    STAR_CHECK1 : { "isSuccess": false, "code": 2102, "message": "별점이 0.5 미만입니다."},
+    STAR_CHECK2 : { "isSuccess": false, "code": 2103, "message": "별점이 0.5 단위가 아닙니다."},
     TYPE_CHECK : {"isSucces":false, "code" : 204, "messsage": "값이 존재하지 않습니다."},
 
 
@@ -35,6 +35,7 @@ module.exports = {
     SIGNUP_REDUNDANT_NICKNAME : { "isSuccess": false, "code": 3004, "message":"중복된 닉네임입니다." },
     SIGNUP_REDUNDANT_EMAIL : { "isSuccess": false, "code": 3005, "message":"중복된 이메일입니다." },
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
+    RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3007, "message": "해당 레시피 id가 없습니다."},
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},

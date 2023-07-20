@@ -3,9 +3,9 @@ module.exports = function (app) {
     const recipe = require("./recipeController");
   
     //15. 레시피의 리뷰(후기) 등록하기
-    app.post("/recipe/:recipe_id/review", jwtMiddleware, recipe.PostRegisterReview);
+    app.post("/recipe/review/:recipe_id", jwtMiddleware, recipe.PostRegisterReview);
 
-    //20. 레시피 상세 페이지 조회
+    //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail", jwtMiddleware, recipe.GetDetail);
     
     //34. 전체 레시피 조회

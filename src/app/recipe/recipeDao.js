@@ -17,6 +17,7 @@ async function avgStar(connection, Info){
     `;
 }
 
+//API.20 상세 레시피 조회
 //레시피 상세 정보 조회
 async function selectDetailInfo(connection, recipe_id){
     const selectDetailQuery = `
@@ -35,10 +36,28 @@ async function selectDetailProcess(connection, recipe_id){
     return recipeProcessRows;
 }
 
+//레시피의 재료 조회
+async function Detailingre(connection, recipe_id){
+    const detailingreQuery=`
+    select recipe_id, DetailIngredient.ingre_id, ingre_name from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ?;
+    `;
+    const [recipeingre]= await connection.query(detailingreQuery);
+    return recipeingre;
+}
+
+//레시피 존재 여부 조회
+async function CheckRecipeExistence(connection,recipe_id){
+    const recipeexistenceQuery = `
+    select recipe_id from Recipe where recipe_id= ?;
+    `;
+    const recipe_existence = await connection.query(recipeexistenceQuery);
+    return recipe_existence[0];
+}
+
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
     const RecipeQuery = `
-    select * from Recipe
+    select * from Recipe;
     `; 
     const recipeRows = await connection.query(RecipeQuery);
     return recipeRows[0];
@@ -123,6 +142,8 @@ module.exports = {
     TypeRecipeInquiry,
     FoodNameRecipeInquiry,
     allRecipeInquiry,
+    CheckRecipeExistence,
+    Detailingre,
 }; 
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows
