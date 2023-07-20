@@ -83,7 +83,7 @@ exports.postSignIn = async function(id, password) {
             secret_config.jwtsecret, 
             // 유효기간 365일
             {
-                expiresIn: "365d",
+                expiresIn: "1h",
                 subject: "user"
             }
         );
@@ -96,6 +96,12 @@ exports.postSignIn = async function(id, password) {
 }
 
 exports.findInfo = async (email) => {
+    // 이메일 존재 확인
+    const emailRows= await userProvider.emailCheck(email);
+    console.log(emailRows.length)
+    if (emailRows.length == 0)
+        return errResponse(baseResponse.FINDING_INFO_ERROR);    
+
     // 비밀번호 재설정 링크를 포함한 메일 옵션 설정
     const mailOptions = {
       from: 'himinsunsine@gmail.com', // 발송할 메일 계정
@@ -103,7 +109,8 @@ exports.findInfo = async (email) => {
       subject: 'HomeFoodFighter', // 이메일 제목
       text: 'Please click the following link to reset your password: <reset_link_here>', // 이메일 내용 (비밀번호 재설정 링크를 포함해야 함)
     };
-  
+    return response(baseResponse.SUCCESS);
+
     try {
       await userProvider.sendMail(mailOptions);
     } catch (error) {

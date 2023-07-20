@@ -6,7 +6,7 @@ module.exports = function (app) {
     app.post("/recipe/review/:recipe_id", jwtMiddleware, recipe.PostRegisterReview);
 
     //19. 인기 레시피 조회
-    app.get("/recipe/highest-star", reicpe.GetRecipeHot);
+    app.get("/recipe/highest-star", recipe.GetRecipeHot);
     
     //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail", jwtMiddleware, recipe.GetDetail);

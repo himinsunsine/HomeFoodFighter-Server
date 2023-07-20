@@ -35,7 +35,9 @@ module.exports = {
     SIGNUP_REDUNDANT_NICKNAME : { "isSuccess": false, "code": 3004, "message":"중복된 닉네임입니다." },
     SIGNUP_REDUNDANT_EMAIL : { "isSuccess": false, "code": 3005, "message":"중복된 이메일입니다." },
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
-    RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3007, "message": "해당 레시피 id가 없습니다."},
+    SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
+    FINDING_INFO_ERROR : {"isSuccess": false, "code": 3007, "message": "등록되지 않은 메일주소입니다. 다시 확인해주세요."},
+    RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3101, "message": "해당 레시피 id가 없습니다."},
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
