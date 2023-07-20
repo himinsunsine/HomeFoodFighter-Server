@@ -35,9 +35,30 @@ exports.PostRegisterReview = async function (req, res) {
         }
     }
     const ReviewInfoResult = await recipeService.registerReview(Info);
-    return res.send(ReviewInfoResult);
+    return return res.send(response(baseResponse.SUCCESS, ReviewInfoResult));
 
 };
+
+/**
+ * API No. 19
+ * API Name : 인기 레시피 조회
+ * [GET] /recipe/highest-star?limit=
+ */
+exports.GetRecipeHot = async function(req,res){
+    const limit = req.query.limit;
+
+    if(!limit){
+        const highestStar = await recipeProvider.getRecipeHot();
+        return res.send(response(baseResponse.SUCCESS, highestStar));
+    } else{
+        const highestStar = await recipeProvider.getRecipeHotLimit(limit);
+        return res.send(response(baseResponse.SUCCESS ,highestStar));
+    }
+    
+    
+
+}
+
 /**
  * API No. 20
  * API Name : 레시피 상세 페이지 조회
@@ -48,7 +69,7 @@ exports.GetDetail= async function (req, res){
 
     
     const recipeResult = await recipeProvider.getDetail(recipe_id);
-    return res.send(recipeResult);
+    return res.send(response(baseResponse.SUCCESS, recipeResult));
 };
 
 

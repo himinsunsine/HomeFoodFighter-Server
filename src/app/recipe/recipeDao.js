@@ -10,10 +10,10 @@ async function insertReview(connection, Info) {
     return userRows[0];
 }
 
-//상위 x개 레시피의 별점 평균 조회
-async function avgStar(connection, Info){
+//API.15 상위 x개 레시피의 별점 평균 조회
+async function avgStar(connection, limit){
     const avgStarQuery = `
-    SELECT recipe_id, avg(star) FROM review GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${Info[0]};
+    SELECT recipe_id, avg(star) FROM review GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${limit};
     `;
 }
 
