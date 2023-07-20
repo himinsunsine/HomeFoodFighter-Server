@@ -54,10 +54,7 @@ exports.GetRecipeHot = async function(req,res){
         const highestStar = await recipeProvider.getRecipeHotLimit(limit);
         return res.send(response(baseResponse.SUCCESS ,highestStar));
     }
-    
-    
-
-}
+};
 
 /**
  * API No. 20

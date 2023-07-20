@@ -10,12 +10,23 @@ async function insertReview(connection, Info) {
     return userRows[0];
 }
 
-//API.15 상위 x개 레시피의 별점 평균 조회
-async function avgStar(connection, limit){
+//API.15 인기 레시피 조회
+async function avgStar(connection){
+    const avgStarQuery = `
+    SELECT recipe_id, avg(star) FROM review GROUP BY recipe_id ORDER BY AVG(star) DESC;
+    `;
+    const [recipeRows] = await connection.query(avgStarQuery);
+    return recipeRows;
+}
+//상위 x개 인기 레시피 조회
+async function avgStarLimit(connection, limit){
     const avgStarQuery = `
     SELECT recipe_id, avg(star) FROM review GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${limit};
     `;
+    const [recipeRows] = await connection.query(avgStarQuery);
+    return recipeRows;
 }
+
 
 //API.20 상세 레시피 조회
 //레시피 상세 정보 조회
@@ -135,6 +146,7 @@ async function FoodNameRecipeInquiry(connection, recipe_name){
 module.exports = {
     insertReview,
     avgStar,
+    avgStarLimit,
     selectDetailInfo,
     selectDetailProcess,
     insertReview,
