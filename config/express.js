@@ -23,6 +23,7 @@ module.exports = function () {
   require("../src/app/user/userRoute")(app);
   require("../src/app/recipe/recipeRoute")(app);
   require("../src/app/mypage/mypageRoute")(app);
+  require("../src/app/refrigerator/refrigeratorRoute")(app);
   
   return app;
 };
