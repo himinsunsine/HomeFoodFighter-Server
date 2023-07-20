@@ -44,7 +44,7 @@ exports.PostRegisterReview = async function (req, res) {
  * [GET] /recipe/detail?recipe_id=
  */
 exports.GetDetail= async function (req, res){
-    const recipe_id = req.params.recipe_id;
+    const recipe_id = req.query.recipe_id;
 
     
     const recipeResult = await recipeProvider.getDetail(recipe_id);

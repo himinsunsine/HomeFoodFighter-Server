@@ -21,7 +21,7 @@ async function avgStar(connection, Info){
 //레시피 상세 정보 조회
 async function selectDetailInfo(connection, recipe_id){
     const selectDetailQuery = `
-    select recipe_id, userid, recipe_name, cook_time, difficulty, img_url from Recipe where recipe_id=?;
+    select recipe_id, userid, recipe_name, cook_time, difficulty, img_url from Recipe where recipe_id=${recipe_id};
     `;
     const [recipeInfoRows] = await connection.query(selectDetailQuery);
     return recipeInfoRows;
@@ -30,7 +30,7 @@ async function selectDetailInfo(connection, recipe_id){
 //레시피 과정 정보 조회
 async function selectDetailProcess(connection, recipe_id){
     const selectDetailQuery = `
-    select cook_order, description, order_img_url from process where recipe_id = ?;
+    select cook_order, description, order_img_url from process where recipe_id = ${recipe_id};
     `;
     const [recipeProcessRows] = await connection.query(selectDetailQuery);
     return recipeProcessRows;
@@ -39,7 +39,7 @@ async function selectDetailProcess(connection, recipe_id){
 //레시피의 재료 조회
 async function Detailingre(connection, recipe_id){
     const detailingreQuery=`
-    select recipe_id, DetailIngredient.ingre_id, ingre_name from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ?;
+    select recipe_id, DetailIngredient.ingre_id, ingre_name from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ${recipe_id};
     `;
     const [recipeingre]= await connection.query(detailingreQuery);
     return recipeingre;
@@ -48,7 +48,7 @@ async function Detailingre(connection, recipe_id){
 //레시피 존재 여부 조회
 async function CheckRecipeExistence(connection,recipe_id){
     const recipeexistenceQuery = `
-    select recipe_id from Recipe where recipe_id= ?;
+    select recipe_id from Recipe where recipe_id= ${recipe_id};
     `;
     const recipe_existence = await connection.query(recipeexistenceQuery);
     return recipe_existence[0];
