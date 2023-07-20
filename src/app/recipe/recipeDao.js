@@ -77,71 +77,22 @@ async function allRecipeInquiry(connection) {
 
 //API.34 레시피 전체 조회  쿼리스트링으로 타입받아 조회하기
 async function TypeRecipeInquiry(connection, RecipeType) {
-    if ( RecipeType == '1'){
-        const KoreaRecipeQuery = `
-        select * from Recipe where type_class = '1'
-        `; 
-        const recipeRows = await connection.query(KoreaRecipeQuery);
-        return recipeRows[0];
-    }
-    
-    else if(RecipeType == '2'){
-        const JapanRecipeQuery = `
-        select * from Recipe where type_class = '2'
-        `; 
-        const recipeRows = await connection.query(JapanRecipeQuery);
-        return recipeRows[0];
-    }
-    
-    else if(RecipeType == '3'){
-        const ChinaRecipeQuery = `
-        select * from Recipe where type_class = '3'
-        `; 
-        const recipeRows = await connection.query(ChinaRecipeQuery);
-        return recipeRows[0];
+
+    const KoreaRecipeQuery = `
+    select * from Recipe where type_class = '${RecipeType}';
+    `; 
+    const [recipeRows] = await connection.query(KoreaRecipeQuery);
+    return recipeRows;
     }
 
-    else if(RecipeType == '4'){
-        const WesternRecipeQuery = `
-        select * from Recipe where type_class = '4' OR type_class = '5'
-        `; 
-        const recipeRows = await connection.query(WesternRecipeQuery);
-        return recipeRows[0];
-    }
-    else if(RecipeType == '5'){
-        const AsiaernRecipeQuery = `
-        select * from Recipe where type_class = '6'
-        `; 
-        const recipeRows = await connection.query(AsiaRecipeQuery);
-        return recipeRows[0];
-    }
-    else if(RecipeType == '6'){
-        const FusionRecipeQuery = `
-        select * from Recipe where type_class = '7'
-        `; 
-        const recipeRows = await connection.query(FusionRecipeQuery);
-        return recipeRows[0];
-    }
-    else if(RecipeType == '7'){
-        const DesertRecipeQuery = `
-        select * from Recipe where type_class = '8'
-        `; 
-        const recipeRows = await connection.query(DesertRecipeQuery);
-        return recipeRows[0];
-    }
-    else{
-        return null;
-    }
-
-}
 
 //API.34 음식이름으로 레시피 조회
 async function FoodNameRecipeInquiry(connection, recipe_name){
     const FoodNameRecipeQuery = `
-    select * from Recipe where recipe_name LIKE concat('%','${recipe_name}','%')
+    select * from Recipe where recipe_name LIKE concat('%','${recipe_name}','%');
     `; 
-    const recipeRows = await connection.query(FoodNameRecipeQuery);
-    return recipeRows[0];
+    const [recipeRows] = await connection.query(FoodNameRecipeQuery);
+    return recipeRows;
 }
 module.exports = {
     insertReview,

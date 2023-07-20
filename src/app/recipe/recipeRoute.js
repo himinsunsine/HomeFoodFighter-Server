@@ -11,9 +11,9 @@ module.exports = function (app) {
     //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail", jwtMiddleware, recipe.GetDetail);
     
-    //34. 전체 레시피 조회
-    app.get("/recipe", jwtMiddleware, recipe.GetallRecipe);
+    //34. 레시피 전체조회 및 타입별 레시피 조회
+    app.get("/recipe", recipe.GetallRecipe);
 
-    //39. 음식이름으로 레시피 조회
+    //35. 음식이름으로 레시피 조회
     app.get("/recipe/name", jwtMiddleware, recipe.GetFoodNameRecipe);  
 };
