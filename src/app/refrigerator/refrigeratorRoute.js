@@ -1,5 +1,5 @@
 module.exports = function(app){
-    const refrigerator = require("./refrigeratorController");
+    const refrigerator = require('./refrigeratorController');
     const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 22. 냉장고 조회 API
