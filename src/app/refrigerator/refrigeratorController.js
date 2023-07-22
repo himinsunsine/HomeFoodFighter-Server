@@ -18,15 +18,21 @@ exports.GetRefrigerator = async function (req, res) {
 /**
  * API No. 23
  * API Name : 냉장고 채우기 API
- * [POST] /refrigerator/fill
+ * [POST] /refrigerator/fill/:ingre_type
  */
-/*exports.FillRefrigerator = async function (req, res) {
-    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator();
-    return res.send(response(baseResponse.SUCCESS, refrigeratorResult));
-};*/
+exports.FillRefrigerator = async function (req, res) {
+    const userid = req.verifiedToken.userId;
+    const ingre_id = req.body.ingre_id;
+    const ingre_type = req.params.ingre_type;
+    
+    const arr = [userid, ingre_id, ingre_type];
+
+    const FillResult = await refrigeratorService.fillRefrigerator(arr);
+    return res.send(response(baseResponse.SUCCESS, FillResult));
+};
 
 /**
- * API No. 22
+ * API No. 24
  * API Name : 냉장고 비우기 API
  * [PATCH] /refrigerator/empty
  */
