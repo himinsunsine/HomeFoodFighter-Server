@@ -7,42 +7,30 @@ const {response, errResponse} = require("../../../config/response");
 /**
  * API No. 22
  * API Name : 냉장고 조회 API
- * [GET] /refrigerator
+ * [GET] /refrigerator/inquire
  */
-exports.inquire = async function (req, res) {
-  try {
-    const result = await inquireRefrigerator();
-    return response(res, 200, "냉장고 조회 성공", result);
-  } catch (error) {
-    console.error(error);
-    return response(res, 500, "냉장고 조회 실패");
-  }
+exports.GetRefrigerator = async function (req, res) {
+    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator();
+    return res.send(response(baseResponse.SUCCESS, refrigeratorResult));
 };
+ 
 
 /**
  * API No. 23
  * API Name : 냉장고 채우기 API
  * [POST] /refrigerator/fill
  */
-exports.fill = async function (req, res) {
-    try {
-      const result = await fillRefrigerator(req.body);
-      return response(res, 200, "냉장고 채우기 성공", result);
-    } catch (error) {
-      return errResponse(res, 500, "냉장고 채우기 실패");
-    }
-  };
+/*exports.FillRefrigerator = async function (req, res) {
+    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator();
+    return res.send(response(baseResponse.SUCCESS, refrigeratorResult));
+};*/
 
 /**
- * API No. 24
+ * API No. 22
  * API Name : 냉장고 비우기 API
  * [PATCH] /refrigerator/empty
  */
-exports.empty = async function (req, res) {
-    try {
-      const result = await emptyRefrigerator(req.body);
-      return response(res, 200, "냉장고 비우기 성공", result);
-    } catch (error) {
-      return errResponse(res, 500, "냉장고 비우기 실패");
-    }
-  };
+/*exports.EmptyRefrigerator = async function (req, res) {
+    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator();
+    return res.send(response(baseResponse.SUCCESS, refrigeratorResult));
+};*/
