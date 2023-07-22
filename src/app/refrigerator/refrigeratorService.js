@@ -1,14 +1,21 @@
 const {logger} = require("../../../config/winston");
 const {pool} = require("../../../config/database");
-const secret_config = require("../../../config/secret");
-const refrigeratorProvider = require("./refrigeratorProvider");
 const refrigeratorDao = require("./refrigeratorDao");
 const baseResponse = require("../../../config/baseResponse");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const {connect} = require("http2");
-
 // Service: Create, Update, Delete 비즈니스 로직 처리
+exports.fillRefrigerator = async function (arr) {
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+        const insertResult = await refrigeratorDao.insertRefrigerator(connection, arr);
+        connection.release();
+        
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
