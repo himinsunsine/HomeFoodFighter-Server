@@ -26,9 +26,9 @@ module.exports = {
     EDITING_PASSWORD_NEW_EMPTY: { "isSuccess": false, "code": 2015, "message": "새 비밀번호를 입력해주세요." },
     EDITING_PASSWORD_CHECK_EMPTY: { "isSuccess": false, "code": 2016, "message": "새 비밀번호 확인을 입력해주세요." },
     EDITING_PASSWORD_PRESENT_LENGTH: { "isSuccess": false, "code": 2017, "message": "현재 비밀번호를 20자리 미만으로 입력해주세요." },
-    EDITING_PASSWORD_NEW_LENGTH: { "isSuccess": false, "code": 2017, "message": "새 비밀번호를 20자리 미만으로 입력해주세요." },
-    EDITING_PASSWORD_CHECK_LENGTH: { "isSuccess": false, "code": 2017, "message": "새 비밀번호 확인을 20자리 미만으로 입력해주세요." },
-    EDITING_PASSWORD_PRESENT_WRONG: { "isSuccess": false, "code": 2014, "message": "현재 비밀번호가 잘못 입력됐습니다." },
+    EDITING_PASSWORD_NEW_LENGTH: { "isSuccess": false, "code": 2018, "message": "새 비밀번호를 20자리 미만으로 입력해주세요." },
+    EDITING_PASSWORD_CHECK_LENGTH: { "isSuccess": false, "code": 2019, "message": "새 비밀번호 확인을 20자리 미만으로 입력해주세요." },
+
 
 
     CONTENT_EMPTY : { "isSuccess": false, "code": 2101, "message": "리뷰를 입력하세요"},
@@ -48,7 +48,8 @@ module.exports = {
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
     FINDING_INFO_ERROR : {"isSuccess": false, "code": 3007, "message": "등록되지 않은 메일주소입니다. 다시 확인해주세요."},
-    EDITING_PASSWORD_DIFFERENT: { "isSuccess": false, "code": 3008, "message":"새 비밀번호를 동일하게 입력해주세요." },
+    EDITING_PASSWORD_PRESENT_WRONG: { "isSuccess": false, "code": 3008, "message": "현재 비밀번호가 잘못 입력됐습니다." },
+    EDITING_PASSWORD_DIFFERENT: { "isSuccess": false, "code": 3009, "message":"새 비밀번호를 동일하게 입력해주세요." },
     RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3101, "message": "해당 레시피 id가 없습니다."},
 
 
