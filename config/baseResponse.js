@@ -21,7 +21,16 @@ module.exports = {
     SIGNUP_EMAIL_EMPTY : { "isSuccess": false, "code": 2012, "message":"이메일을 입력해주세요." },
     SIGNUP_EMAIL_ERROR : { "isSuccess": false, "code": 2013, "message":"이메일을 정확하게 입력해주세요." },
 
-    
+    EDITING_USERID_EMPTY: { "isSuccess": false, "code": 2500, "message": "사용자ID를 입력해주세요." },
+    EDITING_PASSWORD_PRESENT_EMPTY: { "isSuccess": false, "code": 2014, "message": "현재 비밀번호를 입력해주세요." },
+    EDITING_PASSWORD_NEW_EMPTY: { "isSuccess": false, "code": 2015, "message": "새 비밀번호를 입력해주세요." },
+    EDITING_PASSWORD_CHECK_EMPTY: { "isSuccess": false, "code": 2016, "message": "새 비밀번호 확인을 입력해주세요." },
+    EDITING_PASSWORD_PRESENT_LENGTH: { "isSuccess": false, "code": 2017, "message": "현재 비밀번호를 20자리 미만으로 입력해주세요." },
+    EDITING_PASSWORD_NEW_LENGTH: { "isSuccess": false, "code": 2017, "message": "새 비밀번호를 20자리 미만으로 입력해주세요." },
+    EDITING_PASSWORD_CHECK_LENGTH: { "isSuccess": false, "code": 2017, "message": "새 비밀번호 확인을 20자리 미만으로 입력해주세요." },
+    EDITING_PASSWORD_PRESENT_WRONG: { "isSuccess": false, "code": 2014, "message": "현재 비밀번호가 잘못 입력됐습니다." },
+
+
     CONTENT_EMPTY : { "isSuccess": false, "code": 2101, "message": "리뷰를 입력하세요"},
     STAR_CHECK1 : { "isSuccess": false, "code": 2102, "message": "별점이 0.5 미만입니다."},
     STAR_CHECK2 : { "isSuccess": false, "code": 2103, "message": "별점이 0.5 단위가 아닙니다."},
@@ -38,8 +47,11 @@ module.exports = {
     SIGNUP_REDUNDANT_EMAIL : { "isSuccess": false, "code": 3005, "message":"중복된 이메일입니다." },
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
     SIGNIN_UNSIGN_USER : {"isSuccess": false, "code": 3006, "message": "이미 탈퇴한 유저입니다."},
-    FINDING_INFO_ERROR : {"isSuccess": false, "code": 3007, "message": "등록되지 않은 메일주소입니다. 다시 확인해주세요.s"},
+    FINDING_INFO_ERROR : {"isSuccess": false, "code": 3007, "message": "등록되지 않은 메일주소입니다. 다시 확인해주세요."},
+    EDITING_PASSWORD_DIFFERENT: { "isSuccess": false, "code": 3008, "message":"새 비밀번호를 동일하게 입력해주세요." },
     RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3101, "message": "해당 레시피 id가 없습니다."},
+
+
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
