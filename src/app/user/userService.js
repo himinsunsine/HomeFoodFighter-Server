@@ -12,6 +12,24 @@ const secret_config = require("../../../config/secret");
 const crypto = require("crypto");
 const {connect} = require("http2");
 
+// 아이디 중복 확인
+exports.checkDuplicateId = async function (id) {
+    const idRows = await userProvider.idCheck(id);
+    return idRows.length > 0;
+};
+
+// 닉네임 중복 확인
+exports.checkDuplicateNickname = async function (nickname) {
+    const nicknameRows = await userProvider.nicknameCheck(nickname);
+    return nicknameRows.length > 0;
+};
+
+// 이메일 중복 확인
+exports.checkDuplicateEmail = async function (email) {
+    const emailRows = await userProvider.emailCheck(email);
+    return emailRows.length > 0;
+};
+
 exports.createUser = async function (id, password, nickname, name, birth, email) {
     try{
         // 아이디 중복 확인

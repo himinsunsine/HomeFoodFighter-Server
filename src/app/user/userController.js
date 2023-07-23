@@ -5,6 +5,9 @@ const baseResponse = require("../../../config/baseResponse");
 const { response, errResponse } = require("../../../config/response");
 const fs = require("fs");
 
+/**
+ * 입력 형식 검사
+ */
 
 // 생년월일이 유효한지 확인하는 함수 (YYYYMMDD 형식)
 function isValidDate(dateString) {
@@ -33,12 +36,88 @@ function validatePassword(password) {
   return passwordRegex.test(password);
 }
 
-// 이메일 유효성 검사 함수
+
 function validateEmail(email) {
   // 이메일 유효성 검사를 위한 정규표현식
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net)$/;
   return emailRegex.test(email);
 }
+
+
+// // 이메일 유효성 검사 함수
+// function validateEmail(email) {
+//   // 이메일 유효성 검사를 위한 정규표현식
+//   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//   return emailRegex.test(email);
+// }
+
+
+/**
+ * 입력 중복 검사
+ */
+
+// 아이디 중복 확인 API
+exports.checkDuplicateId = async function (req, res) {
+  const { id } = req.params;
+
+  // 유효성 검사 등 추가적인 로직 수행
+  if (!id)
+      return res.send(response(baseResponse.SIGNUP_ID_EMPTY));
+  if (!validateUsername(id))
+      return res.send(response(baseResponse.SIGNUP_ID_ERROR));
+
+  try {
+      const isDuplicateId = await userService.checkDuplicateId(id);
+      if(isDuplicateId==0)
+        res.json({ isDuplicate: '사용 가능한 아이디입니다.' });
+      else
+        return res.send(response(baseResponse.SIGNUP_REDUNDANT_ID));
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+};
+
+// 닉네임 중복 확인 API
+exports.checkDuplicateNickname = async function (req, res) {
+  const { nickname } = req.params;
+
+  // 유효성 검사 등 추가적인 로직 수행
+  if (!nickname)
+    return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+  if (nickname.length > 7)
+    return res.send(response(baseResponse.SIGNUP_NICKNAME_LENGTH));  
+
+  try {
+      const isDuplicateNickname = await userService.checkDuplicateNickname(nickname);
+      if(isDuplicateNickname==0)
+        res.json({ isDuplicate: '사용 가능한 닉네임입니다.' });
+      else
+        return res.send(response(baseResponse.SIGNUP_REDUNDANT_NICKNAME));
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+};
+
+// 이메일 중복 확인 API
+exports.checkDuplicateEmail = async function (req, res) {
+  const { email } = req.params;
+
+  // 유효성 검사 등 추가적인 로직 수행
+  if (!email)
+    return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+  if (!validateEmail(email))
+    return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR));    
+
+  try {
+      const isDuplicateEmail = await userService.checkDuplicateEmail(email);
+      if(isDuplicateEmail==0)
+        res.json({ isDuplicate: '사용 가능한 이메일입니다.' });
+      else
+        return res.send(response(baseResponse.SIGNUP_REDUNDANT_EMAIL));
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+};
 
 /**
  * API No. 2
@@ -46,7 +125,7 @@ function validateEmail(email) {
  * [POST] /users/signup
  */
 
-exports.postSignUpMentor = async function (req, res) {
+exports.postSignUp = async function (req, res) {
   const {id, password, check_password, nickname, name, birth, email, agreed_to_terms } = req.body; // agreed_to_terms도 추가해줘야함.
 
   // 빈 값이 되면 안되는 속성값 체크
@@ -82,6 +161,34 @@ exports.postSignUpMentor = async function (req, res) {
       return res.send(response(baseResponse.SIGNUP_BIRTH_ERROR));
   else if (!validateEmail(email))
       return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR));
+
+
+   // 아이디 중복 확인 API 호출
+   try {
+    const idDuplicateResponse = await userService.checkDuplicateId(id);
+    if (idDuplicateResponse.isDuplicate)
+      return res.send(response(baseResponse.SIGNUP_DUPLICATED_ID));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+
+  // 닉네임 중복 확인 API 호출
+  try {
+    const nicknameDuplicateResponse = await userService.checkDuplicateNickname(nickname);
+    if (nicknameDuplicateResponse.isDuplicate)
+      return res.send(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+
+  // 이메일 중복 확인 API 호출
+  try {
+    const emailDuplicateResponse = await userService.checkDuplicateEmail(email);
+    if (emailDuplicateResponse.isDuplicate)
+      return res.send(response(baseResponse.SIGNUP_DUPLICATED_EMAIL));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 
   const signUpResponse = await userService.createUser(
     id, password, nickname, name, birth, email
