@@ -13,12 +13,12 @@ module.exports = function (app) {
     app.post('/users/finding', user.finding);
 
 
-    // API endpoint for checking duplicate ID
+    // ID 유효성 검사 및 중복 검사 API
     app.get('/users/checkDuplicateId/:id', user.checkDuplicateId);
 
-    // API endpoint for checking duplicate nickname
+    // NICKNAME 유효성 검사 및 중복 검사 API
     app.get('/users/checkDuplicateNickname/:nickname', user.checkDuplicateNickname);
  
-    // API endpoint for checking duplicate email
+    // EMAIL 유효성 검사 및 중복 검사 API
     app.get('/users/checkDuplicateEmail/:email', user.checkDuplicateEmail);
   };

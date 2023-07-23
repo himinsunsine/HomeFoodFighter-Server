@@ -69,7 +69,7 @@ exports.checkDuplicateId = async function (req, res) {
   try {
       const isDuplicateId = await userService.checkDuplicateId(id);
       if(isDuplicateId==0)
-        res.json({ isDuplicate: '사용 가능한 아이디입니다.' });
+        return res.send(response(baseResponse.SUCCESS_ID));
       else
         return res.send(response(baseResponse.SIGNUP_REDUNDANT_ID));
   } catch (err) {
@@ -90,7 +90,7 @@ exports.checkDuplicateNickname = async function (req, res) {
   try {
       const isDuplicateNickname = await userService.checkDuplicateNickname(nickname);
       if(isDuplicateNickname==0)
-        res.json({ isDuplicate: '사용 가능한 닉네임입니다.' });
+        return res.send(response(baseResponse.SUCCESS_NICKNAME));
       else
         return res.send(response(baseResponse.SIGNUP_REDUNDANT_NICKNAME));
   } catch (err) {
@@ -111,7 +111,7 @@ exports.checkDuplicateEmail = async function (req, res) {
   try {
       const isDuplicateEmail = await userService.checkDuplicateEmail(email);
       if(isDuplicateEmail==0)
-        res.json({ isDuplicate: '사용 가능한 이메일입니다.' });
+        return res.send(response(baseResponse.SUCCESS_EMAIL));
       else
         return res.send(response(baseResponse.SIGNUP_REDUNDANT_EMAIL));
   } catch (err) {

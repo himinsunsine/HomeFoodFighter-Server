@@ -4,6 +4,9 @@ module.exports = {
 
     // Success
     SUCCESS : { "isSuccess": true, "code": 1000, "message":"성공" },
+    SUCCESS_ID : { "isSuccess": true, "code": 1001, "message":"사용 가능한 아이디입니다. " },
+    SUCCESS_NICKNAME : { "isSuccess": true, "code": 1002, "message":"사용 가능한 닉네임입니다. " },
+    SUCCESS_EMAIL : { "isSuccess": true, "code": 1003, "message":"사용 가능한 이메일입니다. " },
   
     //request error
     SIGNUP_ID_EMPTY : { "isSuccess": false, "code": 2001, "message":"아이디를 입력해주세요" },
