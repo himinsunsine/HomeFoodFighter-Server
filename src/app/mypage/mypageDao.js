@@ -19,8 +19,21 @@ async function selectUserPassword(connection, password_present, userid) {
     return passwordRows;
 }
 
+async function selectMyRecipes(connection, userid) {
+    const selectMyRecipesQuery = `
+                    SELECT r.recipe_id, r.userid, r.recipe_name, r.summary, AVG(rv.star) AS average_review_star
+                    FROM Recipe r
+                    LEFT JOIN review rv ON r.recipe_id = rv.recipe_id
+                    WHERE r.userid = ${userid}
+                    GROUP BY r.recipe_id, r.userid, r.recipe_name, r.summary;
+                    `;
+    const [my_recipesRows] = await connection.query(selectMyRecipesQuery);
+    return my_recipesRows;
+}
+
 
 module.exports = {
     updatePasswordInfo,
     selectUserPassword,
+    selectMyRecipes,
 };  
