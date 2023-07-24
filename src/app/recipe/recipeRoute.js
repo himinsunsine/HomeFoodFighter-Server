@@ -5,9 +5,6 @@ module.exports = function (app) {
     //15. 레시피의 리뷰(후기) 등록하기
     app.post("/recipe/review/:recipe_id", jwtMiddleware, recipe.PostRegisterReview);
 
-    //16. 주간 캘린더 조회
-    app.get("/calendar/week",jwtMiddleware, recipe.GetWeek);
-    
     //19. 인기 레시피 조회
     app.get("/recipe/highest-star", recipe.GetRecipeHot);
     
