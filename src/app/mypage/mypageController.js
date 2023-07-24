@@ -72,8 +72,8 @@ exports.FavoriteRecipe = async function (req, res) {
 exports.GetMyReviews = async function (req, res) {
     const userid = req.verifiedToken.userId;
 
-    const myRecipeResult = await mypageProvider.getMines(userid);
-    return res.send(response(baseResponse.SUCCESS, myRecipeResult));
+    const myReviewResult = await mypageProvider.getReviews(userid);
+    return res.send(response(baseResponse.SUCCESS, myReviewResult));
 };
 
 
@@ -85,7 +85,7 @@ exports.GetMyReviews = async function (req, res) {
 exports.GetMyRecipes = async function (req, res) {
     const userid = req.verifiedToken.userId;
 
-    const myRecipeResult = await mypageProvider.getMines(userid);
+    const myRecipeResult = await mypageProvider.getRecipes(userid);
     return res.send(response(baseResponse.SUCCESS, myRecipeResult));
 };
 

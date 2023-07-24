@@ -19,6 +19,16 @@ async function selectUserPassword(connection, password_present, userid) {
     return passwordRows;
 }
 
+async function selectMyReviews(connection, userid) {
+    const selectMyReviewsQuery = `
+                    SELECT r.review_id, r.recipe_id, u.nickname, r.content, r.star, r.createdAt
+                    FROM review r
+                    JOIN User u ON r.userid = u.userid where u.userid=${userid};
+                    `;
+    const [my_reviewsRows] = await connection.query(selectMyReviewsQuery);
+    return my_reviewsRows;
+}
+
 async function selectMyRecipes(connection, userid) {
     const selectMyRecipesQuery = `
                     SELECT r.recipe_id, r.userid, r.recipe_name, r.summary, AVG(rv.star) AS average_review_star
@@ -35,5 +45,6 @@ async function selectMyRecipes(connection, userid) {
 module.exports = {
     updatePasswordInfo,
     selectUserPassword,
+    selectMyReviews,
     selectMyRecipes,
 };  

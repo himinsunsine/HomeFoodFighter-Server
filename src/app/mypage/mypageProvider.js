@@ -15,9 +15,22 @@ exports.passwordCheck = async function(password_present, userid) {
     connection.release();
   
     return passwordCheckResult;
-  }
+}
 
-exports.getMines = async function(userid){
+exports.getReviews = async function(userid){
+  try{
+      const connection = await pool.getConnection(async (conn)=>conn);
+      const myReviews = await mypageDao.selectMyReviews(connection, userid);
+      connection.release();
+      return myReviews;
+  }
+  catch(err){
+      logger.error(`App - getReviews Service error\n: ${err.message}`);
+      return errResponse(baseResponse.DB_ERROR);
+  }
+}
+
+exports.getRecipes = async function(userid){
   try{
       const connection = await pool.getConnection(async (conn)=>conn);
       const myRecipes = await mypageDao.selectMyRecipes(connection, userid);
@@ -25,7 +38,7 @@ exports.getMines = async function(userid){
       return myRecipes;
   }
   catch(err){
-      logger.error(`App - getMines Service error\n: ${err.message}`);
+      logger.error(`App - getRecipes Service error\n: ${err.message}`);
       return errResponse(baseResponse.DB_ERROR);
   }
 }
