@@ -39,7 +39,6 @@ exports.PostRegisterReview = async function (req, res) {
 
 };
 
-
 /**
  * API No. 19
  * API Name : 인기 레시피 조회
@@ -75,16 +74,18 @@ exports.GetDetail= async function (req, res){
  * API No. 25
  * API Name : 가능한 레시피 조회 API
  * [GET] /refrigerator/possible
+ * query string을 이용해 recipe/possible?ids = 22,23,24 이런식으로 들어올경우 ,로 구분하여 배열생성
  */
 exports.possibleRecipe = async function (req, res) {
-    const userid = req.verifiedToken.userId;
-    const ingre_id = req.body.ingre_id;
-    const ingre_type = req.params.ingre_type;
-    
-    const arr = [userid, ingre_id, ingre_type];
+    const ids = req.query.ids.split(',');
+    if(ids.length > 0){
+        const recipeResult = await recipeProvider.getpossible(ids);
+        return res.send(response(baseResponse.SUCCESS, recipeResult));
+    }
 
-    const FillResult = await refrigeratorService.fillRefrigerator(arr);
-    return res.send(response(baseResponse.SUCCESS, FillResult));
+    else{
+        return res.send(baseResponse.INGRE_CHECK);
+    }
 };
 
 
