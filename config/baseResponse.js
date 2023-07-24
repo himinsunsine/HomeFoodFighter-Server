@@ -40,6 +40,7 @@ module.exports = {
 
 
     TYPE_CHECK : {"isSucces":false, "code" : 2201, "messsage": "타입을 1이상 7이하의 값으로 입력해주세요."},
+    INGRE_CHECK : {"isSucces":false, "code" : 2202, "messsage": "재료가 선택되지 않았습니다 재료를 선택해 주세요"},
 
 
     // response error
