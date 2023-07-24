@@ -10,6 +10,9 @@ module.exports = function (app) {
     
     //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail", jwtMiddleware, recipe.GetDetail);
+
+    // 25. 가능한 레시피 조회 API
+    app.get('/receipe/possible', jwtMiddleware, refrigerator.possibleRecipe);
     
     //34. 레시피 전체조회 및 타입별 레시피 조회
     app.get("/recipe", recipe.GetallRecipe);
