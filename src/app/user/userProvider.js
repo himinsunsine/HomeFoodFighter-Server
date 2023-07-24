@@ -47,7 +47,7 @@ exports.accountCheck = async function(id){
     connection.release();
   
     return userAccountResult;
-  }
+}
 
 exports.GetIdInfoByEmail= async function(email){
     const connection = await pool.getConnection(async (conn) => conn);

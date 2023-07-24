@@ -65,6 +65,19 @@ exports.FavoriteRecipe = async function (req, res) {
 
 
 /**
+ * API No. 10
+ * API Name : 내가 쓴 리뷰 조회 API
+ * [GET] /mypages/review
+ */
+exports.GetMyReviews = async function (req, res) {
+    const userid = req.verifiedToken.userId;
+
+    const myRecipeResult = await mypageProvider.getMines(userid);
+    return res.send(response(baseResponse.SUCCESS, myRecipeResult));
+};
+
+
+/**
  * API No. 11
  * API Name : 내 레시피 조회 API
  * [GET] /mypages/myrecipe
