@@ -70,6 +70,22 @@ exports.GetDetail= async function (req, res){
     return res.send(response(baseResponse.SUCCESS, recipeResult));
 };
 
+/**
+ * API No. 25
+ * API Name : 가능한 레시피 조회 API
+ * [GET] /refrigerator/possible
+ */
+exports.possibleRecipe = async function (req, res) {
+    const userid = req.verifiedToken.userId;
+    const ingre_id = req.body.ingre_id;
+    const ingre_type = req.params.ingre_type;
+    
+    const arr = [userid, ingre_id, ingre_type];
+
+    const FillResult = await refrigeratorService.fillRefrigerator(arr);
+    return res.send(response(baseResponse.SUCCESS, FillResult));
+};
+
 
 /**
  * API No. 34
@@ -82,9 +98,11 @@ exports.GetallRecipe = async function (req, res) {
     if(!RecipeType){
         const allRecipeResult = await recipeProvider.allRecipe();
         return res.send(allRecipeResult);
-    }else if(RecipeType < 0 || RecipeType > 7){
+    }
+    else if(RecipeType < 0 || RecipeType > 7){
         return res.send(baseResponse.TYPE_CHECK);
-    }else{
+    }
+    else{
         const RecipeTypeResult = await recipeProvider.TypeRecipe(RecipeType);
         return res.send(RecipeTypeResult);
     }
