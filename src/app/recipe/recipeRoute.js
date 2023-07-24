@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.get("/recipe/detail", jwtMiddleware, recipe.GetDetail);
 
     // 25. 가능한 레시피 조회 API
-    app.get('/receipe/possible', jwtMiddleware, refrigerator.possibleRecipe);
+    app.get('/recipe/possible', jwtMiddleware, recipe.possibleRecipe);
     
     //34. 레시피 전체조회 및 타입별 레시피 조회
     app.get("/recipe", recipe.GetallRecipe);

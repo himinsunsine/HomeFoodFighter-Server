@@ -124,9 +124,35 @@ exports.checkDuplicateEmail = async function (req, res) {
  * API Name : 회원 가입 API
  * [POST] /users/signup
  */
-
 exports.postSignUp = async function (req, res) {
   const {id, password, check_password, nickname, name, birth, email, agreed_to_terms } = req.body; // agreed_to_terms도 추가해줘야함.
+
+   // 아이디 중복 확인 API 호출
+   try {
+    const idDuplicateResponse = await userService.checkDuplicateId(id);
+    if (idDuplicateResponse.isDuplicate)
+      return res.send(response(baseResponse.SIGNUP_DUPLICATED_ID));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+
+  // 닉네임 중복 확인 API 호출
+  try {
+    const nicknameDuplicateResponse = await userService.checkDuplicateNickname(nickname);
+    if (nicknameDuplicateResponse.isDuplicate)
+      return res.send(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+
+  // 이메일 중복 확인 API 호출
+  try {
+    const emailDuplicateResponse = await userService.checkDuplicateEmail(email);
+    if (emailDuplicateResponse.isDuplicate)
+      return res.send(response(baseResponse.SIGNUP_DUPLICATED_EMAIL));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 
   // 빈 값이 되면 안되는 속성값 체크
   if (!id)
@@ -161,34 +187,6 @@ exports.postSignUp = async function (req, res) {
       return res.send(response(baseResponse.SIGNUP_BIRTH_ERROR));
   else if (!validateEmail(email))
       return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR));
-
-
-   // 아이디 중복 확인 API 호출
-   try {
-    const idDuplicateResponse = await userService.checkDuplicateId(id);
-    if (idDuplicateResponse.isDuplicate)
-      return res.send(response(baseResponse.SIGNUP_DUPLICATED_ID));
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-
-  // 닉네임 중복 확인 API 호출
-  try {
-    const nicknameDuplicateResponse = await userService.checkDuplicateNickname(nickname);
-    if (nicknameDuplicateResponse.isDuplicate)
-      return res.send(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-
-  // 이메일 중복 확인 API 호출
-  try {
-    const emailDuplicateResponse = await userService.checkDuplicateEmail(email);
-    if (emailDuplicateResponse.isDuplicate)
-      return res.send(response(baseResponse.SIGNUP_DUPLICATED_EMAIL));
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
 
   const signUpResponse = await userService.createUser(
     id, password, nickname, name, birth, email
