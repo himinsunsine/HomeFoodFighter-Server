@@ -24,6 +24,7 @@ module.exports = function () {
   require("../src/app/recipe/recipeRoute")(app);
   require("../src/app/mypage/mypageRoute")(app);
   require("../src/app/refrigerator/refrigeratorRoute")(app);
+  require("../src/app/calendar/calendarRoute")(app);
   
   return app;
 };
