@@ -25,3 +25,26 @@ exports.registerReview = async function(Info){
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+//22. 레시피 찜하기
+exports.favoriteRecipe = async function(userid,recipe_id){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const favoriteexistenceResult = await recipeDao.selectFavorite(connection, userid,recipe_id);
+        console.log(favoriteexistenceResult);
+        if(favoriteexistenceResult[0] == null) {
+            const favoriteResult = await recipeDao.insertFavorite(connection, userid,recipe_id);
+        } else {
+            return response(baseResponse.FAVORITE_EXISTENCE);
+        }
+        
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
