@@ -14,7 +14,10 @@ module.exports = function (app) {
   //11. 내 레시피 조회 API
   app.get('/mypages/myrecipe', jwtMiddleware, mypage.GetMyRecipes);     
   
-  //11. 내 레시피 조회 API
+  //12. 회원 탈퇴 API
   app.post('/mypages/withdrawal', jwtMiddleware, mypage.WithdrawalUser); 
+
+  // 로그아웃 API
+  app.get('/mypages/logout', jwtMiddleware, mypage.LogoutUser);
       
 };

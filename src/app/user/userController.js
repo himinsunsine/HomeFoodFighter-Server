@@ -225,6 +225,14 @@ exports.login = async function (req, res) {
   // userService를 통해 로그인 로직 처리
   const signInResponse = await userService.postSignIn(id, password);
 
+
+  // JWT 토큰을 응답으로 받은 후, 쿠키로 설정하여 클라이언트에게 보냅니다.
+  res.cookie('token', signInResponse.jwt, {
+    maxAge: 3600000, // 쿠키의 만료 시간을 밀리초 단위로 설정합니다 (1시간)
+    httpOnly: true, // 클라이언트 측 JavaScript에서 쿠키에 접근하지 못하도록 합니다
+    // 필요에 따라 secure와 sameSite 같은 다른 쿠키 옵션도 설정할 수 있습니다
+  });
+
   return res.send(signInResponse);
 };
 

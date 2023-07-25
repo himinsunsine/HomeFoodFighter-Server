@@ -103,3 +103,39 @@ exports.WithdrawalUser = async function (req, res) {
     );
     return res.send(updateStateResponse);
 };
+
+
+// /**
+//  * API No. 
+//  * API Name : 로그아웃 API
+//  * [GET] /mypages/logout
+//  */
+// exports.LogoutUser = async function (req, res) {
+//     const token = req.headers['x-access-token'];
+//     if (!token) {
+//         return res.status(400).json({ error: '토큰이 전송되지 않았습니다.' });
+//     }
+
+//     // 쿠키를 삭제하여 로그아웃합니다.
+//     res.clearCookie('token');
+
+//     // 로그아웃 메시지를 응답합니다.
+//     return res.status(200).json({ message: '로그아웃되었습니다.' });
+// };
+
+
+/**
+ * API No. 1
+ * API Name: 로그아웃 API
+ * [GET] /mypages/logout
+ */
+exports.LogoutUser  = async function (req, res) {
+    // 클라이언트에게 전송된 토큰이 쿠키로 설정되어 있으면, 해당 쿠키를 삭제합니다.
+    if (req.cookies.token) {
+      res.clearCookie('token');
+    }
+  
+    // 로그아웃 메시지를 응답합니다.
+    return res.status(200).json({ message: '로그아웃되었습니다.' });
+  };
+  

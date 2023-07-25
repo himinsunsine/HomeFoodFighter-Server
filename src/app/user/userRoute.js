@@ -12,7 +12,7 @@ module.exports = function (app) {
     // 3. 아이디/비밀번호 찾기 API
     app.post('/users/finding', user.finding);
 
-
+  
     // ID 유효성 검사 및 중복 검사 API
     app.get('/users/checkDuplicateId/:id', user.checkDuplicateId);
 
