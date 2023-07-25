@@ -195,19 +195,40 @@ exports.postSignUp = async function (req, res) {
   return res.send(signUpResponse);
 }
 
+
 /**
  * API No. 1
- * API Name : 로그인
+ * API Name: 로그인
  * [POST] /users/login
  * id, password
  */
 exports.login = async function (req, res) {
-  const {id, password} = req.body;
+  const { id, password } = req.body;
 
+  // userProvider를 통해 id로 유저 정보 가져오기
+  const user = await userProvider.getUserById(id);
+
+  // 유저 정보가 없는 경우
+  if (!user) {
+    return res.status(404).json({ error: '아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.' });
+  }
+
+  const user_state = await userProvider.getStateById(id);
+  const stateValues = user_state.map((item) => item.state);
+  console.log(stateValues[0]);
+
+  // 유저의 state가 0인 경우 (로그인 차단)
+  if (stateValues[0] === 0) {
+    return res.status(403).json({ error: '해당 유저는 탈퇴 완료된 유저입니다.' });
+  }
+
+  // userService를 통해 로그인 로직 처리
   const signInResponse = await userService.postSignIn(id, password);
 
   return res.send(signInResponse);
-}
+};
+
+
 
 /**
  * API No. 3

@@ -44,7 +44,7 @@ module.exports = {
 
 
     // response error
-    SIGNIN_ID_WRONG : { "isSuccess": false, "code": 3001, "message": "아이디가 잘못 되었습니다." },
+    SIGNIN_ID_WRONG : { "isSuccess": false, "code": 3001, "message": "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요." },
     SIGNIN_PASSWORD_WRONG : { "isSuccess": false, "code": 3002, "message": "비밀번호가 잘못 되었습니다." },
     SIGNUP_REDUNDANT_ID : { "isSuccess": false, "code": 3003, "message":"중복된 아이디입니다." },
     SIGNUP_REDUNDANT_NICKNAME : { "isSuccess": false, "code": 3004, "message":"중복된 닉네임입니다." },
