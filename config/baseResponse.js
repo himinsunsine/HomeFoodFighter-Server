@@ -38,6 +38,7 @@ module.exports = {
     STAR_CHECK1 : { "isSuccess": false, "code": 2102, "message": "별점이 0.5 미만입니다."},
     STAR_CHECK2 : { "isSuccess": false, "code": 2103, "message": "별점이 0.5 단위가 아닙니다."},
     RECIPE_NAME_EMPTY : { "isSuccess": false, "code": 2104, "message": "정확한 레시피의 이름을 입력하세요."},
+    FAVORITE_EXISTENCE: { "isSuccess": false, "code": 2105, "message": "이미 찜한 레시피입니다."},
 
     TYPE_CHECK : {"isSucces":false, "code" : 2201, "messsage": "타입을 1이상 7이하의 값으로 입력해주세요."},
     INGRE_CHECK : {"isSucces":false, "code" : 2202, "messsage": "재료가 선택되지 않았습니다 재료를 선택해 주세요"},

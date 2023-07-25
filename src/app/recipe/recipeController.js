@@ -71,6 +71,19 @@ exports.GetDetail= async function (req, res){
 };
 
 /**
+ * API No. 21 
+ * API Name : 레시피 찜하기
+ * [POST] /recipe/favorite/:recipe_id
+ */
+exports.Postfavorite = async function (req,res){
+    const userid = req.verifiedToken.userId;
+    const recipe_id = req.params.recipe_id;
+    
+    const favoriteResult = await recipeService.favoriteRecipe(userid,recipe_id);
+    return res.send(favoriteResult);
+};
+
+/**
  * API No. 25
  * API Name : 가능한 레시피 조회 API
  * [GET] /refrigerator/possible
