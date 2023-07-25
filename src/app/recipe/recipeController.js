@@ -8,7 +8,7 @@ const jwtMiddleware = require('../../../config/jwtMiddleware');
 /**
  * API No. 15
  * API Name : 레시피의 리뷰(후기) 등록
- * [POST] /recipe/:recipe_id/review/:userid
+ * [POST] /recipe/review/:recipe_id
  */
 exports.PostRegisterReview = async function (req, res) {
     const recipe_id = req.params.recipe_id;
@@ -35,7 +35,7 @@ exports.PostRegisterReview = async function (req, res) {
         }
     }
     const ReviewInfoResult = await recipeService.registerReview(Info);
-    return res.send(response(baseResponse.SUCCESS, ReviewInfoResult));
+    return res.send(ReviewInfoResult);
 
 };
 
@@ -49,10 +49,10 @@ exports.GetRecipeHot = async function(req,res){
 
     if(!limit){
         const highestStar = await recipeProvider.getRecipeHot();
-        return res.send(response(baseResponse.SUCCESS, highestStar));
+        return res.send(highestStar);
     } else{
         const highestStar = await recipeProvider.getRecipeHotLimit(limit);
-        return res.send(response(baseResponse.SUCCESS ,highestStar));
+        return res.send(highestStar);
     }
 };
 
@@ -67,7 +67,7 @@ exports.GetDetail= async function (req, res){
 
     
     const recipeResult = await recipeProvider.getDetail(recipe_id);
-    return res.send(response(baseResponse.SUCCESS, recipeResult));
+    return res.send(recipeResult);
 };
 
 /**
