@@ -78,6 +78,7 @@ exports.GetDetail= async function (req, res){
  */
 exports.possibleRecipe = async function (req, res) {
     const ids = req.query.ids.split(',');
+    console.log(ids);
     if(ids.length > 0){
         const recipeResult = await recipeProvider.getpossible(ids);
         return res.send(response(baseResponse.SUCCESS, recipeResult));
