@@ -3,7 +3,7 @@ module.exports = function(app){
     const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 22. 냉장고 조회 API
-    app.get('/refrigerator/inquire', refrigerator.GetRefrigerator);
+    app.get('/refrigerator/inquire', jwtMiddleware, refrigerator.GetRefrigerator);
     
     // 23. 냉장고 채우기 API
     app.post('/refrigerator/fill/:ingre_type', jwtMiddleware, refrigerator.FillRefrigerator);

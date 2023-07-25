@@ -1,8 +1,8 @@
 //API.22 냉장고 조회하기
-async function selectRefrigerator(connection) {
+async function selectRefrigerator(connection, user_id) {
     const selectRefrigeratorQuery = `
       SELECT ingre_id, ingre_type
-      FROM refrigerator where userid = 2;
+      FROM refrigerator where userid = ${user_id};
     `;
     const [rows] = await connection.query(selectRefrigeratorQuery);
     return rows;
