@@ -10,7 +10,7 @@ const jwtMiddleware = require('../../../config/jwtMiddleware');
  * [GET] /calendar/week
  */
 exports.GetWeek = async function (req, res) {
-    const userid = req.verifiedToken.userid;
+    const userid = req.verifiedToken.userId;
     const date = req.params.date;
 
     const weekInfoResult = await calendarProvider.getWekekInfo(userid,date);
@@ -24,7 +24,7 @@ exports.GetWeek = async function (req, res) {
  * [POST] /calendar/week/self/:date
  */
 exports.PostSelf = async function (req, res) {
-    const userid = req.verifiedToken.userid;
+    const userid = req.verifiedToken.userId;
     const name = req.body.name;
     const date = req.params.date;
     const meal_time = req.body.meal_time;
