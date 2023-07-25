@@ -6,13 +6,13 @@ const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 
 // Service: Create, Update, Delete 비즈니스 로직 처리
+
 exports.fillRefrigerator = async function (arr) {
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
         const insertResult = await refrigeratorDao.insertRefrigerator(connection, arr);
         connection.release();
-        
-        return response(baseResponse.SUCCESS);
+        return insertResult;
     }
     catch(err){
         logger.error(`App - Service error\n: ${err.message}`);

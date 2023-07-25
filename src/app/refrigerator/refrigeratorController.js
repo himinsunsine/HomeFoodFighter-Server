@@ -10,7 +10,8 @@ const {response, errResponse} = require("../../../config/response");
  * [GET] /refrigerator/inquire
  */
 exports.GetRefrigerator = async function (req, res) {
-    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator();
+    const user_id = req.verifiedToken.userId;
+    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator(user_id);
     return res.send(response(baseResponse.SUCCESS, refrigeratorResult));
 };
  
