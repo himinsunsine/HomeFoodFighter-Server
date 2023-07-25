@@ -23,7 +23,7 @@ exports.editPassword = async function (password_present, password_new, userid,) 
         console.log(`${userid}의 비밀번호 수정 완료`);
         connection.release();
 
-        return response(baseResponse.SUCCESS);
+        return res.send(response(baseResponse.SUCCESS_CHANGE_PASSWORD));
 
     } catch (err) {
         logger.error(`App - editUser Service error\n: ${err.message}`);

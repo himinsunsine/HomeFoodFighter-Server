@@ -4,6 +4,7 @@ const methodOverride = require("method-override");
 var cors = require("cors");
 const { json } = require("body-parser");
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
 module.exports = function () {
   const app = express();
 
@@ -16,6 +17,7 @@ module.exports = function () {
   app.use(methodOverride());
 
   app.use(cors());
+  app.use(cookieParser());
   // app.use(express.static(process.cwd() + '/public'));
 
   /* App (Android, iOS) */
