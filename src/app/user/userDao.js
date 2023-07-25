@@ -94,6 +94,29 @@ async function passwordGet(connection, email) {
     return passwordRows;
 }
 
+
+async function getUserByIdGet(connection, id) {
+    const selectUserQuery = `
+                    SELECT userid
+                    FROM User
+                    WHERE id = '${id}';
+                    `;
+    const userRows = await connection.query(selectUserQuery);
+    return userRows;
+}
+
+
+async function getStateById(connection, id) {
+    const selectUserStateQuery = `
+                    SELECT state
+                    FROM User
+                    WHERE id = '${id}';
+                    `;
+    const [stateRows] = await connection.query(selectUserStateQuery);
+    return stateRows;
+}
+
+
 module.exports = {
     insertUser,
     selectUserId,
@@ -103,4 +126,6 @@ module.exports = {
     selectUserEmail,
     idGet,
     passwordGet,
+    getUserByIdGet,
+    getStateById,
 };  

@@ -87,4 +87,20 @@ exports.sendMail = async (mailOptions) => {
 };
 
 
+exports.getUserById = async function(id){
+  const connection = await pool.getConnection(async (conn) => conn);
+  const getUserByIdResult = await userDao.getUserByIdGet(connection, id);
+  connection.release();
+
+  return getUserByIdResult;
+};
+
+
+exports.getStateById = async function(id){
+  const connection = await pool.getConnection(async (conn) => conn);
+  const getStateByIdResult = await userDao.getStateById(connection, id);
+  connection.release();
+
+  return getStateByIdResult;
+};
 
