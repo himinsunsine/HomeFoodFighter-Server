@@ -14,7 +14,7 @@ exports.getRecipeHot = async function(){
         const connection = await pool.getConnection(async (conn)=>conn);
         const recipeHot = await recipeDao.avgStar(connection);
         connection.release();
-        return recipeHot;
+        return response(baseResponse.SUCCESS,recipeHot);
 
     }
     catch(err){
@@ -28,7 +28,7 @@ exports.getRecipeHotLimit = async function(limit){
         const connection = await pool.getConnection(async (conn)=>conn);
         const recipeHot = await recipeDao.avgStarLimit(connection,limit);
         connection.release();
-        return recipeHot;
+        return response(baseResponse.SUCCESS,recipeHot);
 
     }
     catch(err){
@@ -51,7 +51,7 @@ exports.getDetail = async function(recipe_id){
             connection.release();
 
             recipeInfo=[recipeInfoResult, recipeProcessResult, recipeIngreResult];
-            return recipeInfo;
+            return response(baseResponse.SUCCESS,recipeInfo);
         }
 
         

@@ -9,10 +9,10 @@ const {errResponse} = require("../../../config/response");
 const jwtMiddleware = require('../../../config/jwtMiddleware');
 
 
-exports.getWekekInfo = async function(userid){
+exports.getWekekInfo = async function(userid,date){
     try{
         const connection = await pool.getConnection(async (conn)=>conn);
-        const calendarWeek = await calendarDao.getWeek(connection,userid);
+        const calendarWeek = await calendarDao.getWeek(connection,userid,date);
         connection.release();
         return response(baseResponse.SUCCESS, calendarWeek);
 

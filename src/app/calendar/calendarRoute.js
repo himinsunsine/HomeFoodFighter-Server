@@ -3,6 +3,6 @@ module.exports = function (app) {
     const calendar = require("./calendarController");
 
     //16. 주간 캘린더 조회
-    app.get("/calendar/week", jwtMiddleware, calendar.GetWeek);
+    app.get("/calendar/week/:date", jwtMiddleware, calendar.GetWeek);
     
 };
