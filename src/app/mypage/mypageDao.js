@@ -42,9 +42,21 @@ async function selectMyRecipes(connection, userid) {
 }
 
 
+// 회원 탈퇴
+async function changeState(connection, userid) {
+    const updatestateQuery = `
+    UPDATE User
+    SET state = 0
+    WHERE userid=${userid};`;
+
+    const updateStateRow = await connection.query(updatestateQuery);
+    return updateStateRow;
+}
+
 module.exports = {
     updatePasswordInfo,
     selectUserPassword,
     selectMyReviews,
     selectMyRecipes,
+    changeState,
 };  

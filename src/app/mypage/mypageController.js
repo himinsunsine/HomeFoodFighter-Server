@@ -90,3 +90,16 @@ exports.GetMyRecipes = async function (req, res) {
 };
 
 
+/**
+ * API No. 12
+ * API Name : 회원 탈퇴 API
+ * [GET] /mypages/withdrawal
+ */
+exports.WithdrawalUser = async function (req, res) {
+    const userid = req.verifiedToken.userId;
+
+    const updateStateResponse = await mypageService.changeUserState(
+        userid,
+    );
+    return res.send(updateStateResponse);
+};
