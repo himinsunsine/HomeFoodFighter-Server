@@ -11,8 +11,9 @@ const jwtMiddleware = require('../../../config/jwtMiddleware');
  */
 exports.GetWeek = async function (req, res) {
     const userid = req.verifiedToken.userId;
+    const date = req.params.date;
 
-    const weekInfoResult = await calendarProvider.getWekekInfo(userid);
+    const weekInfoResult = await calendarProvider.getWekekInfo(userid,date);
     return res.send(weekInfoResult);
 
 };
