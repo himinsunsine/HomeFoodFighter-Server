@@ -4,6 +4,9 @@ module.exports = function (app) {
 
     //16. 주간 캘린더 조회
     app.get("/calendar/week/:date", jwtMiddleware, calendar.GetWeek);
+
+    //17. 찜 이용하여 추가하기
+    app.post("/calendar/week/favorite/:date", jwtMiddleware, calendar.PostFavorites);
     
     //18. 캘린더에서 직접 추가하기
     app.post("/calendar/week/self/:date", jwtMiddleware, calendar.PostSelf);
