@@ -25,3 +25,20 @@ exports.PostSelf = async function(userid,name,date,meal_time){
     }
 
 };
+
+exports.postCalendar = async function(Info){
+    try{
+        
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const calendarResult = await calendarDao.insertCalendarFavorites(connection, Info);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+
+};
