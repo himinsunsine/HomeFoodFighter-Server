@@ -29,6 +29,37 @@ async function selectMyReviews(connection, userid) {
     return my_reviewsRows;
 }
 
+async function selectMyFavorites(connection, userid) {
+    const selectMyFavoritesQuery = `
+    SELECT
+        U.nickname,
+        R.summary,
+        R.img_url,
+        R.recipe_name,
+        AVG(rev.star) AS star,
+        COUNT(rev.review_id) AS count
+    FROM
+        User U
+    JOIN
+        Recipe R ON U.userid = R.userid
+    LEFT JOIN
+        review rev ON R.recipe_id = rev.recipe_id
+    WHERE
+        R.recipe_id IN (
+            SELECT F.recipe_id
+            FROM FavoriteRecipes F
+            WHERE F.userid = ${userid}
+        )
+    GROUP BY
+        U.nickname,
+        R.summary,
+        R.img_url,
+        R.recipe_name;
+    `;
+    const [my_favoritesRows] = await connection.query(selectMyFavoritesQuery);
+    return my_favoritesRows;
+}
+
 async function selectMyRecipes(connection, userid) {
     const selectMyRecipesQuery = `
                     SELECT r.recipe_id, r.userid, r.recipe_name, r.summary, AVG(rv.star) AS average_review_star
@@ -59,4 +90,5 @@ module.exports = {
     selectMyReviews,
     selectMyRecipes,
     changeState,
+    selectMyFavorites,
 };  

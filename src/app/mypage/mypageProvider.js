@@ -30,6 +30,22 @@ exports.getReviews = async function(userid){
   }
 }
 
+exports.getFavorites = async function(userid){
+    try{
+        const connection = await pool.getConnection(async (conn)=>conn);
+        const myFavorties = await mypageDao.selectMyFavorites(connection, userid);
+        if(myFavorties==null){
+            return response(baseResponse.FAVORITES_EMPTY)
+        }
+        connection.release();
+        return response(baseResponse.SUCCESS, myFavorties);
+    }
+    catch(err){
+        logger.error(`App - getFavorites Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+
 exports.getRecipes = async function(userid){
   try{
       const connection = await pool.getConnection(async (conn)=>conn);

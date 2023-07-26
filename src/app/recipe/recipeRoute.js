@@ -9,7 +9,7 @@ module.exports = function (app) {
     app.get("/recipe/highest-star", recipe.GetRecipeHot);
     
     //20. 레시피 상세 페이지 조회 
-    app.get("/recipe/detail", jwtMiddleware, recipe.GetDetail);
+    app.get("/recipe/detail", recipe.GetDetail);
 
     //22. 레시피 찜하기 
     app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);
