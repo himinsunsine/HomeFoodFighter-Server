@@ -65,6 +65,11 @@ exports.PostSelf = async function (req, res) {
     const meal_time = req.body.meal_time;
     console.log(userid);
 
+    // date 값이 유효한 날짜 형식인지 확인합니다.
+    if (!isValidDate(date)) {
+        return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
+    }
+
     if(!name){
         return res.send(errResponse(baseResponse.RECIPE_NAME_EMPTY));
     }
