@@ -58,7 +58,7 @@ exports.patchPassword = async function (req, res) {
  * API Name : 찜한 레시피 조회 API
  * [GET] /mypages/favorite
  */
-exports.FavoriteRecipe = async function (req, res) {
+exports.getFavorite = async function (req, res) {
     const userid = req.verifiedToken.userId;
 
     const myFavoriteResult = await mypageProvider.getFavorites(userid);
