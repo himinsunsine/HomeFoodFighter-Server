@@ -38,7 +38,8 @@ module.exports = {
     STAR_CHECK1 : { "isSuccess": false, "code": 2102, "message": "별점이 0.5 미만입니다."},
     STAR_CHECK2 : { "isSuccess": false, "code": 2103, "message": "별점이 0.5 단위가 아닙니다."},
     RECIPE_NAME_EMPTY : { "isSuccess": false, "code": 2104, "message": "정확한 레시피의 이름을 입력하세요."},
-    FAVORITE_EXISTENCE: { "isSuccess": false, "code": 2105, "message": "이미 찜한 레시피입니다."},
+    FAVORITES_EMPTY :{ "isSuccess": true, "code": 2104, "message": "찜한 레시피가 없습니다."},
+    
 
     TYPE_CHECK : {"isSucces":false, "code" : 2201, "messsage": "타입을 1이상 7이하의 값으로 입력해주세요."},
     INGRE_CHECK : {"isSucces":false, "code" : 2202, "messsage": "재료가 선택되지 않았습니다 재료를 선택해 주세요"},
@@ -56,7 +57,7 @@ module.exports = {
     EDITING_PASSWORD_PRESENT_WRONG: { "isSuccess": false, "code": 3008, "message": "현재 비밀번호가 잘못 입력됐습니다." },
     EDITING_PASSWORD_DIFFERENT: { "isSuccess": false, "code": 3009, "message":"새 비밀번호를 동일하게 입력해주세요." },
     RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3101, "message": "해당 레시피 id가 없습니다."},
-
+    FAVORITE_EXISTENCE: { "isSuccess": false, "code": 3102, "message": "이미 찜한 레시피입니다."},
 
 
     //Connection, Transaction 등의 서버 오류
