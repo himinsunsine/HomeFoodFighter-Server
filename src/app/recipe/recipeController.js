@@ -91,14 +91,12 @@ exports.Postfavorite = async function (req,res){
  */
 exports.possibleRecipe = async function (req, res) {
     const ids = req.query.ids.split(',');
-    console.log(ids);
-    if(ids.length > 0){
-        const recipeResult = await recipeProvider.getpossible(ids);
-        return res.send(response(baseResponse.SUCCESS, recipeResult));
-    }
-
-    else{
+    if (ids.length === 1 && ids[0] === ''){
         return res.send(baseResponse.INGRE_CHECK);
+    }
+    else{
+        const recipeResult = await recipeProvider.getpossible(ids);
+        return res.send(recipeResult);
     }
 };
 
@@ -110,7 +108,6 @@ exports.possibleRecipe = async function (req, res) {
  */
 exports.GetallRecipe = async function (req, res) {
     const RecipeType = req.query.type;
-    console.log(RecipeType);
     if(!RecipeType){
         const allRecipeResult = await recipeProvider.allRecipe();
         return res.send(allRecipeResult);
