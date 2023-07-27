@@ -64,7 +64,7 @@ async function selectMyFavorites(connection, userid) {
 
 async function selectMyRecipes(connection, userid) {
     const selectMyRecipesQuery = `
-                    SELECT r.recipe_id, r.userid, r.recipe_name, r.summary, AVG(rv.star) AS average_review_star
+                    SELECT r.recipe_id, r.userid, r.recipe_name, r.summary, COUNT(rv.recipe_id) AS review_count, AVG(rv.star) AS average_review_star
                     FROM Recipe r
                     LEFT JOIN review rv ON r.recipe_id = rv.recipe_id
                     WHERE r.userid = ${userid}
