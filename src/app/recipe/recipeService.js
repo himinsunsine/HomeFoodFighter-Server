@@ -26,7 +26,7 @@ exports.registerReview = async function(Info){
     }
 }
 
-//22. 레시피 찜하기
+//21. 레시피 찜하기
 exports.favoriteRecipe = async function(userid,recipe_id){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
@@ -37,6 +37,30 @@ exports.favoriteRecipe = async function(userid,recipe_id){
             const favoriteResult = await recipeDao.insertFavorite(connection, userid,recipe_id);
         } else {
             return response(baseResponse.FAVORITE_EXISTENCE);
+        }
+        
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+
+//19. 레시피 찜 취소하기
+exports.DeletefavoriteRecipe = async function(userid, recipe_id){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const favoriteexistenceResult = await recipeDao.selectFavorite(connection, userid,recipe_id);
+        console.log(favoriteexistenceResult);
+        if(favoriteexistenceResult[0] == null) {
+            return response(baseResponse.FAVORITE_NOT_EXISTENCE);
+        } else {
+            
+            const favoriteResult = await recipeDao.deleteFavorite(connection, userid,recipe_id);
         }
         
         connection.release();
