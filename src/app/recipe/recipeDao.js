@@ -32,6 +32,14 @@ async function avgStarLimit(connection, limit){
     return recipeRows;
 }
 
+//API.19 레시피 찜 취소하기
+async function deleteFavorite(connection, userid,recipe_id){
+    const insertFavoriteQuery = `
+    delete from FavoriteRecipes where userid= ${userid} and recipe_id =${recipe_id};
+    `;
+    const recipe_favorite = await connection.query(insertFavoriteQuery);
+    return recipe_favorite[0];
+}
 
 //API.20 상세 레시피 조회
 //레시피 상세 정보 조회
@@ -166,6 +174,7 @@ module.exports = {
     possibleRecipeInquiry,
     insertFavorite,
     selectFavorite,
+    deleteFavorite,
 }; 
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows

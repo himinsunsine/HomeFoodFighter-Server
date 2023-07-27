@@ -7,12 +7,15 @@ module.exports = function (app) {
 
     //19. 인기 레시피 조회
     app.get("/recipe/highest-star", recipe.GetRecipeHot);
+
+    //19. 레시피 찜 취소하기
+    app.post("/recipe/favorite/delete/:recipe_id", jwtMiddleware, recipe.Deletefavorite);
     
     //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail", recipe.GetDetail);
 
-    //22. 레시피 찜하기 
-    app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);
+    //21. 레시피 찜하기 
+    app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);  
 
     //25. 가능한 레시피 조회 API
     app.get('/recipe/possible', jwtMiddleware, recipe.possibleRecipe);
