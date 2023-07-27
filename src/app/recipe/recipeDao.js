@@ -98,7 +98,7 @@ async function possibleRecipeInquiry(connection, ids){
     where recipe_id in 
     (SELECT recipe_id FROM DetailIngredient AS A WHERE ingre_id IN (${ids.map(id => '?').join(', ')}) 
     AND Detailingre_type = 1 GROUP BY recipe_id 
-    HAVING ${length_ids} >= (SELECT SUM(CASE WHEN Detailingre_type = 1 THEN 1 ELSE 0 END) 
+    HAVING ${length_ids} >= (SELECT SUM(CASE WHEN Detailingre_type = 1 THEN 1 ELSE 0 END)
     FROM DetailIngredient AS B WHERE A.recipe_id = B.recipe_id) AND NOT EXISTS 
     (SELECT 1 FROM DetailIngredient AS C WHERE A.recipe_id = C.recipe_id AND ingre_id not in (${ids.map(id => '?').join(', ')}) 
     AND Detailingre_type = 1));
@@ -125,12 +125,13 @@ async function allRecipeInquiry(connection) {
 async function TypeRecipeInquiry(connection, RecipeType) {
 
     const KoreaRecipeQuery = `
+
     SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
     FROM Recipe R
-    where R.type_class = ${RecipeType}
-    LEFT JOIN User U ON R.userid = U.userid;
+    LEFT JOIN User U ON R.userid = U.userid
+    where R.type_class = ${RecipeType};
     `; 
     const [recipeRows] = await connection.query(KoreaRecipeQuery);
     return recipeRows;
@@ -144,8 +145,8 @@ async function FoodNameRecipeInquiry(connection, recipe_name){
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
     FROM Recipe R
-    where recipe_name LIKE concat('%','${recipe_name}','%')
-    LEFT JOIN User U ON R.userid = U.userid;
+    LEFT JOIN User U ON R.userid = U.userid
+    where recipe_name LIKE concat('%','${recipe_name}','%');
     `; 
     const [recipeRows] = await connection.query(FoodNameRecipeQuery);
     return recipeRows;

@@ -91,7 +91,7 @@ exports.Postfavorite = async function (req,res){
  */
 exports.possibleRecipe = async function (req, res) {
     const ids = req.query.ids.split(',');
-    if (ids.length === 1 && ids[0] === ''){
+    if (!ids){
         return res.send(baseResponse.INGRE_CHECK);
     }
     else{
