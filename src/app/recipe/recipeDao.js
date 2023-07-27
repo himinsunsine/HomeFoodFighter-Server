@@ -91,7 +91,7 @@ async function selectFavorite(connection, userid, recipe_id){
 async function possibleRecipeInquiry(connection, ids){
     // info[12, 15]
     const possibleRecipeQuery = `
-    SELECT* from Recipe where Recipe_id = (SELECT Recipe_id from DetailIngredient INNER JOIN refrigerator ON DetailIngredient.ingre_id = refrigerator.ingre_id where Detailingre_type = 1 AND DetailIngredient.ingre_id IN (${ids.map(id => '?').join(', ')} GROUP BY recipe_id));
+    SELECT* from Recipe where Recipe_id = (SELECT Recipe_id from DetailIngredient INNER JOIN refrigerator ON DetailIngredient.ingre_id = refrigerator.ingre_id where Detailingre_type = 1 AND DetailIngredient.ingre_id IN (${ids.map(id => '?').join(', ')}) );
     `; 
     const [recipeRows] = await connection.query(possibleRecipeQuery, ids);
     return recipeRows;
