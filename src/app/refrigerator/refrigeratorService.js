@@ -19,3 +19,16 @@ exports.fillRefrigerator = async function (arr) {
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+exports.clearRefrigerator = async function (arr) {
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+        const removeResult = await refrigeratorDao.removeRefrigerator(connection, arr);
+        connection.release();
+        return removeResult;
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}

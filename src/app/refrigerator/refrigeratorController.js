@@ -37,7 +37,12 @@ exports.FillRefrigerator = async function (req, res) {
  * API Name : 냉장고 비우기 API
  * [PATCH] /refrigerator/empty
  */
-/*exports.EmptyRefrigerator = async function (req, res) {
-    const refrigeratorResult = await refrigeratorProvider.inquireRefrigerator();
-    return res.send(response(baseResponse.SUCCESS, refrigeratorResult));
-};*/
+exports.EmptyRefrigerator = async function (req, res) {
+    const userid = req.verifiedToken.userId;
+    const ingre_id = req.body.ingre_id;
+    const ingre_type = req.params.ingre_type;
+    
+    const arr = [userid, ingre_id, ingre_type];
+    const clearResult = await refrigeratorService.clearRefrigerator(arr);
+    return res.send(response(baseResponse.SUCCESS, clearResult));
+};
