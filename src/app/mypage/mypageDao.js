@@ -32,6 +32,7 @@ async function selectMyReviews(connection, userid) {
 async function selectMyFavorites(connection, userid) {
     const selectMyFavoritesQuery = `
     SELECT
+        R.recipe_id,
         U.nickname,
         R.summary,
         R.img_url,
@@ -54,6 +55,7 @@ async function selectMyFavorites(connection, userid) {
         U.nickname,
         R.summary,
         R.img_url,
+        R.recipe_id,
         R.recipe_name;
     `;
     const [my_favoritesRows] = await connection.query(selectMyFavoritesQuery);
