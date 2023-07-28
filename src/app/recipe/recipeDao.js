@@ -99,17 +99,32 @@ async function selectFavorite(connection, userid, recipe_id){
 async function possibleRecipeInquiry(connection, ids){
     const length_ids = ids.length;
     const possibleRecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url,
-    (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
-    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
-    FROM Recipe R LEFT JOIN User U ON R.userid = U.userid
-    where recipe_id in 
-    (SELECT recipe_id FROM DetailIngredient AS A WHERE ingre_id IN (${ids.map(id => '?').join(', ')}) 
-    AND Detailingre_type = 1 GROUP BY recipe_id 
-    HAVING ${length_ids} >= (SELECT SUM(CASE WHEN Detailingre_type = 1 THEN 1 ELSE 0 END)
-    FROM DetailIngredient AS B WHERE A.recipe_id = B.recipe_id) AND NOT EXISTS 
-    (SELECT 1 FROM DetailIngredient AS C WHERE A.recipe_id = C.recipe_id AND ingre_id not in (${ids.map(id => '?').join(', ')}) 
-    AND Detailingre_type = 1));
+    SELECT
+    U.name AS user_name,
+    R.recipe_name,
+    R.summary,
+    R.img_url,
+    COUNT(V.review_id) AS review_count,
+    AVG(V.star) AS average_rating
+FROM Recipe R
+LEFT JOIN User U ON R.userid = U.userid
+LEFT JOIN review V ON R.recipe_id = V.recipe_id
+WHERE R.recipe_id IN (
+    SELECT recipe_id
+    FROM DetailIngredient AS A
+    WHERE ingre_id IN (${ids.map(id => '?').join(', ')})
+    AND Detailingre_type = 1
+    GROUP BY recipe_id
+    HAVING COUNT(DISTINCT A.ingre_id) = ${length_ids} OR COUNT(DISTINCT A.ingre_id) = ${length_ids - 1}
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM DetailIngredient AS C
+    WHERE R.recipe_id = C.recipe_id
+    AND ingre_id NOT IN (${ids.map(id => '?').join(', ')})
+    AND Detailingre_type = 1
+)
+GROUP BY R.recipe_id, U.name, R.recipe_name, R.summary, R.img_url;
     `; 
     const [recipeRows] = await connection.query(possibleRecipeQuery, ids.concat(ids));
     return recipeRows;
