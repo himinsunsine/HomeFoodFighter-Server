@@ -17,7 +17,17 @@ async function insertRefrigerator(connection, arr) {
   return rows[0];
 }
 
+//API.24 냉장고 비우기
+async function removeRefrigerator(connection, arr) {
+  const deleteRefrigeratorQuery = `
+    DELETE FROM refrigerator WHERE userid = ${arr[0]} AND ingre_id = ${arr[1]} AND ingre_type = ${arr[2]};
+  `;
+  const rows = await connection.query(deleteRefrigeratorQuery);
+  return rows[0];
+}
+
 module.exports = {
     selectRefrigerator,
-    insertRefrigerator
+    insertRefrigerator,
+    removeRefrigerator
 };

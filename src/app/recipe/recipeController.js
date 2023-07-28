@@ -57,6 +57,19 @@ exports.GetRecipeHot = async function(req,res){
 };
 
 /**
+ * API No. 19
+ * API Name : 레시피 찜 취소하기
+ * [POST] /recipe/favorite/delete/:recipe_id
+ */
+exports.Deletefavorite = async function (req,res){
+    const userid = req.verifiedToken.userId;
+    const recipe_id = req.params.recipe_id;
+    
+    const favoriteResult = await recipeService.DeletefavoriteRecipe(userid,recipe_id);
+    return res.send(favoriteResult);
+};
+
+/**
  * API No. 20
  * API Name : 레시피 상세 페이지 조회
  * [GET] /recipe/detail?recipe_id=

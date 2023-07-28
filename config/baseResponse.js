@@ -58,7 +58,7 @@ module.exports = {
     EDITING_PASSWORD_DIFFERENT: { "isSuccess": false, "code": 3009, "message":"새 비밀번호를 동일하게 입력해주세요." },
     RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3101, "message": "해당 레시피 id가 없습니다."},
     FAVORITE_EXISTENCE: { "isSuccess": false, "code": 3102, "message": "이미 찜한 레시피입니다."},
-
+    FAVORITE_NOT_EXISTENCE : { "isSuccess": false, "code": 3103, "message": "찜한 레시피가 아닙니다."},
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
