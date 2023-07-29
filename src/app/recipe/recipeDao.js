@@ -101,14 +101,17 @@ async function possibleRecipeInquiry(connection, ids){
     const possibleRecipeQuery = `
     SELECT
     U.name AS user_name,
+    R.recipe_id,
     R.recipe_name,
     R.summary,
     R.img_url,
     COUNT(V.review_id) AS review_count,
-    AVG(V.star) AS average_rating
+    AVG(V.star) AS average_rating,
+    COUNT(DISTINCT CASE WHEN D.Detailingre_type = 1 THEN D.ingre_id END) AS main_ingredient_count
 FROM Recipe R
 LEFT JOIN User U ON R.userid = U.userid
 LEFT JOIN review V ON R.recipe_id = V.recipe_id
+LEFT JOIN DetailIngredient D ON R.recipe_id = D.recipe_id
 WHERE R.recipe_id IN (
     SELECT recipe_id
     FROM DetailIngredient AS A
@@ -124,7 +127,9 @@ AND NOT EXISTS (
     AND ingre_id NOT IN (${ids.map(id => '?').join(', ')})
     AND Detailingre_type = 1
 )
-GROUP BY R.recipe_id, U.name, R.recipe_name, R.summary, R.img_url;
+GROUP BY R.recipe_id, U.name, R.recipe_name, R.summary, R.img_url
+ORDER BY main_ingredient_count DESC;
+
     `; 
     const [recipeRows] = await connection.query(possibleRecipeQuery, ids.concat(ids));
     return recipeRows;
