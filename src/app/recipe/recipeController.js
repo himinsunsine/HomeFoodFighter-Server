@@ -40,7 +40,7 @@ exports.PostRegisterReview = async function (req, res) {
 };
 
 /**
- * API No. 19
+ * API No. 13~14
  * API Name : 인기 레시피 조회
  * [GET] /recipe/highest-star?limit=
  */
@@ -113,6 +113,17 @@ exports.possibleRecipe = async function (req, res) {
     }
 };
 
+/**
+ * API No. 26
+ * API Name : 레시피의 리뷰 조회
+ * [GET] /recipe/review/:recipe_id
+ * 
+ **/
+exports.getReview = async function (req, res) {
+    const recipe_id = req.params.recipe_id;
+    const AllreviewResult = await recipeProvider.getAllReivew(recipe_id);
+    return res.send(AllreviewResult);
+};
 
 /**
  * API No. 34
