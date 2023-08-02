@@ -3,7 +3,7 @@ const userProvider = require("../../app/User/userProvider");
 const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponse");
 const { response, errResponse } = require("../../../config/response");
-const fs = require("fs");
+const crypto = require('crypto');
 
 /**
  * 입력 형식 검사
@@ -188,11 +188,32 @@ exports.postSignUp = async function (req, res) {
   else if (!validateEmail(email))
       return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR));
 
-  const signUpResponse = await userService.createUser(
-    id, password, nickname, name, birth, email
-  );
+  // const signUpResponse = await userService.createUser(
+  //   id, password, nickname, name, birth, email
+  // );
   
-  return res.send(signUpResponse);
+  // return res.send(signUpResponse);
+  // 비밀번호 단방향 암호화 (crypto.pbkdf2)
+  const salt = crypto.randomBytes(16).toString('hex');
+  const iterations = 100000;
+  const keylen = 64;
+  const digest = 'sha512';
+  
+  try {
+    crypto.pbkdf2(password, salt, iterations, keylen, digest, async (err, derivedKey) => {
+      if (err) throw err;
+      
+      const hashedPassword = derivedKey.toString('hex');
+      // 데이터베이스에 저장되는 비밀번호는 hashedPassword로 대체합니다.
+      const signUpResponse = await userService.createUser(
+        id, hashedPassword, nickname, name, birth, email
+      );
+      return res.send(signUpResponse);
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+  
 }
 
 
