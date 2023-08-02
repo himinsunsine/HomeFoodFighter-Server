@@ -14,11 +14,11 @@ module.exports = function (app) {
 
   
     // ID 유효성 검사 및 중복 검사 API
-    app.get('/users/checkDuplicateId/:id', user.checkDuplicateId);
+    app.get('/users/checkduplicateId/:id', user.checkDuplicateId);
 
     // NICKNAME 유효성 검사 및 중복 검사 API
-    app.get('/users/checkDuplicateNickname/:nickname', user.checkDuplicateNickname);
+    app.get('/users/checkduplicatenickname/:nickname', user.checkDuplicateNickname);
  
     // EMAIL 유효성 검사 및 중복 검사 API
-    app.get('/users/checkDuplicateEmail/:email', user.checkDuplicateEmail);
+    app.get('/users/checkduplicateemail/:email', user.checkDuplicateEmail);
   };
