@@ -29,7 +29,7 @@ exports.passwordCheck = async function(selectUserPasswordParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const passwordCheckResult = await userDao.selectUserPassword(connection, selectUserPasswordParams);
     connection.release();
-  
+    
     return passwordCheckResult;
   }
 

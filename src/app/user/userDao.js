@@ -1,8 +1,8 @@
 // 유저 삽입
 async function insertUser(connection, insertUserParams) {
     const insertUserQuery =`
-              INSERT INTO User (id, password, nickname, name, birth, email, state)
-              VALUES (?, ?, ?, ?, ?, ?, 1);
+              INSERT INTO User (id, password, nickname, name, birth, email, state, salt)
+              VALUES (?, ?, ?, ?, ?, ?, 1, ?);
                 `;
                 
     const insertUserRow = await connection.query(
@@ -27,15 +27,16 @@ async function selectUserId(connection, id) {
 async function selectUserPassword(connection, selectUserPasswordParams){
     console.log(selectUserPasswordParams)
     const selectPasswordQuery = `
-        SELECT userId, id, nickname, password
+        SELECT userId, id, nickname, password, salt
         FROM User
-        WHERE id = ? AND password = ?;
+        WHERE id = ?;
     `;
     
     const selectUserPasswordRow = await connection.query(
         selectPasswordQuery,
         selectUserPasswordParams
     );
+    
     return selectUserPasswordRow;
 }
 

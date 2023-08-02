@@ -8,9 +8,25 @@ const {errResponse} = require("../../../config/response");
 const jwtMiddleware = require("../../../config/jwtMiddleware");
 const jwt = require("jsonwebtoken");
 const secret_config = require("../../../config/secret");
-
-const crypto = require("crypto");
 const {connect} = require("http2");
+const crypto = require('crypto');
+
+// 비밀번호 해싱 함수
+async function hashPassword(password,salt) {
+
+  const iterations = 100000;
+  const keylen = 64;
+  const digest = 'sha512';
+
+  return new Promise((resolve, reject) => {
+    crypto.pbkdf2(password, salt, iterations, keylen, digest, (err, derivedKey) => {
+      if (err) return reject(err);
+      resolve(derivedKey.toString('hex'));
+    });
+  });
+}
+
+
 
 // 아이디 중복 확인
 exports.checkDuplicateId = async function (id) {
@@ -30,7 +46,7 @@ exports.checkDuplicateEmail = async function (email) {
     return emailRows.length > 0;
 };
 
-exports.createUser = async function (id, password, nickname, name, birth, email) {
+exports.createUser = async function (id, password, nickname, name, birth, email,salt) {
     try{
         // 아이디 중복 확인
         const idRows = await userProvider.idCheck(id); // Read인 Provider 통해서 확인
@@ -49,7 +65,7 @@ exports.createUser = async function (id, password, nickname, name, birth, email)
             return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
         
         // INSERT할 Params
-        const insertUserParams = [id, password, nickname, name, birth, email];
+        const insertUserParams = [id, password, nickname, name, birth, email,salt];
 
         const connection = await pool.getConnection(async (conn) => conn);
 
@@ -76,10 +92,11 @@ exports.postSignIn = async function(id, password) {
         const selectId = idRows[0].id
         const selectUserPasswordParams = [selectId, password];
         const passwordRows = await userProvider.passwordCheck(selectUserPasswordParams)
-
+        console.log(passwordRows[0][0]);
+        const hashedPassword = await hashPassword(password, passwordRows[0][0].salt); 
         // DB에 있는 비밀번호와 입력된 비밀번호 값이 다르면 에러 메세지
-        console.log(passwordRows[0], passwordRows[0][0].password, password)
-        if (passwordRows[0][0].password !== password) {
+        // console.log(passwordRows[0], passwordRows[0][0].password, password, hashedPassword)
+        if (passwordRows[0][0].password !== hashedPassword) {
             return errResponse(baseResponse.SIGNIN_PASSWORD_WRONG)
         }
 
