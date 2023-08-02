@@ -206,7 +206,7 @@ exports.postSignUp = async function (req, res) {
       const hashedPassword = derivedKey.toString('hex');
       // 데이터베이스에 저장되는 비밀번호는 hashedPassword로 대체합니다.
       const signUpResponse = await userService.createUser(
-        id, hashedPassword, nickname, name, birth, email
+        id, hashedPassword, nickname, name, birth, email,salt
       );
       return res.send(signUpResponse);
     });
