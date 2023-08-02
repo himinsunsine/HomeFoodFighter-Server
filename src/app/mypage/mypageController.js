@@ -107,6 +107,20 @@ exports.WithdrawalUser = async function (req, res) {
     return res.send(updateStateResponse);
 };
 
+/**
+ * API No. 27
+ * API Name : 리뷰 삭제 API
+ * [GET] /mypages/review/delete
+ */
+exports.deleteReview = async function (req,res){
+    const userid = req.verifiedToken.userId;
+    const review_id = req.body.review_id;
+
+    const deleteReviewResponse = await mypageService.deleteMyReview(userid, review_id);
+
+    return res.send(deleteReviewResponse);
+}
+
 
 // /**
 //  * API No. 
