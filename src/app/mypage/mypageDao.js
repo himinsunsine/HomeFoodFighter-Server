@@ -29,6 +29,15 @@ async function selectMyReviews(connection, userid) {
     return my_reviewsRows;
 }
 
+async function deleteMyReview(connection, userid, review_id){
+    const deleteMyReviewQUery = `
+    delete from review where userid= ${userid} and review_id =${review_id}; 
+    `;
+
+    const deleteReviewRows = await connection.query(deleteMyReviewQUery);
+    return deleteReviewRows[0];
+}
+
 async function selectMyFavorites(connection, userid) {
     const selectMyFavoritesQuery = `
     SELECT
@@ -93,4 +102,5 @@ module.exports = {
     selectMyRecipes,
     changeState,
     selectMyFavorites,
+    deleteMyReview,
 };  

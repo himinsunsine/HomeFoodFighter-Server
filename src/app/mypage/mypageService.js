@@ -48,3 +48,20 @@ exports.changeUserState = async function(userid){
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+exports.deleteMyReview = async function(userid, review_id){
+    try{
+        
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const deleteMyReviewInfoResult = await mypageDao.deleteMyReview(connection, userid, review_id);
+        console.log(`리뷰 삭제 완료`);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}

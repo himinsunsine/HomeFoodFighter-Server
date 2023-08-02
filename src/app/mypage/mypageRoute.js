@@ -17,6 +17,9 @@ module.exports = function (app) {
   //12. 회원 탈퇴 API
   app.post('/mypages/withdrawal', jwtMiddleware, mypage.WithdrawalUser); 
 
+  //27. 리뷰 삭제 API
+  app.post('/mypages/review/delete', jwtMiddleware, mypage.deleteReview);
+
   // 로그아웃 API
   app.get('/mypages/logout', jwtMiddleware, mypage.LogoutUser);
       
