@@ -135,6 +135,16 @@ ORDER BY main_ingredient_count DESC;
     return recipeRows;
 }
 
+//API.26 레시피의 리뷰 조회
+async function selectAllReview(connection, recipe_id){
+    const selectAllReviewQuery = `
+    select review_id,recipe_id, review.userid, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
+
+    ;`;
+    const revieweRows = await connection.query(selectAllReviewQuery);
+    return revieweRows[0];
+}
+
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
     const RecipeQuery = `
@@ -196,6 +206,7 @@ module.exports = {
     insertFavorite,
     selectFavorite,
     deleteFavorite,
+    selectAllReview,
 }; 
 
 /*API. 레시피 등록하기// 밑에 다시 확인하기 userRows

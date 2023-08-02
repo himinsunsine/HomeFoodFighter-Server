@@ -81,6 +81,23 @@ exports.getpossible = async function(ids){
 
 }
 
+//26. 레시피의 리뷰 조회하기
+exports.getAllReivew = async function(recipe_id){
+    try{
+        
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const ReviewResult = await recipeDao.selectAllReview(connection, recipe_id)
+
+        connection.release();
+        return response(baseResponse.SUCCESS,ReviewResult);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        console.log(err)
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
 
 //34. 전체레시피 조회
 exports.allRecipe = async function(){
