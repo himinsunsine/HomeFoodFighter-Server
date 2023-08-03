@@ -24,25 +24,24 @@ exports.GetRefrigerator = async function (req, res) {
 exports.FillRefrigerator = async function (req, res) {
     const userid = req.verifiedToken.userId;
     const ingre_id = req.body.ingre_id;
-    const ingre_type = req.params.ingre_type;
     
-    const arr = [userid, ingre_id, ingre_type];
+    const arr = [userid, ingre_id];
 
     const FillResult = await refrigeratorService.fillRefrigerator(arr);
-    return res.send(response(baseResponse.SUCCESS, FillResult));
+    return res.send(FillResult);
 };
 
 /**
  * API No. 24
  * API Name : 냉장고 비우기 API
- * [PATCH] /refrigerator/empty
+ * [POST] /refrigerator/empty/:ingre_type
  */
 exports.EmptyRefrigerator = async function (req, res) {
     const userid = req.verifiedToken.userId;
     const ingre_id = req.body.ingre_id;
-    const ingre_type = req.params.ingre_type;
     
-    const arr = [userid, ingre_id, ingre_type];
+    const arr = [userid, ingre_id];
+
     const clearResult = await refrigeratorService.clearRefrigerator(arr);
-    return res.send(response(baseResponse.SUCCESS, clearResult));
+    return res.send(clearResult);
 };
