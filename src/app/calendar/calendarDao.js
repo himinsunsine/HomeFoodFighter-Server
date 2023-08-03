@@ -4,7 +4,7 @@ const baseResponse = require("../../../config/baseResponse");
 async function getWeek(connection, userid, date) {
     
     const getWeekQuery = `
-    SELECT * FROM Calendar WHERE userid = ${userid} AND WEEK(bydate, 1) = WEEK('${date}', 1);
+    SELECT userid, recipe_id, DATE_FORMAT(bydate, '%Y-%m-%d'), meal_time, name FROM Calendar WHERE userid = ${userid} AND WEEK(bydate, 1) = WEEK('${date}', 1);
     `;
     const [weekRows] = await connection.query(getWeekQuery);
     return weekRows;
@@ -18,7 +18,7 @@ async function insertCalendarFavorites(connection, Info) {
     SELECT FR.userid, FR.recipe_id, '${Info[1]}', 2, R.recipe_name
     FROM FavoriteRecipes FR
     JOIN Recipe R ON FR.recipe_id = R.recipe_id
-    WHERE FR.userid = ${Info[0]} AND FR.recipe_id IN (${Info[2]});
+    WHERE FR.userid = ${Info[0]} AND FR.recipe_id =${Info[2]};
     `;
     const CalendarFavoritesRows = await connection.query(insertCalendarFavoritesQuery);
     return CalendarFavoritesRows;
