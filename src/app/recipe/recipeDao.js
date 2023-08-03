@@ -147,7 +147,7 @@ async function selectAllReview(connection, recipe_id){
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
     const RecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.recipe_id
+    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
     FROM Recipe R
@@ -178,7 +178,7 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 //API.35 음식이름으로 레시피 조회
 async function FoodNameRecipeInquiry(connection, recipe_name){
     const FoodNameRecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.recipe_id
+    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
     FROM Recipe R

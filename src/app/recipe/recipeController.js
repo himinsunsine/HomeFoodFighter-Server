@@ -103,7 +103,7 @@ exports.Postfavorite = async function (req,res){
  * query string을 이용해 recipe/possible?ingredient_id = 22,23,24 이런식으로 들어올경우 ,로 구분하여 배열생성
  */
 exports.possibleRecipe = async function (req, res) {
-    const ids = req.query.ids.split(',');
+    const ingredient_id = req.query.ids.split(',');
     if (!ingredient_id){
         return res.send(baseResponse.INGRE_CHECK);
     }
