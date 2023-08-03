@@ -100,15 +100,15 @@ exports.Postfavorite = async function (req,res){
  * API No. 25
  * API Name : 가능한 레시피 조회 API
  * [GET] /refrigerator/possible
- * query string을 이용해 recipe/possible?ids = 22,23,24 이런식으로 들어올경우 ,로 구분하여 배열생성
+ * query string을 이용해 recipe/possible?ingredient_id = 22,23,24 이런식으로 들어올경우 ,로 구분하여 배열생성
  */
 exports.possibleRecipe = async function (req, res) {
     const ids = req.query.ids.split(',');
-    if (!ids){
+    if (!ingredient_id){
         return res.send(baseResponse.INGRE_CHECK);
     }
     else{
-        const recipeResult = await recipeProvider.getpossible(ids);
+        const recipeResult = await recipeProvider.getpossible(ingredient_id);
         return res.send(recipeResult);
     }
 };
