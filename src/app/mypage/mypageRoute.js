@@ -3,7 +3,7 @@ module.exports = function (app) {
   const mypage = require("./mypageController");
     
   //4. 비밀번호 변경 API
-  app.post('/mypages/password', jwtMiddleware, mypage.patchPassword);
+  app.post('/users/password', jwtMiddleware, mypage.patchPassword);
   
   //9. 찜한 레시피 조회
   app.get("/mypages/favorite", jwtMiddleware, mypage.getFavorite);
@@ -15,12 +15,11 @@ module.exports = function (app) {
   app.get('/mypages/myrecipe', jwtMiddleware, mypage.GetMyRecipes);     
   
   //12. 회원 탈퇴 API
-  app.post('/mypages/withdrawal', jwtMiddleware, mypage.WithdrawalUser); 
+  app.post('/users/withdrawal', jwtMiddleware, mypage.WithdrawalUser); 
 
   //27. 리뷰 삭제 API
   app.post('/mypages/review/delete', jwtMiddleware, mypage.deleteReview);
 
   // 로그아웃 API
-  app.get('/mypages/logout', jwtMiddleware, mypage.LogoutUser);
-      
+  app.get('/users/logout', jwtMiddleware, mypage.LogoutUser);
 };
