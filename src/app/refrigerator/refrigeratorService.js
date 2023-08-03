@@ -12,7 +12,7 @@ exports.fillRefrigerator = async function (arr) {
         const connection = await pool.getConnection(async (conn)=> conn);
         const insertResult = await refrigeratorDao.insertRefrigerator(connection, arr);
         connection.release();
-        return insertResult;
+        return response(baseResponse.SUCCESS);
     }
     catch(err){
         logger.error(`App - Service error\n: ${err.message}`);
@@ -25,7 +25,7 @@ exports.clearRefrigerator = async function (arr) {
         const connection = await pool.getConnection(async (conn)=> conn);
         const removeResult = await refrigeratorDao.removeRefrigerator(connection, arr);
         connection.release();
-        return removeResult;
+        return response(baseResponse.SUCCESS);
     }
     catch(err){
         logger.error(`App - Service error\n: ${err.message}`);
