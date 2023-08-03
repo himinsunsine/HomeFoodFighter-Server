@@ -23,7 +23,7 @@ module.exports = function (app) {
     //26. 레시피의 리뷰 조회
     app.get("/recipe/review/:recipe_id", recipe.getReview);
     
-    //34. 레시피 전체조회 및 타입별 레시피 조회
+    //33~34. 레시피 전체조회 및 타입별 레시피 조회
     app.get("/recipe", recipe.GetallRecipe);
 
     //35. 음식이름으로 레시피 조회
