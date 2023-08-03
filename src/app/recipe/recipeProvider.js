@@ -63,11 +63,11 @@ exports.getDetail = async function(recipe_id){
 }
 
 //25. 가능한 레시피 조회
-exports.getpossible = async function(ids){
+exports.getpossible = async function(ingredient_id){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
 
-        const inquiryResult = await recipeDao.possibleRecipeInquiry(connection,ids);
+        const inquiryResult = await recipeDao.possibleRecipeInquiry(connection,ingredient_id);
         console.log(`레시피 검색 완료`);
         console.log(inquiryResult);
         connection.release();
