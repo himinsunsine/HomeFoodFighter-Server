@@ -21,9 +21,19 @@ async function selectUserPassword(connection, password_present, userid) {
 
 async function selectMyReviews(connection, userid) {
     const selectMyReviewsQuery = `
-                    SELECT r.review_id, r.recipe_id, u.nickname, r.content, r.star, r.createdAt
-                    FROM review r
-                    JOIN User u ON r.userid = u.userid where u.userid=${userid};
+    SELECT
+        r.review_id,
+        r.recipe_id,
+        DATE_FORMAT(r.createdAt, '%Y-%m-%d') AS bydate,
+        u.nickname,
+        r.content,
+        r.star
+    FROM
+        review r
+    JOIN
+        User u ON r.userid = u.userid
+    WHERE
+        u.userid = ${userid};
                     `;
     const [my_reviewsRows] = await connection.query(selectMyReviewsQuery);
     return my_reviewsRows;
