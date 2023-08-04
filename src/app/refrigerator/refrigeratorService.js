@@ -10,9 +10,16 @@ const {errResponse} = require("../../../config/response");
 exports.fillRefrigerator = async function (arr) {
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
-        const insertResult = await refrigeratorDao.insertRefrigerator(connection, arr);
-        connection.release();
-        return response(baseResponse.SUCCESS);
+        const checkResult = await refrigeratorDao.checkRefrigerator(connection, arr);
+        
+        if(checkResult[0].length === 0) {
+            const insertResult = await refrigeratorDao.insertRefrigerator(connection, arr);
+            connection.release();
+            return response(baseResponse.SUCCESS);
+        }
+        
+        else
+            return errResponse(baseResponse.DB_ERROR);
     }
     catch(err){
         logger.error(`App - Service error\n: ${err.message}`);
