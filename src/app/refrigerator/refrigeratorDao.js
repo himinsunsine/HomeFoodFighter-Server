@@ -1,7 +1,7 @@
 //API.22 냉장고 조회하기
 async function selectRefrigerator(connection, user_id) {
     const selectRefrigeratorQuery = `
-      SELECT r.ingre_id, i.ingre_type, i.ingre_name
+      SELECT r.ingre_id, i.ingre_type, i.ingre_name, i.ingre_english
       FROM refrigerator r
       JOIN ingredient i ON r.ingre_id = i.ingre_id
       WHERE r.userid = '${user_id}';
