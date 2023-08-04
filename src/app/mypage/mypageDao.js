@@ -57,7 +57,7 @@ async function selectMyFavorites(connection, userid) {
         R.img_url,
         R.recipe_name,
         AVG(rev.star) AS star,
-        COUNT(rev.review_id) AS count
+        COUNT(rev.review_id) AS review_count
     FROM
         User U
     JOIN

@@ -4,7 +4,7 @@ const baseResponse = require("../../../config/baseResponse");
 async function getWeek(connection, userid, date) {
     
     const getWeekQuery = `
-    SELECT userid, recipe_id, DATE_FORMAT(bydate, '%Y-%m-%d'), meal_time, name FROM Calendar WHERE userid = ${userid} AND WEEK(bydate, 1) = WEEK('${date}', 1);
+    SELECT userid, recipe_id, DATE_FORMAT(bydate, '%Y-%m-%d') as bydate, meal_time, name FROM Calendar WHERE userid = ${userid} AND WEEK(bydate, 1) = WEEK('${date}', 1);
     `;
     const [weekRows] = await connection.query(getWeekQuery);
     return weekRows;
