@@ -92,7 +92,7 @@ exports.postSignIn = async function(id, password) {
         const selectId = idRows[0].id
         const selectUserPasswordParams = [selectId, password];
         const passwordRows = await userProvider.passwordCheck(selectUserPasswordParams)
-        console.log(passwordRows[0][0]);
+        // console.log(passwordRows[0][0]);
         const hashedPassword = await hashPassword(password, passwordRows[0][0].salt); 
         // DB에 있는 비밀번호와 입력된 비밀번호 값이 다르면 에러 메세지
         // console.log(passwordRows[0], passwordRows[0][0].password, password, hashedPassword)
