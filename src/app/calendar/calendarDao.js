@@ -34,8 +34,19 @@ async function insertRecipe(connection, userid, name, date, meal_time) {
     return weekRows;
 };
 
+//API.29 캘린더에서 레시피 삭제
+async function deleteCalendarWeek(connection, Info) {
+//쿼리문짜기    
+    const deleteWeekQuery = `
+
+    `;
+    const weekRows = await connection.query(deleteWeekQuery);
+    return weekRows;
+};
+
 module.exports={
     getWeek,
     insertRecipe,
     insertCalendarFavorites,
+    deleteCalendarWeek,
 }
