@@ -1,7 +1,7 @@
 //API.22 냉장고 조회하기
 async function selectRefrigerator(connection, user_id) {
     const selectRefrigeratorQuery = `
-      SELECT r.ingre_id, i.ingre_type, i.ingre_name
+      SELECT r.ingre_id, i.ingre_type, i.ingre_name, i.ingre_english
       FROM refrigerator r
       JOIN ingredient i ON r.ingre_id = i.ingre_id
       WHERE r.userid = '${user_id}';
@@ -9,6 +9,15 @@ async function selectRefrigerator(connection, user_id) {
     const [rows] = await connection.query(selectRefrigeratorQuery);
     return rows;
   }
+
+//냉장고 채우기 전 DB 중복체크
+async function checkRefrigerator(connection, arr) {
+  const checkRefrigeratorQuery = `
+    SELECT * FROM refrigerator WHERE userid = '${arr[0]}' AND ingre_id IN (${arr[1]});
+  `;
+  const rows = await connection.query(checkRefrigeratorQuery);
+  return rows;
+}
 
 //API.23 냉장고 채우기
 async function insertRefrigerator(connection, arr) {
@@ -35,6 +44,7 @@ async function removeRefrigerator(connection, arr) {
 
 module.exports = {
     selectRefrigerator,
+    checkRefrigerator,
     insertRefrigerator,
     removeRefrigerator
 };
