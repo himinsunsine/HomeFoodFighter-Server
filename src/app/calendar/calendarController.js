@@ -39,14 +39,15 @@ exports.GetWeek = async function (req, res) {
 exports.PostFavorites = async function (req, res) {
     const userid = req.verifiedToken.userId;
     const date = req.params.date;
-    const recipes = req.body.recipes;
+    const recipe = req.body.recipe;
+    const meal_time = req.body.meal_time;
 
     // date 값이 유효한 날짜 형식인지 확인합니다.
     if (!isValidDate(date)) {
         return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
     }
 
-    const Info = [userid, date, recipes];
+    const Info = [userid, date, recipe, meal_time];
 
     const calendarInfoResult = await calendarService.postCalendar(Info);
     return res.send(calendarInfoResult);
