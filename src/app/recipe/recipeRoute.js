@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.post("/recipe/favorite/delete/:recipe_id", jwtMiddleware, recipe.Deletefavorite);
     
     //20. 레시피 상세 페이지 조회 
-    app.get("/recipe/detail", recipe.GetDetail);
+    app.get("/recipe/detail/:recipe_id", recipe.GetDetail);
 
     //21. 레시피 찜하기 
     app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);  
