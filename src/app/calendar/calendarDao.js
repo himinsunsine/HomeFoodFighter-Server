@@ -15,7 +15,7 @@ async function insertCalendarFavorites(connection, Info) {
     
     const insertCalendarFavoritesQuery = `
     INSERT INTO Calendar (userid, recipe_id, bydate, meal_time, name)
-    SELECT FR.userid, FR.recipe_id, '${Info[1]}', 2, R.recipe_name
+    SELECT FR.userid, FR.recipe_id, '${Info[1]}', ${Info[3]}, R.recipe_name
     FROM FavoriteRecipes FR
     JOIN Recipe R ON FR.recipe_id = R.recipe_id
     WHERE FR.userid = ${Info[0]} AND FR.recipe_id =${Info[2]};
