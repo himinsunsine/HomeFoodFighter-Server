@@ -72,10 +72,10 @@ exports.Deletefavorite = async function (req,res){
 /**
  * API No. 20
  * API Name : 레시피 상세 페이지 조회
- * [GET] /recipe/detail?recipe_id=
+ * [GET] /recipe/detail/:recipe_id
  */
 exports.GetDetail= async function (req, res){
-    const recipe_id = req.query.recipe_id;
+    const recipe_id = req.params.recipe_id;
     console.log(recipe_id);
 
     
