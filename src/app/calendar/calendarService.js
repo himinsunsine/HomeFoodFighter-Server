@@ -42,3 +42,21 @@ exports.postCalendar = async function(Info){
     }
 
 };
+
+// API 29번 캘린더에서 레시피 삭제
+exports.deleteRecipe = async function(Info){
+    try{
+        
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const calendarResult = await calendarDao.deleteCalendarWeek(connection, Info);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+
+};

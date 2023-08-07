@@ -101,14 +101,14 @@ async function possibleRecipeInquiry(connection, ingredient_id){
     const length_ingredient_id = ingredient_id.length;
     const possibleRecipeQuery = `
     SELECT
-    U.name AS user_name,
+    U.name,
     R.recipe_name,
     R.summary,
     R.img_url,
     R.type_class,
     R.recipe_id,
     COUNT(V.review_id) AS review_count,
-    AVG(V.star) AS average_rating
+    AVG(V.star) AS star
 FROM Recipe R
 LEFT JOIN User U ON R.userid = U.userid
 LEFT JOIN review V ON R.recipe_id = V.recipe_id
@@ -151,7 +151,7 @@ async function allRecipeInquiry(connection) {
     const RecipeQuery = `
     SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
-    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
+    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
     LEFT JOIN User U ON R.userid = U.userid;
     `; 
@@ -167,7 +167,7 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 
     SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
-    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
+    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
     LEFT JOIN User U ON R.userid = U.userid
     where R.type_class = ${RecipeType};
@@ -182,7 +182,7 @@ async function FoodNameRecipeInquiry(connection, recipe_name){
     const FoodNameRecipeQuery = `
     SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
-    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS average_rating
+    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
     LEFT JOIN User U ON R.userid = U.userid
     where recipe_name LIKE concat('%','${recipe_name}','%');
