@@ -12,6 +12,6 @@ module.exports = function (app) {
     app.post("/calendar/week/self/:date", jwtMiddleware, calendar.PostSelf);
 
     //
-    app.delete("/calendar/week/recipe", jwtMiddleware, calendar.deleteWeekRecipe);
+    app.delete("/calendar/week/remove", jwtMiddleware, calendar.deleteWeekRecipe);
     
 };
