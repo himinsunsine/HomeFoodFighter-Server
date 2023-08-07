@@ -48,10 +48,13 @@ exports.deleteRecipe = async function(Info){
     try{
         
         const connection = await pool.getConnection(async (conn)=> conn);
-
         const calendarResult = await calendarDao.deleteCalendarWeek(connection, Info);
         connection.release();
+        console.log(calendarResult);
 
+        if (calendarResult[0].affectedRows === 0) {
+            return errResponse(baseResponse.CALENDAR_RECIPE_EMPTY);
+        }
         return response(baseResponse.SUCCESS);
     }
     catch(err){

@@ -38,10 +38,10 @@ async function insertRecipe(connection, userid, name, date, meal_time) {
 async function deleteCalendarWeek(connection, Info) {
 //쿼리문짜기    
     const deleteWeekQuery = `
-
+    DELETE FROM Calendar WHERE userid = ? AND bydate = ? AND meal_time = ?;
     `;
-    const weekRows = await connection.query(deleteWeekQuery);
-    return weekRows;
+    const weekRemoveRows = await connection.query(deleteWeekQuery,Info);
+    return weekRemoveRows;
 };
 
 module.exports={

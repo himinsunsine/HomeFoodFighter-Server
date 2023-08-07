@@ -39,15 +39,14 @@ exports.GetWeek = async function (req, res) {
 exports.PostFavorites = async function (req, res) {
     const userid = req.verifiedToken.userId;
     const date = req.params.date;
-    const recipe = req.body.recipe;
-    const meal_time = req.body.meal_time;
+    const recipes = req.body.recipes;
 
     // date 값이 유효한 날짜 형식인지 확인합니다.
     if (!isValidDate(date)) {
         return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
     }
 
-    const Info = [userid, date, recipe, meal_time];
+    const Info = [userid, date, recipes];
 
     const calendarInfoResult = await calendarService.postCalendar(Info);
     return res.send(calendarInfoResult);
@@ -82,30 +81,28 @@ exports.PostSelf = async function (req, res) {
 
 /**
  * API No. 29
- * API Name : 캘린더에서 레시피삭제
- * [POST] /calendar/week/self/:date
+ * API Name : 캘린더에서 레시피 삭제
+ * [DELETE] /calendar/week?bydate= , meal_time=
  */
 exports.deleteWeekRecipe = async function (req, res) {
-    const recipe_id = req.params.recipe_id;
     const userid = req.verifiedToken.userId;
-    const bydate = req.body.bydate;
-    const meal_time = req.body.meal_time;
+    const bydate = req.query.bydate;
+    const meal_time = req.query.meal_time;
 
-    console.log(recipe_id,userid,bydate, meal_time);
+    console.log(userid,bydate, meal_time);
 
-    const Info = [recipe_id, userid, bydate, meal_time];
+    const Info = [userid, bydate, meal_time];
 
 
 
     // date 값이 유효한 날짜 형식인지 확인합니다.
     if (!isValidDate(bydate)) {
         return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
+        
     }
-    //여기 다시확인
-    if(!userid || !recipe_id || !bydate || !meal_time){
-        return res.send(errResponse(baseResponse.RECIPE_NAME_EMPTY));
+    if(!meal_time){
+        return res.send(errResponse(baseResponse.MEAL_TIME_EMPTY));
     }
-
     const weekdeleteResult = await calendarService.deleteRecipe(Info);
     return res.send(weekdeleteResult);
 
