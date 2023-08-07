@@ -41,9 +41,9 @@ module.exports = {
     FAVORITES_EMPTY :{ "isSuccess": true, "code": 2104, "message": "찜한 레시피가 없습니다."},
     
 
-    TYPE_CHECK : {"isSucces":false, "code" : 2201, "messsage": "타입을 1이상 7이하의 값으로 입력해주세요."},
-    INGRE_CHECK : {"isSucces":false, "code" : 2202, "messsage": "재료가 선택되지 않았습니다 재료를 선택해 주세요"},
-
+    TYPE_CHECK : { "isSuccess": false, "code": 2201, "message": "타입을 1이상 7이하의 값으로 입력해주세요."},
+    INGRE_CHECK : { "isSuccess": false, "code": 2202, "message": "재료가 선택되지 않았습니다 재료를 선택해 주세요."},
+    MEAL_TIME_EMPTY : { "isSuccess": false, "code": 2203, "message": "아침, 점심, 저녁중 하나를 선택해주세요."},
 
     // response error
     SIGNIN_ID_WRONG : { "isSuccess": false, "code": 3001, "message": "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요." },
@@ -59,6 +59,7 @@ module.exports = {
     RECIPE_ID_EMPTY : {"isSuccess": false, "code": 3101, "message": "해당 레시피 id가 없습니다."},
     FAVORITE_EXISTENCE: { "isSuccess": false, "code": 3102, "message": "이미 찜한 레시피입니다."},
     FAVORITE_NOT_EXISTENCE : { "isSuccess": false, "code": 3103, "message": "찜한 레시피가 아닙니다."},
+    CALENDAR_RECIPE_EMPTY : { "isSuccess": false, "code": 3103, "message": "해당 켈린더에 레시피가 존재하지 않습니다."},
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},

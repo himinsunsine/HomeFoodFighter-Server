@@ -11,7 +11,7 @@ module.exports = function (app) {
     //18. 캘린더에서 직접 추가하기
     app.post("/calendar/week/self/:date", jwtMiddleware, calendar.PostSelf);
 
-    //
-    app.delete("/calendar/week/remove", jwtMiddleware, calendar.deleteWeekRecipe);
+    //29. 캘린더에서 레시피삭제
+    app.delete("/calendar/week", jwtMiddleware, calendar.deleteWeekRecipe);
     
 };
