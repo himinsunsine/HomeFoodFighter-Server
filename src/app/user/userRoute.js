@@ -20,4 +20,7 @@ module.exports = function (app) {
  
     // EMAIL 유효성 검사 및 중복 검사 API
     app.get('/users/check/duplicate/email/:email', user.checkDuplicateEmail);
+
+    // kakaologin API
+    app.post('/kakao/signin', user.signInKakao)
   };
