@@ -86,7 +86,7 @@ exports.PostSelf = async function (req, res) {
  */
 exports.deleteWeekRecipe = async function (req, res) {
     const userid = req.verifiedToken.userId;
-    const bydate = req.query.bydate;
+    const bydate = req.query.date;
     const meal_time = req.query.meal_time;
 
     console.log(userid,bydate, meal_time);
