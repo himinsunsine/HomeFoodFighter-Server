@@ -189,11 +189,12 @@ exports.signInKakaotoken = async (kakaoToken) => {
     const profileImage = data.properties.profile_image;
 
     if (!name || !email || !kakaoId) throw new error("KEY_ERROR", 400);
-
-    const user = await userDao.kakaogetUserById(kakaoId);
-
+    const connection = await pool.getConnection(async (conn) => conn);
+    const user = await userDao.kakaogetUserById(connection, kakaoId);
+ 
+    const Info = [email, name, kakaoId, profileImage];
     if (!user) {
-        await userDao.kakaosignUp(email, name, kakaoId, profileImage);
+        await userDao.kakaosignUp(connection, Info);
     }
 
     return jwt.sign({ kakao_id: user[0].kakao_id }, process.env.TOKKENSECRET);
