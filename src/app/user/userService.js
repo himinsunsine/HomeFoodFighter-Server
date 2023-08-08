@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const secret_config = require("../../../config/secret");
 const {connect} = require("http2");
 const crypto = require('crypto');
+const axios = require("axios");
 
 // 비밀번호 해싱 함수
 async function hashPassword(password,salt) {
@@ -165,3 +166,36 @@ exports.findInfo = async (email) => {
     }
     return response(baseResponse.SUCCESS);
   };
+  
+
+
+
+
+
+
+
+
+
+exports.signInKakaotoken = async (kakaoToken) => {
+    const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
+        headers: {
+            Authorization: `Bearer ${kakaoToken}`,
+        },
+    });
+    const {data} = result
+    const name = data.properties.nickname;
+    const email = data.kakao_account.email;
+    const kakaoId = data.id;
+    const profileImage = data.properties.profile_image;
+
+    if (!name || !email || !kakaoId) throw new error("KEY_ERROR", 400);
+
+    const user = await userDao.kakaogetUserById(kakaoId);
+
+    if (!user) {
+        await userDao.kakaosignUp(email, name, kakaoId, profileImage);
+    }
+
+    return jwt.sign({ kakao_id: user[0].kakao_id }, process.env.TOKKENSECRET);
+    
+};

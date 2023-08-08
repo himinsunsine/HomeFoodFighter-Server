@@ -118,6 +118,26 @@ async function getStateById(connection, id) {
 }
 
 
+
+
+
+async function kakaogetUserById(kakaoId) {
+    const appDataSourceQuery = `
+    SELECT kakao_id, account_email, name, profile_image FROM users WHERE kakao_id='${kakaoId}';
+    `;
+    const kakaoRows = await connection.query(appDataSourceQuery);
+    return kakaoRows;
+}
+
+async function kakaosignUp(email, name, kakaoId, profileImage) {
+    const kakaosignupQuery =`
+    INSERT INTO users(account_email, name, kakao_id, profile_image) VALUES (?, ?, ?, ?);
+    `
+    const kakaosignupRows = await connection.query(kakaosignupQuery);
+    return kakaosignupRows;
+}
+
+
 module.exports = {
     insertUser,
     selectUserId,
@@ -129,4 +149,5 @@ module.exports = {
     passwordGet,
     getUserByIdGet,
     getStateById,
+    kakaogetUserById,
 };  
