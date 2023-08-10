@@ -281,7 +281,7 @@ exports.finding = async function (req, res) {
 exports.signInKakao = async function (req, res) {
  // const headers = req.headers["authorization"];
   //const kakaoToken = headers.split(" ")[1];
-  const kakaoToken = '3OADwaz9HoEIkQ5YCorcao9K6hkbGC0ybmRkF5IOCj11XAAAAYnUjw-g';
+  const kakaoToken = 'F8zmOqsSz4ogClrhKM5r6nmFR8x3a_EfIuOFIPYYCj11GgAAAYndy1in';
 
   const accessToken = await userService.signInKakaotoken(kakaoToken);
   

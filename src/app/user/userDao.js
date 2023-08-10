@@ -150,4 +150,5 @@ module.exports = {
     getUserByIdGet,
     getStateById,
     kakaogetUserById,
+    kakaosignUp,
 };  

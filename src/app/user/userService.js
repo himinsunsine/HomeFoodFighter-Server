@@ -196,7 +196,18 @@ exports.signInKakaotoken = async (kakaoToken) => {
     if (!user) {
         await userDao.kakaosignUp(connection, Info);
     }
-
-    return jwt.sign({ kakao_id: user[0].kakao_id }, process.env.TOKKENSECRET);
+    // 토큰 생성
+    let token = await jwt.sign(
+        {
+            kakao_id: user[0].kakao_id,
+        }, // 토큰 내용
+        secret_config.jwtsecret, 
+        // 유효기간 365일
+        {
+            expiresIn: "1h",
+            subject: "user"
+        }
+        );
+        return response(baseResponse.SUCCESS, {'kakao_id' : user[0].kakao_id, 'jwt': token});
     
 };
