@@ -22,5 +22,5 @@ module.exports = function (app) {
     app.get('/users/check/duplicate/email/:email', user.checkDuplicateEmail);
 
     // kakaologin API
-    app.post('/kakao/signin', user.signInKakao)
+    app.post('/users/kakao/signin', user.signInKakao)
   };

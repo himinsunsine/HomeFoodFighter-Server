@@ -189,13 +189,25 @@ exports.signInKakaotoken = async (kakaoToken) => {
     const profileImage = data.properties.profile_image;
 
     if (!name || !email || !kakaoId) throw new error("KEY_ERROR", 400);
-
-    const user = await userDao.kakaogetUserById(kakaoId);
-
+    const connection = await pool.getConnection(async (conn) => conn);
+    const user = await userDao.kakaogetUserById(connection, kakaoId);
+ 
+    const Info = [email, name, kakaoId, profileImage];
     if (!user) {
-        await userDao.kakaosignUp(email, name, kakaoId, profileImage);
+        await userDao.kakaosignUp(connection, Info);
     }
-
-    return jwt.sign({ kakao_id: user[0].kakao_id }, process.env.TOKKENSECRET);
+    // 토큰 생성
+    let token = await jwt.sign(
+        {
+            kakao_id: user[0].kakao_id,
+        }, // 토큰 내용
+        secret_config.jwtsecret, 
+        // 유효기간 365일
+        {
+            expiresIn: "1h",
+            subject: "user"
+        }
+        );
+        return response(baseResponse.SUCCESS, {'kakao_id' : user[0].kakao_id, 'jwt': token});
     
 };
