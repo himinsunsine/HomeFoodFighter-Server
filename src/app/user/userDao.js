@@ -120,12 +120,20 @@ async function getStateById(connection, id) {
 
 
 
-
 async function kakaogetUserById(connection, kakaoId) {
     const appDataSourceQuery = `
-    SELECT id, email, name, image FROM User WHERE id='${kakaoId}';
+    SELECT id FROM User WHERE id='${kakaoId}';
     `;
     const kakaoRows = await connection.query(appDataSourceQuery);
+    return kakaoRows;
+}
+
+async function kakaogetUserById(connection, kakaoId) {
+    const query = `
+    SELECT id FROM User WHERE id = ?;
+    `;
+    
+    const [kakaoRows] = await connection.execute(query, [kakaoId]);
     return kakaoRows;
 }
 

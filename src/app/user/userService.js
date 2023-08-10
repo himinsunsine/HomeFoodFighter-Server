@@ -193,7 +193,9 @@ exports.signInKakaotoken = async (kakaoToken) => {
     const user = await userDao.kakaogetUserById(connection, kakaoId);
  
     const Info = [email, name, kakaoId, profileImage];
-    if (!user) {
+    console.log(user);
+    console.log(Info);
+    if (!user || user.length === 0) {
         await userDao.kakaosignUp(connection, Info);
     }
     // 토큰 생성
