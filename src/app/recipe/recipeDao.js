@@ -139,7 +139,7 @@ ORDER BY COUNT(DISTINCT CASE WHEN D.Detailingre_type = 1 THEN D.ingre_id END) DE
 //API.26 레시피의 리뷰 조회
 async function selectAllReview(connection, recipe_id){
     const selectAllReviewQuery = `
-    select review_id,recipe_id, review.userid, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
+    select review_id,recipe_id, review.userid, U.nickname, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
 
     ;`;
     const revieweRows = await connection.query(selectAllReviewQuery);
