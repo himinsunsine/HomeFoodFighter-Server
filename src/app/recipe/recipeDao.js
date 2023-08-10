@@ -45,7 +45,7 @@ async function deleteFavorite(connection, userid,recipe_id){
 //레시피 상세 정보 조회
 async function selectDetailInfo(connection, recipe_id){
     const selectDetailQuery = `
-    select recipe_id, U.userid, U.image as user_img_url, nickname, recipe_name, cook_time, difficulty, img_url, quantity from Recipe join User U on Recipe.userid = U.userid where recipe_id=${recipe_id};
+    select recipe_id, U.userid, summary, U.image as user_img_url, nickname, recipe_name, cook_time, difficulty, img_url, quantity from Recipe join User U on Recipe.userid = U.userid where recipe_id=${recipe_id};
 
     `;
     const [recipeInfoRows] = await connection.query(selectDetailQuery);
