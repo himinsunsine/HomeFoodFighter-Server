@@ -183,17 +183,28 @@ exports.signInKakaotoken = async (kakaoToken) => {
         },
     });
     const {data} = result
-    const name = data.properties.nickname;
+    const name = data.kakao_account.profile.nickname;
+    const nickname = data.properties.nickname;
     const email = data.kakao_account.email;
     const kakaoId = data.id;
     const profileImage = data.properties.profile_image;
+    const birthday = data.kakao_account.birthday;
+
+    const month = birthday.substr(0, 2);
+    const day = birthday.substr(2, 2);
+  
+    // 현재 연도를 가져옴 카카오는 월일만 제공함으로 임시로 현재 연도를 넣었음
+    const currentYear = new Date().getFullYear();
+  
+    // 'MMDD' 형식을 Date 형식으로 변환
+    const birthDate = new Date(`${currentYear}-${month}-${day}`);
+    
 
     if (!name || !email || !kakaoId) throw new error("KEY_ERROR", 400);
     const connection = await pool.getConnection(async (conn) => conn);
     const user = await userDao.kakaogetUserById(connection, kakaoId);
  
-    const Info = [email, name, kakaoId, profileImage];
-    console.log(user);
+    const Info = [name, nickname, email, kakaoId, profileImage, birthDate];
     console.log(Info);
     if (!user || user.length === 0) {
         await userDao.kakaosignUp(connection, Info);
@@ -201,7 +212,7 @@ exports.signInKakaotoken = async (kakaoToken) => {
     // 토큰 생성
     let token = await jwt.sign(
         {
-            kakao_id: user[0].kakao_id,
+            kakao_id: user,
         }, // 토큰 내용
         secret_config.jwtsecret, 
         // 유효기간 365일
