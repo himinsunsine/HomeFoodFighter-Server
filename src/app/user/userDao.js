@@ -130,7 +130,7 @@ async function kakaogetUserById(connection, kakaoId) {
 
 async function kakaogetUserById(connection, kakaoId) {
     const query = `
-    SELECT id FROM User WHERE id = ?;
+    SELECT userId, id FROM User WHERE id = ?;
     `;
     
     const [kakaoRows] = await connection.execute(query, [kakaoId]);

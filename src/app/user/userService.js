@@ -11,6 +11,7 @@ const secret_config = require("../../../config/secret");
 const {connect} = require("http2");
 const crypto = require('crypto');
 const axios = require("axios");
+const { userInfo } = require("os");
 
 // 비밀번호 해싱 함수
 async function hashPassword(password,salt) {
@@ -200,19 +201,28 @@ exports.signInKakaotoken = async (kakaoToken) => {
     const birthDate = new Date(`${currentYear}-${month}-${day}`);
     
 
-    if (!name || !email || !kakaoId) throw new error("KEY_ERROR", 400);
+    if (!name){
+        return errResponse(baseResponse.KAKAO_NAME_EMPTY);
+    }else if (!email){
+        return errResponse(baseResponse.KAKAO_EMAIL_EMPTY);
+    }else if (!kakaoId){
+        return errResponse(baseResponse.KAKAO_ID_EMPTY);
+    }else if (!birthday){
+        return errResponse(baseResponse.KAKAO_BIRTY_EMPTY);
+    }
+
     const connection = await pool.getConnection(async (conn) => conn);
-    const user = await userDao.kakaogetUserById(connection, kakaoId);
- 
+    const userInfoRows = await userDao.kakaogetUserById(connection, kakaoId);
+    console.log(userInfoRows);
     const Info = [name, nickname, email, kakaoId, profileImage, birthDate];
     console.log(Info);
-    if (!user || user.length === 0) {
+    if (!userInfoRows || userInfoRows.length === 0) {
         await userDao.kakaosignUp(connection, Info);
     }
     // 토큰 생성
     let token = await jwt.sign(
         {
-            kakao_id: user,
+            userId: userInfoRows[0].userId,
         }, // 토큰 내용
         secret_config.jwtsecret, 
         // 유효기간 365일
@@ -221,6 +231,6 @@ exports.signInKakaotoken = async (kakaoToken) => {
             subject: "user"
         }
         );
-        return response(baseResponse.SUCCESS, {'kakao_id' : user[0].kakao_id, 'jwt': token});
+        return response(baseResponse.SUCCESS, {'user_id' : userInfoRows[0].userId, 'jwt': token});
     
 };
