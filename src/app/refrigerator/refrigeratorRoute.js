@@ -9,5 +9,5 @@ module.exports = function(app){
     app.post('/refrigerator/fill/:ingre_type', jwtMiddleware, refrigerator.FillRefrigerator);
      
     // 24. 냉장고 비우기 API
-    app.post('/refrigerator/empty/:ingre_type', jwtMiddleware, refrigerator.EmptyRefrigerator);
+    app.post('/refrigerator/empty', jwtMiddleware, refrigerator.EmptyRefrigerator);
   };
