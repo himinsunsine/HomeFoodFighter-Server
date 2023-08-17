@@ -130,16 +130,16 @@ async function kakaogetUserById(connection, kakaoId) {
 
 async function kakaogetUserById(connection, kakaoId) {
     const query = `
-    SELECT id FROM User WHERE id = ?;
+    SELECT userId, id FROM User WHERE id = ?;
     `;
     
     const [kakaoRows] = await connection.execute(query, [kakaoId]);
     return kakaoRows;
 }
-
+//[name, nickname, email, kakaoId, profileImage, birthday]
 async function kakaosignUp(connection, Info) {
     const kakaosignupQuery =`
-    INSERT INTO User(email, name, id, image) VALUES (?, ?, ?, ?);
+    INSERT INTO User(name, nickname, email, id, image, birth, state) VALUES (?, ?, ?, ?, ?, ?,1);
     `
     const kakaosignupRows = await connection.query(kakaosignupQuery, Info);
     return kakaosignupRows;

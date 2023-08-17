@@ -206,7 +206,7 @@ exports.postSignUp = async function (req, res) {
       const hashedPassword = derivedKey.toString('hex');
       // 데이터베이스에 저장되는 비밀번호는 hashedPassword로 대체합니다.
       const signUpResponse = await userService.createUser(
-        id, hashedPassword, nickname, name, birth, email,salt
+        id, hashedPassword, nickname, name, birth, email, salt
       );
       return res.send(signUpResponse);
     });
@@ -281,7 +281,7 @@ exports.finding = async function (req, res) {
 exports.signInKakao = async function (req, res) {
  // const headers = req.headers["authorization"];
   //const kakaoToken = headers.split(" ")[1];
-  const kakaoToken = 'F8zmOqsSz4ogClrhKM5r6nmFR8x3a_EfIuOFIPYYCj11GgAAAYndy1in';
+  const kakaoToken = 'bWmE8Ah8kj53Pg19n8wL3F_EH-11gvxzkxmYKfyRCj10lwAAAYnylf9S';
 
   const accessToken = await userService.signInKakaotoken(kakaoToken);
   
