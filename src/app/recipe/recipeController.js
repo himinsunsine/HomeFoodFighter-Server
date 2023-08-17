@@ -79,6 +79,8 @@ exports.GetDetail= async function (req, res){
     console.log(recipe_id);
 
     
+
+    
     const recipeResult = await recipeProvider.getDetail(recipe_id);
     return res.send(recipeResult);
 };

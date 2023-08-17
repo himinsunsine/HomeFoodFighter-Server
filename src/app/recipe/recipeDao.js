@@ -64,7 +64,7 @@ async function selectDetailProcess(connection, recipe_id){
 //레시피의 재료 조회
 async function Detailingre(connection, recipe_id){
     const detailingreQuery=`
-    select recipe_id, DetailIngre_type, ingre_name, ingre_english, amount from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ${recipe_id};
+    select recipe_id, i.ingre_id, DetailIngre_type, ingre_name, ingre_english, amount from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ${recipe_id};
     `;
     const [recipeingre]= await connection.query(detailingreQuery);
     return recipeingre;
