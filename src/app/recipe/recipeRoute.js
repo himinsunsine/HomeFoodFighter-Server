@@ -18,7 +18,7 @@ module.exports = function (app) {
     app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);  
 
     //25. 가능한 레시피 조회 API
-    app.get('/recipe/possible', jwtMiddleware, recipe.possibleRecipe);
+    app.get('/recipe/possible', recipe.possibleRecipe);
 
     //26. 레시피의 리뷰 조회
     app.get("/recipe/review/:recipe_id", recipe.getReview);
@@ -27,5 +27,5 @@ module.exports = function (app) {
     app.get("/recipe", recipe.GetallRecipe);
 
     //35. 음식이름으로 레시피 조회
-    app.get("/recipe/name", jwtMiddleware, recipe.GetFoodNameRecipe);  
+    app.get("/recipe/name", recipe.GetFoodNameRecipe);  
 };
