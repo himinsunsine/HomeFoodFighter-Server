@@ -48,6 +48,9 @@ exports.patchPassword = async function (req, res) {
             password_new,
             userid,
         );
+
+        if(updatePasswordResponse.code==3008)
+        return res.status(400).json(baseResponse.EDITING_PASSWORD_PRESENT_WRONG);
     
         return res.send(updatePasswordResponse);
     }
@@ -62,6 +65,8 @@ exports.getFavorite = async function (req, res) {
     const userid = req.verifiedToken.userId;
 
     const myFavoriteResult = await mypageProvider.getFavorites(userid);
+    if(signUpResponse.code==2104)
+        return res.status(400).json(baseResponse.FAVORITES_EMPTY);    
     return res.send(myFavoriteResult);
     
 };

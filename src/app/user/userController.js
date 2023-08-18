@@ -208,6 +208,12 @@ exports.postSignUp = async function (req, res) {
       const signUpResponse = await userService.createUser(
         id, hashedPassword, nickname, name, birth, email, salt
       );
+      if(signUpResponse.code==3003)
+        return res.status(400).json(baseResponse.SIGNUP_REDUNDANT_ID);
+      if(signUpResponse.code==3004)
+        return res.status(400).json(baseResponse.SIGNUP_REDUNDANT_NICKNAME);
+      if(signUpResponse.code==3005)
+        return res.status(400).json(baseResponse.SIGNUP_REDUNDANT_EMAIL);      
       return res.send(signUpResponse);
     });
   } catch (err) {
