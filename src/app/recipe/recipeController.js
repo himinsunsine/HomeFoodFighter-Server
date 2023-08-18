@@ -113,12 +113,14 @@ exports.Postfavorite = async function (req,res){
  * query string을 이용해 recipe/possible?ingredient_id = 22,23,24 이런식으로 들어올경우 ,로 구분하여 배열생성
  */
 exports.possibleRecipe = async function (req, res) {
-    const ingredient_id = req.query.ingredient_id.split(',');
-    if (!ingredient_id){
-        return res.send(baseResponse.INGRE_CHECK);
-    }
-    else{
-        const recipeResult = await recipeProvider.getpossible(ingredient_id);
+    const ingredient_id = req.query.ingredient_id;
+
+    if (!ingredient_id || ingredient_id === "") {
+        return res.status(400).json(errResponse(baseResponse.INGRE_CHECK));
+    } else {
+        const ingredient_ids = ingredient_id.split(',');
+
+        const recipeResult = await recipeProvider.getpossible(ingredient_ids);
         return res.send(recipeResult);
     }
 };
@@ -147,7 +149,7 @@ exports.GetallRecipe = async function (req, res) {
         return res.send(allRecipeResult);
     }
     else if(RecipeType < 0 || RecipeType > 7){
-        return res.send(baseResponse.TYPE_CHECK);
+        return res.status(400).json(errResponse(baseResponse.TYPE_CHECK));
     }
     else{
         const RecipeTypeResult = await recipeProvider.TypeRecipe(RecipeType);
@@ -166,7 +168,11 @@ exports.GetallRecipe = async function (req, res) {
 exports.GetFoodNameRecipe = async function (req, res) {
     const recipe_name = req.query.recipe_name;
 
-    const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(recipe_name);
-    return res.send(FoodNameRecipeResult);
+    if(!recipe_name){
+        return res.status(400).json(errResponse(baseResponse.REIPCE_NAME_EMPTY));
+    }else{
+        const FoodNameRecipeResult = await recipeProvider.FoodNameRecipe(recipe_name);
+        return res.send(FoodNameRecipeResult);
+    }
 }
 
