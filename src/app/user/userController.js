@@ -252,6 +252,13 @@ exports.login = async function (req, res) {
   // userService를 통해 로그인 로직 처리
   const signInResponse = await userService.postSignIn(id, password);
 
+  if(signUpResponse.code==3001)
+    return res.status(400).json(baseResponse.SIGNIN_ID_WRONG);
+  if(signUpResponse.code==3002)
+    return res.status(400).json(baseResponse.SIGNIN_PASSWORD_WRONG);
+  if(signUpResponse.code==3006)
+    return res.status(400).json(baseResponse.SIGNIN_UNSIGN_USER);
+    
 
   // JWT 토큰을 응답으로 받은 후, 쿠키로 설정하여 클라이언트에게 보냅니다.
   res.cookie('token', signInResponse.jwt, {
@@ -275,6 +282,8 @@ exports.finding = async function (req, res) {
   const {email} = req.body;
 
   const findingResponse = await userService.findInfo(email);
+  if(signUpResponse.code==3007)
+    return res.status(400).json(baseResponse.FINDING_INFO_ERROR);
 
   return res.send(findingResponse);
 }
