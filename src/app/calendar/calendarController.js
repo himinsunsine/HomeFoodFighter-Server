@@ -104,6 +104,10 @@ exports.deleteWeekRecipe = async function (req, res) {
         return res.status(400).json(errResponse(baseResponse.MEAL_TIME_EMPTY));
     }
     const weekdeleteResult = await calendarService.deleteRecipe(Info);
+    console.log(weekdeleteResult.code);
+    if (weekdeleteResult.code == 3103){
+        return res.status(400).json(errResponse(baseResponse.CALENDAR_RECIPE_EMPTY));
+    }
     return res.send(weekdeleteResult);
 
 };
