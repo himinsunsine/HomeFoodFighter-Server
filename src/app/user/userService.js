@@ -53,7 +53,7 @@ exports.createUser = async function (id, password, nickname, name, birth, email,
         // 아이디 중복 확인
         const idRows = await userProvider.idCheck(id); // Read인 Provider 통해서 확인
         if (idRows.length > 0)
-            return res.status(400).json(errResponse(baseResponse.SIGNUP_REDUNDANT_ID))
+            return errResponse(baseResponse.SIGNUP_REDUNDANT_ID)
 
         // 닉네임 중복 확인
         const nicknameRows = await userProvider.nicknameCheck(nickname);
