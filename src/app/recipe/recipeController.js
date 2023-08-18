@@ -66,6 +66,10 @@ exports.Deletefavorite = async function (req,res){
     const recipe_id = req.params.recipe_id;
     
     const favoriteResult = await recipeService.DeletefavoriteRecipe(userid,recipe_id);
+    console.log(favoriteResult);
+    if (favoriteResult.code==3103){
+        return res.status(400).json(errResponse(baseResponse.FAVORITE_NOT_EXISTENCE));
+    }
     return res.send(favoriteResult);
 };
 
@@ -79,9 +83,10 @@ exports.GetDetail= async function (req, res){
     console.log(recipe_id);
 
     
-
-
     const recipeResult = await recipeProvider.getDetail(recipe_id);
+    if (recipeResult.code==3101){
+        return res.status(400).json(errResponse(baseResponse.RECIPE_ID_EMPTY));
+    }
     return res.send(recipeResult);
 };
 
@@ -95,6 +100,9 @@ exports.Postfavorite = async function (req,res){
     const recipe_id = req.params.recipe_id;
     
     const favoriteResult = await recipeService.favoriteRecipe(userid,recipe_id);
+    if (favoriteResult.code==3102){
+        return res.status(400).json(errResponse(baseResponse.FAVORITE_EXISTENCE));
+    }
     return res.send(favoriteResult);
 };
 

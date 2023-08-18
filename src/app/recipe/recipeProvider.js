@@ -42,8 +42,9 @@ exports.getDetail = async function(recipe_id){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
         const recipe_existence = await recipeDao.CheckRecipeExistence(connection,recipe_id);
-        if (recipe_existence==null){
-            return res.send(response(baseResponse.RECIPE_ID_EMPTY));
+        console.log(recipe_existence);
+        if (recipe_existence[0]==null){
+            return errResponse(baseResponse.RECIPE_ID_EMPTY);
         } else{
             const recipeInfoResult = await recipeDao.selectDetailInfo(connection, recipe_id);
             const recipeProcessResult = await recipeDao.selectDetailProcess(connection, recipe_id);
