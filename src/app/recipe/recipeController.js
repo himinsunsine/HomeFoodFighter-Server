@@ -22,16 +22,16 @@ exports.PostRegisterReview = async function (req, res) {
 
     // 빈 값 체크
     if(!content){
-        return res.send(errResponse(baseResponse.CONTENT_EMPTY));
+        return res.status(400).json(errResponse(baseResponse.CONTENT_EMPTY));
     }
 
     //최소 별점 값 체크
     if(star<0.5){
-        return res.send(errResponse(baseResponse.STAR_CHECK1));
+        return res.status(400).json(errResponse(baseResponse.STAR_CHECK1));
     }
     else{ // 0.5 단위 체크
         if(star % 0.5 != 0){
-            return res.send(errResponse(baseResponse.STAR_CHECK2));
+            return res.status(400).json(errResponse(baseResponse.STAR_CHECK2));
         }
     }
     const ReviewInfoResult = await recipeService.registerReview(Info);
@@ -80,7 +80,7 @@ exports.GetDetail= async function (req, res){
 
     
 
-    
+
     const recipeResult = await recipeProvider.getDetail(recipe_id);
     return res.send(recipeResult);
 };
