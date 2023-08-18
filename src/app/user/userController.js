@@ -62,16 +62,16 @@ exports.checkDuplicateId = async function (req, res) {
 
   // 유효성 검사 등 추가적인 로직 수행
   if (!id)
-      return res.send(response(baseResponse.SIGNUP_ID_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_ID_EMPTY));
   if (!validateUsername(id))
-      return res.send(response(baseResponse.SIGNUP_ID_ERROR));
+      return res.status(400).json(response(baseResponse.SIGNUP_ID_ERROR));
 
   try {
       const isDuplicateId = await userService.checkDuplicateId(id);
       if(isDuplicateId==0)
         return res.send(response(baseResponse.SUCCESS_ID));
       else
-        return res.send(response(baseResponse.SIGNUP_REDUNDANT_ID));
+        return res.status(400).json(response(baseResponse.SIGNUP_REDUNDANT_ID));
   } catch (err) {
       res.status(500).json({ error: err.message });
   }
@@ -83,16 +83,16 @@ exports.checkDuplicateNickname = async function (req, res) {
 
   // 유효성 검사 등 추가적인 로직 수행
   if (!nickname)
-    return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+    return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
   if (nickname.length > 7)
-    return res.send(response(baseResponse.SIGNUP_NICKNAME_LENGTH));  
+    return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_LENGTH));  
 
   try {
       const isDuplicateNickname = await userService.checkDuplicateNickname(nickname);
       if(isDuplicateNickname==0)
         return res.send(response(baseResponse.SUCCESS_NICKNAME));
       else
-        return res.send(response(baseResponse.SIGNUP_REDUNDANT_NICKNAME));
+        return res.status(400).json(response(baseResponse.SIGNUP_REDUNDANT_NICKNAME));
   } catch (err) {
       res.status(500).json({ error: err.message });
   }
@@ -104,16 +104,16 @@ exports.checkDuplicateEmail = async function (req, res) {
 
   // 유효성 검사 등 추가적인 로직 수행
   if (!email)
-    return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+    return res.status(400).json(response(baseResponse.SIGNUP_EMAIL_EMPTY));
   if (!validateEmail(email))
-    return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR));    
+    return res.status(400).json(response(baseResponse.SIGNUP_EMAIL_ERROR));    
 
   try {
       const isDuplicateEmail = await userService.checkDuplicateEmail(email);
       if(isDuplicateEmail==0)
         return res.send(response(baseResponse.SUCCESS_EMAIL));
       else
-        return res.send(response(baseResponse.SIGNUP_REDUNDANT_EMAIL));
+        return res.status(400).json(response(baseResponse.SIGNUP_REDUNDANT_EMAIL));
   } catch (err) {
       res.status(500).json({ error: err.message });
   }
@@ -131,7 +131,7 @@ exports.postSignUp = async function (req, res) {
    try {
     const idDuplicateResponse = await userService.checkDuplicateId(id);
     if (idDuplicateResponse.isDuplicate)
-      return res.send(response(baseResponse.SIGNUP_DUPLICATED_ID));
+      return res.status(400).json(response(baseResponse.SIGNUP_REDUNDANT_ID));
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -140,7 +140,7 @@ exports.postSignUp = async function (req, res) {
   try {
     const nicknameDuplicateResponse = await userService.checkDuplicateNickname(nickname);
     if (nicknameDuplicateResponse.isDuplicate)
-      return res.send(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
+      return res.status(400).json(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -149,44 +149,44 @@ exports.postSignUp = async function (req, res) {
   try {
     const emailDuplicateResponse = await userService.checkDuplicateEmail(email);
     if (emailDuplicateResponse.isDuplicate)
-      return res.send(response(baseResponse.SIGNUP_DUPLICATED_EMAIL));
+      return res.status(400).json(response(baseResponse.SIGNUP_DUPLICATED_EMAIL));
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 
   // 빈 값이 되면 안되는 속성값 체크
   if (!id)
-      return res.send(response(baseResponse.SIGNUP_ID_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_ID_EMPTY));
   else if (!password)
-      return res.send(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
   else if (!check_password)
-      return res.send(response(baseResponse.SIGNUP_CHECK_PASSWORD_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_CHECK_PASSWORD_EMPTY));
   else if (!nickname)
-      return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
   else if (!name)
-      return res.send(response(baseResponse.SIGNUP_NAME_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_NAME_EMPTY));
   else if (!birth)
-      return res.send(response(baseResponse.SIGNUP_BIRTH_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_BIRTH_EMPTY));
   else if (!email)
-      return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_EMAIL_EMPTY));
   else if (!agreed_to_terms)
-      return res.send(response(baseResponse.SIGNUP_AGREED_TO_TERMS_EMPTY));
+      return res.status(400).json(response(baseResponse.SIGNUP_AGREED_TO_TERMS_EMPTY));
   
   // 오류 체크
   if (!validateUsername(id))
-      return res.send(response(baseResponse.SIGNUP_ID_ERROR));
+      return res.status(400).json(response(baseResponse.SIGNUP_ID_ERROR));
   else if (!validatePassword(password))
-      return res.send(response(baseResponse.SIGNUP_PASSWORD_ERROR));
+      return res.status(400).json(response(baseResponse.SIGNUP_PASSWORD_ERROR));
   else if (password != check_password) 
-      return res.send(response(baseResponse.SIGNUP_CHECK_PASSWORD_ERROR));
+      return res.status(400).json(response(baseResponse.SIGNUP_CHECK_PASSWORD_ERROR));
   else if (nickname.length > 7)
-      return res.send(response(baseResponse.SIGNUP_NICKNAME_LENGTH));
+      return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_LENGTH));
   else if (name.length > 7)
-      return res.send(response(baseResponse.SIGNUP_NAME_LENGTH));
+      return res.status(400).json(response(baseResponse.SIGNUP_NAME_LENGTH));
   else if (!isValidDate(birth))
-      return res.send(response(baseResponse.SIGNUP_BIRTH_ERROR));
+      return res.status(400).json(response(baseResponse.SIGNUP_BIRTH_ERROR));
   else if (!validateEmail(email))
-      return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR));
+      return res.status(400).json(response(baseResponse.SIGNUP_EMAIL_ERROR));
 
   // const signUpResponse = await userService.createUser(
   //   id, password, nickname, name, birth, email
