@@ -26,22 +26,22 @@ exports.patchPassword = async function (req, res) {
     const password_new = req.body.password_new;
     const password_check = req.body.password_check;
 
-    if (!userid) return res.send(response(baseResponse.EDITING_USERID_EMPTY));
+    if (!userid) return res.status(400).json(response(baseResponse.EDITING_USERID_EMPTY));
 
     // 비밀번호 입력값 빈칸 오류
-    if (!password_present) return res.send(response(baseResponse.EDITING_PASSWORD_PRESENT_EMPTY));
-    if (!password_new) return res.send(response(baseResponse.EDITING_PASSWORD_NEW_EMPTY));
-    if (!password_check) return res.send(response(baseResponse.EDITING_PASSWORD_CHECK_EMPTY));
+    if (!password_present) return res.status(400).json(response(baseResponse.EDITING_PASSWORD_PRESENT_EMPTY));
+    if (!password_new) return res.status(400).json(response(baseResponse.EDITING_PASSWORD_NEW_EMPTY));
+    if (!password_check) return res.status(400).json(response(baseResponse.EDITING_PASSWORD_CHECK_EMPTY));
 
-    if (password_present.length > 20) return res.send(response(baseResponse.EDITING_PASSWORD_PRESENT_LENGTH));
-    if (password_new.length > 20) return res.send(response(baseResponse.EDITING_PASSWORD_NEW_LENGTH));
-    if (password_check.length > 20) return res.send(response(baseResponse.EDITING_PASSWORD_CHECK_LENGTH));
+    if (password_present.length > 20) return res.status(400).json(response(baseResponse.EDITING_PASSWORD_PRESENT_LENGTH));
+    if (password_new.length > 20) return res.status(400).json(response(baseResponse.EDITING_PASSWORD_NEW_LENGTH));
+    if (password_check.length > 20) return res.status(400).json(response(baseResponse.EDITING_PASSWORD_CHECK_LENGTH));
 
-    if (!validatePassword(password_new)) return res.send(response(baseResponse.SIGNUP_PASSWORD_ERROR));
+    if (!validatePassword(password_new)) return res.status(400).json(response(baseResponse.SIGNUP_PASSWORD_ERROR));
 
     // 비밀번호 입력과 재입력값 비교
     if (password_new != password_check) 
-        return res.send(response(baseResponse.EDITING_PASSWORD_DIFFERENT));
+        return res.status(400).json(response(baseResponse.EDITING_PASSWORD_DIFFERENT));
     else{
         const updatePasswordResponse = await mypageService.editPassword(
             password_present,

@@ -231,7 +231,7 @@ exports.login = async function (req, res) {
 
   // 유저 정보가 없는 경우
   if (!user) {
-    return res.status(404).json({ error: '아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.' });
+    return res.status(400).json({ error: '아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.' });
   }
 
   const user_state = await userProvider.getStateById(id);
@@ -240,7 +240,7 @@ exports.login = async function (req, res) {
 
   // 유저의 state가 0인 경우 (로그인 차단)
   if (stateValues[0] === 0) {
-    return res.status(403).json({ error: '해당 유저는 탈퇴 완료된 유저입니다.' });
+    return res.status(400).json({ error: '해당 유저는 탈퇴 완료된 유저입니다.' });
   }
 
   // userService를 통해 로그인 로직 처리
