@@ -10,10 +10,10 @@ module.exports = {
   
     //request error
     SIGNUP_ID_EMPTY : { "isSuccess": false, "code": 2001, "message":"아이디를 입력해주세요" },
-    SIGNUP_ID_ERROR : { "isSuccess": false, "code": 2002, "message":"4~20자리/영문,숫자,특수문자’_’ 만 사용가능" },
+    SIGNUP_ID_ERROR : { "isSuccess": false, "code": 2002, "message":"아이디는 4~20자리/영문,숫자,특수문자’_’만 사용가능합니다." },
     SIGNUP_PASSWORD_EMPTY : { "isSuccess": false, "code": 2003, "message": "비밀번호를 입력해주세요." },
     SIGNUP_CHECK_PASSWORD_EMPTY : { "isSuccess": false, "code": 2004, "message": "비밀번호를 한번 더 입력해주세요." },
-    SIGNUP_PASSWORD_ERROR : { "isSuccess": false, "code": 2005, "message":"8~16자리/영문 대소문자,숫자,특수문자 조합" },
+    SIGNUP_PASSWORD_ERROR : { "isSuccess": false, "code": 2005, "message":"비밀번호는 8~16자리/영문 대소문자,숫자,특수문자 조합으로 설정해주세요." },
     SIGNUP_CHECK_PASSWORD_ERROR : { "isSuccess": false, "code": 2006, "message": "비밀번호가 일치하지 않습니다." }, 
     SIGNUP_NICKNAME_EMPTY : { "isSuccess": false, "code": 2007, "message":"닉네임을 입력해주세요." },
     SIGNUP_NICKNAME_LENGTH : { "isSuccess": false,"code": 2010,"message":"닉네임을 7자리 이하로 입력해주세요." },
