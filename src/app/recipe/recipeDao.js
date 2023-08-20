@@ -93,6 +93,7 @@ async function selectFavorite(connection, userid, recipe_id){
     select id from FavoriteRecipes where userid=${userid} and recipe_id = ${recipe_id};
     `;
     const FavoriteRecipe_existence = await connection.query(selectFavoriteQuery);
+    
     return FavoriteRecipe_existence[0];
 }
 

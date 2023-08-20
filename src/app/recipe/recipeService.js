@@ -32,7 +32,7 @@ exports.favoriteRecipe = async function(userid,recipe_id){
         const connection = await pool.getConnection(async (conn)=> conn);
 
         const favoriteexistenceResult = await recipeDao.selectFavorite(connection, userid,recipe_id);
-        console.log(favoriteexistenceResult);
+        //console.log(favoriteexistenceResult);
         if(favoriteexistenceResult[0] == null) {
             const favoriteResult = await recipeDao.insertFavorite(connection, userid,recipe_id);
         } else {

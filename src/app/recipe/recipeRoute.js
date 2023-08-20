@@ -14,6 +14,9 @@ module.exports = function (app) {
     //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail/:recipe_id", recipe.GetDetail);
 
+    //30. 토큰 + 레시피 상세 페이지 조회 
+    app.get("/recipe/detail/login/:recipe_id", jwtMiddleware,recipe.GetDetailwithToken);
+
     //21. 레시피 찜하기 
     app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);  
 
