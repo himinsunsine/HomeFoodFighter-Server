@@ -65,7 +65,7 @@ exports.getFavorite = async function (req, res) {
     const userid = req.verifiedToken.userId;
 
     const myFavoriteResult = await mypageProvider.getFavorites(userid);
-    if(signUpResponse.code==2104)
+    if(myFavoriteResult.code==2104)
         return res.status(400).json(baseResponse.FAVORITES_EMPTY);    
     return res.send(myFavoriteResult);
     
