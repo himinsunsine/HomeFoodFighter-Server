@@ -252,11 +252,11 @@ exports.login = async function (req, res) {
   // userService를 통해 로그인 로직 처리
   const signInResponse = await userService.postSignIn(id, password);
 
-  if(signUpResponse.code==3001)
+  if(signInResponse.code==3001)
     return res.status(400).json(baseResponse.SIGNIN_ID_WRONG);
-  if(signUpResponse.code==3002)
+  if(signInResponse.code==3002)
     return res.status(400).json(baseResponse.SIGNIN_PASSWORD_WRONG);
-  if(signUpResponse.code==3006)
+  if(signInResponse.code==3006)
     return res.status(400).json(baseResponse.SIGNIN_UNSIGN_USER);
     
 

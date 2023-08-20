@@ -80,10 +80,25 @@ exports.Deletefavorite = async function (req,res){
  */
 exports.GetDetail= async function (req, res){
     const recipe_id = req.params.recipe_id;
-    console.log(recipe_id);
-
     
     const recipeResult = await recipeProvider.getDetail(recipe_id);
+    if (recipeResult.code==3101){
+        return res.status(400).json(errResponse(baseResponse.RECIPE_ID_EMPTY));
+    }
+    return res.send(recipeResult);
+};
+
+/**
+ * API No.30
+ * API Name : 토큰 + 레시피 상세 페이지 조회
+ * [GET] /recipe/detail/login/:recipe_id
+ */
+exports.GetDetailwithToken= async function (req, res){
+    const recipe_id = req.params.recipe_id;
+    const userid = req.verifiedToken.userId;
+
+    
+    const recipeResult = await recipeProvider.getDetailwithToken(recipe_id,userid);
     if (recipeResult.code==3101){
         return res.status(400).json(errResponse(baseResponse.RECIPE_ID_EMPTY));
     }
