@@ -140,7 +140,7 @@ ORDER BY COUNT(DISTINCT CASE WHEN D.Detailingre_type = 1 THEN D.ingre_id END) DE
 //API.26 레시피의 리뷰 조회
 async function selectAllReview(connection, recipe_id){
     const selectAllReviewQuery = `
-    select review_id,recipe_id, review.userid, U.nickname, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
+    select review_id, recipe_id, review.userid, U.nickname, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
 
     ;`;
     const revieweRows = await connection.query(selectAllReviewQuery);
@@ -150,7 +150,7 @@ async function selectAllReview(connection, recipe_id){
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
     const RecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
@@ -166,7 +166,7 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 
     const KoreaRecipeQuery = `
 
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
@@ -181,7 +181,7 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 //API.35 음식이름으로 레시피 조회
 async function FoodNameRecipeInquiry(connection, recipe_name){
     const FoodNameRecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
