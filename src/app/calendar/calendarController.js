@@ -50,6 +50,10 @@ exports.PostFavorites = async function (req, res) {
     const Info = [userid, date, recipes,meal_time];
 
     const calendarInfoResult = await calendarService.postCalendar(Info);
+
+    if (calendarInfoResult.code == 3103){
+        return res.status(400).json(errResponse(baseResponse.FAVORITE_NOT_EXISTENCE));
+    }
     return res.send(calendarInfoResult);
 
 };
