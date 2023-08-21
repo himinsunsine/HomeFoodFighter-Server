@@ -13,7 +13,7 @@ async function insertReview(connection, Info) {
 //API.15 인기 레시피 조회
 async function avgStar(connection){
     const avgStarQuery = `
-    SELECT R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url, AVG(star)
+    SELECT R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url, AVG(star) as star
     FROM Recipe R
     JOIN review RV ON R.recipe_id = RV.recipe_id
     GROUP BY R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url
@@ -26,7 +26,7 @@ async function avgStar(connection){
 //상위 x개 인기 레시피 조회
 async function avgStarLimit(connection, limit){
     const avgStarQuery = `
-    SELECT RV.recipe_id, avg(star), R.recipe_name, R.img_url FROM review RV join Recipe R GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${limit};
+    SELECT RV.recipe_id, avg(star) as star, R.recipe_name, R.img_url FROM review RV join Recipe R GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${limit};
     `;
     const [recipeRows] = await connection.query(avgStarQuery);
     return recipeRows;
