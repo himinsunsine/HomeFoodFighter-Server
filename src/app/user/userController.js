@@ -127,7 +127,8 @@ exports.checkDuplicateEmail = async function (req, res) {
  */
 exports.patchNickname = async function (req, res) {
   const { nickname } = req.params;
-
+  const userid = req.verifiedToken.userId;
+  
   // 유효성 검사 등 추가적인 로직 수행
   if (!nickname)
     return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
@@ -139,7 +140,7 @@ exports.patchNickname = async function (req, res) {
       if(isDuplicateNickname==0){
         const updateNicknameResponse = await userService.editNickname(
           nickname,
-          userid,
+          userid
         )
         return res.send(updateNicknameResponse);
       }

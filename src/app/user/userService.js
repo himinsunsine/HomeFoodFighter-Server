@@ -246,7 +246,7 @@ exports.editNickname = async function (nickname, userid) {
         console.log(`${userid}의 닉네임 수정 완료`);
         connection.release();
 
-        return res.send(response(baseResponse.SUCCESS));
+        return response(response(baseResponse.SUCCESS));
 
     } catch (err) {
         logger.error(`App - editUserNickname Service error\n: ${err.message}`);
