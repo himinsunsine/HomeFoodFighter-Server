@@ -126,33 +126,30 @@ exports.checkDuplicateEmail = async function (req, res) {
  * body : nickname
  */
 exports.patchNickname = async function (req, res) {
+  const { nickname } = req.params;
 
-  const userid = req.verifiedToken.userId;
+  // 유효성 검사 등 추가적인 로직 수행
+  if (!nickname)
+    return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+  if (nickname.length > 7)
+    return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_LENGTH));  
 
-  const nickname = req.body.nickname;
-
-  if (!userid) return res.status(400).json(response(baseResponse.EDITING_USERID_EMPTY));
-
-  // 닉네임 입력값 오류
-  if (!nickname) return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
-  if (nickname.length > 7) return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_LENGTH));
-
-  // 닉네임 중복 확인 API 호출
   try {
-    const nicknameDuplicateResponse = await userService.checkDuplicateNickname(nickname);
-    if (nicknameDuplicateResponse>0)
-      return res.status(400).json(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
-    else{
+      const isDuplicateNickname = await userService.checkDuplicateNickname(nickname);
+      if(isDuplicateNickname==0){
         const updateNicknameResponse = await userService.editNickname(
-            nickname,
-            userid,
-        );    
+          nickname,
+          userid,
+        )
         return res.send(updateNicknameResponse);
-    }
+      }
+      else
+        return res.status(400).json(response(baseResponse.CANT_NICKNAME));
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+      res.status(500).json({ error: err.message });
   }
 };
+
 
 
 

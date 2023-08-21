@@ -66,6 +66,8 @@ module.exports = {
     KAKAO_NAME_EMPTY : { "isSuccess": false, "code": 3203, "message": "KAKAO 사용자 이름이 존재하지 않습니다."},
     KAKAO_BIRTY_EMPTY : { "isSuccess": false, "code": 3204, "message": "KAKAO 사용자 생일이 존재하지 않습니다."},
 
+    CANT_NICKNAME : { "isSuccess": false, "code": 3301, "message":"사용 불가능한 닉네임 입니다." },
+
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
     SERVER_ERROR : { "isSuccess": false, "code": 4001, "message": "서버 에러"},
