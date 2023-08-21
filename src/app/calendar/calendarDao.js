@@ -24,6 +24,16 @@ async function insertCalendarFavorites(connection, Info) {
     return CalendarFavoritesRows;
 };
 
+//찜여부 조회하기
+async function selectFavorite(connection, userid, recipe_id){
+    const selectFavoriteQuery = `
+    select id from FavoriteRecipes where userid=${userid} and recipe_id = ${recipe_id};
+    `;
+    const FavoriteRecipe_existence = await connection.query(selectFavoriteQuery);
+    
+    return FavoriteRecipe_existence[0];
+}
+
 //API.18 캘린더에서 직접 추가하기
 async function insertRecipe(connection, userid, name, date, meal_time) {
     
@@ -49,4 +59,5 @@ module.exports={
     insertRecipe,
     insertCalendarFavorites,
     deleteCalendarWeek,
+    selectFavorite,
 }
