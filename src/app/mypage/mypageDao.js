@@ -105,6 +105,17 @@ async function changeState(connection, userid) {
     return updateStateRow;
 }
 
+//API.30 회원정보조회
+async function selectUserinfo(connection, userid) {
+    const selectUserinfoQuery = `
+                    SELECT nickname, name, userid, image
+                    FROM User
+                    WHERE userid=${userid};
+                    `;
+    const [userinfoRows] = await connection.query(selectUserinfoQuery);
+    return userinfoRows
+}
+
 module.exports = {
     updatePasswordInfo,
     selectUserPassword,
@@ -113,4 +124,5 @@ module.exports = {
     changeState,
     selectMyFavorites,
     deleteMyReview,
+    selectUserinfo,
 };  
