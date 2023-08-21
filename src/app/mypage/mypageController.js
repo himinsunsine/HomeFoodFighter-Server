@@ -161,3 +161,16 @@ exports.LogoutUser  = async function (req, res) {
     return res.status(200).json({ message: '로그아웃되었습니다.' });
   };
   
+
+
+  /**
+ * API No. 31
+ * API Name : 유저 정보 조회 API
+ * [GET] /mypages/userinfo
+ */
+exports.inquiryuser = async function (req, res) {
+    const userid = req.verifiedToken.userId;
+
+    const myuserResult = await mypageProvider.getuserinfo(userid);
+    return res.send(response(baseResponse.SUCCESS, myuserResult));
+};
