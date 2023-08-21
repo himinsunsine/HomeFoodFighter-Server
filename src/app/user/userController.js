@@ -120,6 +120,43 @@ exports.checkDuplicateEmail = async function (req, res) {
 };
 
 /**
+ * API No. 4
+ * API Name : 닉네임 변경 API
+ * [PATCH] /users/nickname
+ * body : nickname
+ */
+exports.patchNickname = async function (req, res) {
+
+  const userid = req.verifiedToken.userId;
+
+  const nickname = req.body.nickname;
+
+  if (!userid) return res.status(400).json(response(baseResponse.EDITING_USERID_EMPTY));
+
+  // 닉네임 입력값 오류
+  if (!nickname) return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+  if (nickname.length > 7) return res.status(400).json(response(baseResponse.SIGNUP_NICKNAME_LENGTH));
+
+  // 닉네임 중복 확인 API 호출
+  try {
+    const nicknameDuplicateResponse = await userService.checkDuplicateNickname(nickname);
+    if (nicknameDuplicateResponse>0)
+      return res.status(400).json(response(baseResponse.SIGNUP_DUPLICATED_NICKNAME));
+    else{
+        const updateNicknameResponse = await userService.editNickname(
+            nickname,
+            userid,
+        );    
+        return res.send(updateNicknameResponse);
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+/**
  * API No. 2
  * API Name : 회원 가입 API
  * [POST] /users/signup
