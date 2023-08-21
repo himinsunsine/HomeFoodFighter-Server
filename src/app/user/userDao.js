@@ -146,6 +146,19 @@ async function kakaosignUp(connection, Info) {
 }
 
 
+async function updateNicknameInfo(connection, updateNicknameInfoParams) {
+    const updateNicknameQuery = `
+    UPDATE User 
+    SET nickname = ?, updatedAt = now()
+    WHERE (userid = ?);`;
+
+    const updateNicknameRow = await connection.query(updateNicknameQuery, updateNicknameInfoParams);
+    return updateNicknameRow;
+}
+
+
+
+
 module.exports = {
     insertUser,
     selectUserId,
@@ -159,4 +172,5 @@ module.exports = {
     getStateById,
     kakaogetUserById,
     kakaosignUp,
+    updateNicknameInfo,
 };  

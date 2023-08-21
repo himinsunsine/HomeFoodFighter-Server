@@ -234,3 +234,22 @@ exports.signInKakaotoken = async (kakaoToken) => {
         return response(baseResponse.SUCCESS, {'user_id' : userInfoRows[0].userId, 'jwt': token});
     
 };
+
+
+
+exports.editNickname = async function (nickname, userid) {
+    try {
+        const updateNicknameInfoParams = [nickname, userid];
+        const connection = await pool.getConnection(async (conn) => conn);
+        const editNicknameResult = await userDao.updateNicknameInfo(connection, updateNicknameInfoParams);
+
+        console.log(`${userid}의 닉네임 수정 완료`);
+        connection.release();
+
+        return res.send(response(baseResponse.SUCCESS));
+
+    } catch (err) {
+        logger.error(`App - editUserNickname Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
