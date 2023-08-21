@@ -25,5 +25,5 @@ module.exports = function (app) {
     app.post('/users/kakao/signin', user.signInKakao);
 
     // 닉네임 변경
-    app.post('/users/nickname', jwtMiddleware, user.patchNickname);
+    app.post('/users/:nickname', jwtMiddleware, user.patchNickname);
   };
