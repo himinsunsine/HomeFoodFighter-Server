@@ -13,7 +13,7 @@ async function insertReview(connection, Info) {
 //API.15 인기 레시피 조회
 async function avgStar(connection){
     const avgStarQuery = `
-    SELECT R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url, AVG(star) as star
+    SELECT R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url, AVG(star) as star, COUNT(RV.review_id) as review_count
     FROM Recipe R
     JOIN review RV ON R.recipe_id = RV.recipe_id
     GROUP BY R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url
