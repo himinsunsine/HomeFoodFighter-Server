@@ -120,7 +120,7 @@ WHERE R.recipe_id IN (
     WHERE ingre_id IN (${ingredient_id.map(id => '?').join(', ')})
     AND Detailingre_type = 1
     GROUP BY recipe_id
-    HAVING COUNT(DISTINCT A.ingre_id) = ${length_ingredient_id} OR COUNT(DISTINCT A.ingre_id) = ${length_ingredient_id - 1}
+    HAVING COUNT(DISTINCT A.ingre_id) BETWEEN ${length_ingredient_id - 50} AND ${length_ingredient_id}
 )
 AND NOT EXISTS (
     SELECT 1
