@@ -96,7 +96,7 @@ async function selectFavorite(connection, userid, recipe_id){
     
     return FavoriteRecipe_existence[0];
 }
-
+/*
 //API.25 가능한 레시피 조회
 async function possibleRecipeInquiry(connection, ingredient_id){
     const length_ingredient_id = ingredient_id.length;
@@ -132,6 +132,24 @@ AND NOT EXISTS (
 GROUP BY R.recipe_id, U.name, R.recipe_name, R.summary, R.img_url
 ORDER BY COUNT(DISTINCT CASE WHEN D.Detailingre_type = 1 THEN D.ingre_id END) DESC;
 
+    `; 
+    const [recipeRows] = await connection.query(possibleRecipeQuery, ingredient_id.concat(ingredient_id));
+    return recipeRows;
+}*/
+
+//API.25 가능한 레시피 조회
+async function possibleRecipeInquiry(connection, ingredient_id){
+    const length_ingredient_id = ingredient_id.length;
+    const possibleRecipeQuery = `
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
+    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
+    FROM Recipe R
+    LEFT JOIN User U ON R.userid = U.userid
+    WHERE R.recipe_id IN ( Select recipe_id from DetailIngredient where ingre_id IN (${ingredient_id.map(id => '?').join(', ')})
+    AND Detailingre_type = 1
+    GROUP BY recipe_id
+    )
     `; 
     const [recipeRows] = await connection.query(possibleRecipeQuery, ingredient_id.concat(ingredient_id));
     return recipeRows;
