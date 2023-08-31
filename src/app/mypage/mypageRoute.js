@@ -22,4 +22,7 @@ module.exports = function (app) {
 
   // 로그아웃 API
   app.get('/users/logout', jwtMiddleware, mypage.LogoutUser);
+
+  //31. 회원 정보 조회 API
+  app.get('/mypage/userinfo', jwtMiddleware, mypage.inquiryuser);
 };

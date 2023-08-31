@@ -34,7 +34,7 @@ exports.FillRefrigerator = async function (req, res) {
 /**
  * API No. 24
  * API Name : 냉장고 비우기 API
- * [POST] /refrigerator/empty/:ingre_type
+ * [POST] /refrigerator/empty
  */
 exports.EmptyRefrigerator = async function (req, res) {
     const userid = req.verifiedToken.userId;

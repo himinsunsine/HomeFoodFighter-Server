@@ -42,15 +42,49 @@ exports.getDetail = async function(recipe_id){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
         const recipe_existence = await recipeDao.CheckRecipeExistence(connection,recipe_id);
-        if (recipe_existence==null){
-            return res.send(response(baseResponse.RECIPE_ID_EMPTY));
+        console.log(recipe_existence);
+        if (recipe_existence[0]==null){
+            return errResponse(baseResponse.RECIPE_ID_EMPTY);
         } else{
             const recipeInfoResult = await recipeDao.selectDetailInfo(connection, recipe_id);
             const recipeProcessResult = await recipeDao.selectDetailProcess(connection, recipe_id);
             const recipeIngreResult = await recipeDao.Detailingre(connection,recipe_id);
+            
             connection.release();
 
             recipeInfo=[recipeInfoResult, recipeProcessResult, recipeIngreResult];
+            return response(baseResponse.SUCCESS,recipeInfo);
+        }
+
+        
+    }
+    catch(err){
+        logger.error(`App - getRecipeInfo Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+
+//30. 토큰 + 상세 레시피 조회
+exports.getDetailwithToken= async function(recipe_id,userid){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+        const recipe_existence = await recipeDao.CheckRecipeExistence(connection,recipe_id);
+        var favoriteResult = 0
+        if (recipe_existence[0]==null){
+            return errResponse(baseResponse.RECIPE_ID_EMPTY);
+        } else{
+            const recipeInfoResult = await recipeDao.selectDetailInfo(connection, recipe_id);
+            const recipeProcessResult = await recipeDao.selectDetailProcess(connection, recipe_id);
+            const recipeIngreResult = await recipeDao.Detailingre(connection,recipe_id);
+            const selectFavoriteResult = await recipeDao.selectFavorite(connection,userid,recipe_id);
+            connection.release();
+            if (selectFavoriteResult[0]==null){
+                favoriteResult = false
+            }
+            else{
+                favoriteResult = true
+            }
+            recipeInfo=[recipeInfoResult, recipeProcessResult, recipeIngreResult,favoriteResult];
             return response(baseResponse.SUCCESS,recipeInfo);
         }
 

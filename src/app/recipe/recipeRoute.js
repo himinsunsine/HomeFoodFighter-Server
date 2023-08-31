@@ -14,11 +14,14 @@ module.exports = function (app) {
     //20. 레시피 상세 페이지 조회 
     app.get("/recipe/detail/:recipe_id", recipe.GetDetail);
 
+    //30. 토큰 + 레시피 상세 페이지 조회 
+    app.get("/recipe/detail/login/:recipe_id", jwtMiddleware,recipe.GetDetailwithToken);
+
     //21. 레시피 찜하기 
     app.post("/recipe/favorite/:recipe_id", jwtMiddleware, recipe.Postfavorite);  
 
     //25. 가능한 레시피 조회 API
-    app.get('/recipe/possible', jwtMiddleware, recipe.possibleRecipe);
+    app.get('/recipe/possible', recipe.possibleRecipe);
 
     //26. 레시피의 리뷰 조회
     app.get("/recipe/review/:recipe_id", recipe.getReview);
@@ -27,5 +30,5 @@ module.exports = function (app) {
     app.get("/recipe", recipe.GetallRecipe);
 
     //35. 음식이름으로 레시피 조회
-    app.get("/recipe/name", jwtMiddleware, recipe.GetFoodNameRecipe);  
+    app.get("/recipe/name", recipe.GetFoodNameRecipe);  
 };

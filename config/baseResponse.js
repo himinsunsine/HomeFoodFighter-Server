@@ -10,10 +10,10 @@ module.exports = {
   
     //request error
     SIGNUP_ID_EMPTY : { "isSuccess": false, "code": 2001, "message":"아이디를 입력해주세요" },
-    SIGNUP_ID_ERROR : { "isSuccess": false, "code": 2002, "message":"4~20자리/영문,숫자,특수문자’_’ 만 사용가능" },
+    SIGNUP_ID_ERROR : { "isSuccess": false, "code": 2002, "message":"아이디는 4~20자리/영문,숫자,특수문자’_’만 사용가능합니다." },
     SIGNUP_PASSWORD_EMPTY : { "isSuccess": false, "code": 2003, "message": "비밀번호를 입력해주세요." },
     SIGNUP_CHECK_PASSWORD_EMPTY : { "isSuccess": false, "code": 2004, "message": "비밀번호를 한번 더 입력해주세요." },
-    SIGNUP_PASSWORD_ERROR : { "isSuccess": false, "code": 2005, "message":"8~16자리/영문 대소문자,숫자,특수문자 조합" },
+    SIGNUP_PASSWORD_ERROR : { "isSuccess": false, "code": 2005, "message":"비밀번호는 8~16자리/영문 대소문자,숫자,특수문자 조합으로 설정해주세요." },
     SIGNUP_CHECK_PASSWORD_ERROR : { "isSuccess": false, "code": 2006, "message": "비밀번호가 일치하지 않습니다." }, 
     SIGNUP_NICKNAME_EMPTY : { "isSuccess": false, "code": 2007, "message":"닉네임을 입력해주세요." },
     SIGNUP_NICKNAME_LENGTH : { "isSuccess": false,"code": 2010,"message":"닉네임을 7자리 이하로 입력해주세요." },
@@ -44,6 +44,7 @@ module.exports = {
     TYPE_CHECK : { "isSuccess": false, "code": 2201, "message": "타입을 1이상 7이하의 값으로 입력해주세요."},
     INGRE_CHECK : { "isSuccess": false, "code": 2202, "message": "재료가 선택되지 않았습니다 재료를 선택해 주세요."},
     MEAL_TIME_EMPTY : { "isSuccess": false, "code": 2203, "message": "아침, 점심, 저녁중 하나를 선택해주세요."},
+    REIPCE_NAME_EMPTY : { "isSuccess": false, "code": 2203, "message": "레시피 이름이 입력되지 않았습니다."},
 
     // response error
     SIGNIN_ID_WRONG : { "isSuccess": false, "code": 3001, "message": "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요." },
@@ -60,6 +61,12 @@ module.exports = {
     FAVORITE_EXISTENCE: { "isSuccess": false, "code": 3102, "message": "이미 찜한 레시피입니다."},
     FAVORITE_NOT_EXISTENCE : { "isSuccess": false, "code": 3103, "message": "찜한 레시피가 아닙니다."},
     CALENDAR_RECIPE_EMPTY : { "isSuccess": false, "code": 3103, "message": "해당 켈린더에 레시피가 존재하지 않습니다."},
+    KAKAO_ID_EMPTY : { "isSuccess": false, "code": 3201, "message": "KAKAO ID가 존재하지 않습니다."},
+    KAKAO_EMAIL_EMPTY : { "isSuccess": false, "code": 3202, "message": "KAKAO email이 존재하지 않습니다."},
+    KAKAO_NAME_EMPTY : { "isSuccess": false, "code": 3203, "message": "KAKAO 사용자 이름이 존재하지 않습니다."},
+    KAKAO_BIRTY_EMPTY : { "isSuccess": false, "code": 3204, "message": "KAKAO 사용자 생일이 존재하지 않습니다."},
+
+    CANT_NICKNAME : { "isSuccess": false, "code": 3301, "message":"사용 불가능한 닉네임 입니다." },
 
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},

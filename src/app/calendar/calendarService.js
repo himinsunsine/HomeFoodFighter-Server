@@ -30,7 +30,11 @@ exports.postCalendar = async function(Info){
     try{
         
         const connection = await pool.getConnection(async (conn)=> conn);
-
+        const favoriteexistenceResult = await calendarDao.selectFavorite(connection, Info[0], Info[2]);
+        //console.log(favoriteexistenceResult);
+        if(favoriteexistenceResult[0] == null) {
+            return errResponse(baseResponse.FAVORITE_NOT_EXISTENCE);
+        } 
         const calendarResult = await calendarDao.insertCalendarFavorites(connection, Info);
         connection.release();
 
@@ -53,6 +57,7 @@ exports.deleteRecipe = async function(Info){
         console.log(calendarResult);
 
         if (calendarResult[0].affectedRows === 0) {
+            
             return errResponse(baseResponse.CALENDAR_RECIPE_EMPTY);
         }
         return response(baseResponse.SUCCESS);

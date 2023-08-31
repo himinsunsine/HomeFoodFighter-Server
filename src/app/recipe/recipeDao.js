@@ -13,7 +13,7 @@ async function insertReview(connection, Info) {
 //API.15 인기 레시피 조회
 async function avgStar(connection){
     const avgStarQuery = `
-    SELECT R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url, AVG(star)
+    SELECT R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url, AVG(star) as star
     FROM Recipe R
     JOIN review RV ON R.recipe_id = RV.recipe_id
     GROUP BY R.recipe_id, R.recipe_name, R.summary, R.userid, R.img_url
@@ -26,7 +26,7 @@ async function avgStar(connection){
 //상위 x개 인기 레시피 조회
 async function avgStarLimit(connection, limit){
     const avgStarQuery = `
-    SELECT RV.recipe_id, avg(star), R.recipe_name, R.img_url FROM review RV join Recipe R GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${limit};
+    SELECT RV.recipe_id, avg(star) as star, R.recipe_name, R.img_url FROM review RV join Recipe R GROUP BY recipe_id ORDER BY AVG(star) DESC LIMIT ${limit};
     `;
     const [recipeRows] = await connection.query(avgStarQuery);
     return recipeRows;
@@ -64,7 +64,7 @@ async function selectDetailProcess(connection, recipe_id){
 //레시피의 재료 조회
 async function Detailingre(connection, recipe_id){
     const detailingreQuery=`
-    select recipe_id, DetailIngre_type, ingre_name, ingre_english, amount from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ${recipe_id};
+    select recipe_id, i.ingre_id, DetailIngre_type, ingre_name, ingre_english, amount from DetailIngredient join ingredient i on i.ingre_id = DetailIngredient.ingre_id where recipe_id = ${recipe_id};
     `;
     const [recipeingre]= await connection.query(detailingreQuery);
     return recipeingre;
@@ -93,9 +93,10 @@ async function selectFavorite(connection, userid, recipe_id){
     select id from FavoriteRecipes where userid=${userid} and recipe_id = ${recipe_id};
     `;
     const FavoriteRecipe_existence = await connection.query(selectFavoriteQuery);
+    
     return FavoriteRecipe_existence[0];
 }
-
+/*
 //API.25 가능한 레시피 조회
 async function possibleRecipeInquiry(connection, ingredient_id){
     const length_ingredient_id = ingredient_id.length;
@@ -119,7 +120,7 @@ WHERE R.recipe_id IN (
     WHERE ingre_id IN (${ingredient_id.map(id => '?').join(', ')})
     AND Detailingre_type = 1
     GROUP BY recipe_id
-    HAVING COUNT(DISTINCT A.ingre_id) = ${length_ingredient_id} OR COUNT(DISTINCT A.ingre_id) = ${length_ingredient_id - 1}
+    HAVING COUNT(DISTINCT A.ingre_id) BETWEEN ${length_ingredient_id - 50} AND ${length_ingredient_id}
 )
 AND NOT EXISTS (
     SELECT 1
@@ -134,12 +135,30 @@ ORDER BY COUNT(DISTINCT CASE WHEN D.Detailingre_type = 1 THEN D.ingre_id END) DE
     `; 
     const [recipeRows] = await connection.query(possibleRecipeQuery, ingredient_id.concat(ingredient_id));
     return recipeRows;
+}*/
+
+//API.25 가능한 레시피 조회
+async function possibleRecipeInquiry(connection, ingredient_id){
+    const length_ingredient_id = ingredient_id.length;
+    const possibleRecipeQuery = `
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
+    (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
+    FROM Recipe R
+    LEFT JOIN User U ON R.userid = U.userid
+    WHERE R.recipe_id IN ( Select recipe_id from DetailIngredient where ingre_id IN (${ingredient_id.map(id => '?').join(', ')})
+    AND Detailingre_type = 1
+    GROUP BY recipe_id
+    )
+    `; 
+    const [recipeRows] = await connection.query(possibleRecipeQuery, ingredient_id.concat(ingredient_id));
+    return recipeRows;
 }
 
 //API.26 레시피의 리뷰 조회
 async function selectAllReview(connection, recipe_id){
     const selectAllReviewQuery = `
-    select review_id,recipe_id, review.userid, U.nickname, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
+    select review_id, recipe_id, review.userid, U.nickname, content, U.image from review join User U on U.userid = review.userid where recipe_id= ${recipe_id};
 
     ;`;
     const revieweRows = await connection.query(selectAllReviewQuery);
@@ -149,7 +168,7 @@ async function selectAllReview(connection, recipe_id){
 //API.34 레시피 전체 조회
 async function allRecipeInquiry(connection) {
     const RecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
@@ -165,7 +184,7 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 
     const KoreaRecipeQuery = `
 
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R
@@ -180,7 +199,7 @@ async function TypeRecipeInquiry(connection, RecipeType) {
 //API.35 음식이름으로 레시피 조회
 async function FoodNameRecipeInquiry(connection, recipe_name){
     const FoodNameRecipeQuery = `
-    SELECT U.name as user_name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
+    SELECT U.name, R.recipe_name, R.summary, R.img_url, R.type_class, R.recipe_id,
     (SELECT COUNT(*) FROM review V WHERE R.recipe_id = V.recipe_id) AS review_count,
     (SELECT AVG(star) FROM review V WHERE R.recipe_id = V.recipe_id) AS star
     FROM Recipe R

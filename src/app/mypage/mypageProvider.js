@@ -58,3 +58,16 @@ exports.getRecipes = async function(userid){
       return errResponse(baseResponse.DB_ERROR);
   }
 }
+
+exports.getuserinfo = async function(userid){
+    try{
+        const connection = await pool.getConnection(async (conn)=>conn);
+        const myuserinfo = await mypageDao.selectUserinfo(connection, userid);
+        connection.release();
+        return myuserinfo;
+    }
+    catch(err){
+        logger.error(`App - getRecipes Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+  }

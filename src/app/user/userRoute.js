@@ -22,5 +22,8 @@ module.exports = function (app) {
     app.get('/users/check/duplicate/email/:email', user.checkDuplicateEmail);
 
     // kakaologin API
-    app.post('/users/kakao/signin', user.signInKakao)
+    app.post('/users/kakao/signin', user.signInKakao);
+
+    // 닉네임 변경
+    app.post('/users/:nickname', jwtMiddleware, user.patchNickname);
   };

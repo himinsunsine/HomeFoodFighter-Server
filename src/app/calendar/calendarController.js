@@ -40,15 +40,20 @@ exports.PostFavorites = async function (req, res) {
     const userid = req.verifiedToken.userId;
     const date = req.params.date;
     const recipes = req.body.recipes;
+    const meal_time = req.body.meal_time;
 
     // date 값이 유효한 날짜 형식인지 확인합니다.
     if (!isValidDate(date)) {
         return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
     }
 
-    const Info = [userid, date, recipes];
+    const Info = [userid, date, recipes,meal_time];
 
     const calendarInfoResult = await calendarService.postCalendar(Info);
+
+    if (calendarInfoResult.code == 3103){
+        return res.status(400).json(errResponse(baseResponse.FAVORITE_NOT_EXISTENCE));
+    }
     return res.send(calendarInfoResult);
 
 };
@@ -71,7 +76,7 @@ exports.PostSelf = async function (req, res) {
     }
 
     if(!name){
-        return res.send(errResponse(baseResponse.RECIPE_NAME_EMPTY));
+        return res.status(400).json(errResponse(baseResponse.RECIPE_NAME_EMPTY));
     }
 
     const weekInfoResult = await calendarService.PostSelf(userid,name,date,meal_time);
@@ -101,9 +106,13 @@ exports.deleteWeekRecipe = async function (req, res) {
         
     }
     if(!meal_time){
-        return res.send(errResponse(baseResponse.MEAL_TIME_EMPTY));
+        return res.status(400).json(errResponse(baseResponse.MEAL_TIME_EMPTY));
     }
     const weekdeleteResult = await calendarService.deleteRecipe(Info);
+    console.log(weekdeleteResult.code);
+    if (weekdeleteResult.code == 3103){
+        return res.status(400).json(errResponse(baseResponse.CALENDAR_RECIPE_EMPTY));
+    }
     return res.send(weekdeleteResult);
 
 };
