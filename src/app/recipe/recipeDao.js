@@ -55,7 +55,7 @@ async function selectDetailInfo(connection, recipe_id){
 //레시피 과정 정보 조회
 async function selectDetailProcess(connection, recipe_id){
     const selectDetailQuery = `
-    select cook_order, description, order_img_url from process where recipe_id = ${recipe_id};
+    select cook_order, description, order_img_url, timer from process where recipe_id = ${recipe_id};
     `;
     const [recipeProcessRows] = await connection.query(selectDetailQuery);
     return recipeProcessRows;
